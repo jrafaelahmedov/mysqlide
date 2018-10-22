@@ -5,7 +5,11 @@
  */
 package mysqlidea;
 
-import javax.swing.JOptionPane;
+import java.awt.Color;
+import javax.swing.BorderFactory;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 
 /**
  *
@@ -81,7 +85,6 @@ public class MySQLIdea extends javax.swing.JFrame {
         jMenu7 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1050, 675));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1050, 61));
 
@@ -90,18 +93,42 @@ public class MySQLIdea extends javax.swing.JFrame {
         jButton4.setContentAreaFilled(false);
         jButton4.setDefaultCapable(false);
         jButton4.setPreferredSize(new java.awt.Dimension(80, 61));
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton4MouseExited(evt);
+            }
+        });
 
         jButton5.setText("Function");
         jButton5.setBorder(null);
         jButton5.setContentAreaFilled(false);
         jButton5.setDefaultCapable(false);
         jButton5.setPreferredSize(new java.awt.Dimension(80, 61));
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton5MouseExited(evt);
+            }
+        });
 
         jButton6.setText("View");
         jButton6.setBorder(null);
         jButton6.setContentAreaFilled(false);
         jButton6.setDefaultCapable(false);
         jButton6.setPreferredSize(new java.awt.Dimension(80, 61));
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton6MouseExited(evt);
+            }
+        });
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -113,6 +140,14 @@ public class MySQLIdea extends javax.swing.JFrame {
         jButton7.setContentAreaFilled(false);
         jButton7.setDefaultCapable(false);
         jButton7.setPreferredSize(new java.awt.Dimension(80, 61));
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton7MouseExited(evt);
+            }
+        });
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -124,18 +159,42 @@ public class MySQLIdea extends javax.swing.JFrame {
         jButton8.setContentAreaFilled(false);
         jButton8.setDefaultCapable(false);
         jButton8.setPreferredSize(new java.awt.Dimension(80, 61));
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton8MouseExited(evt);
+            }
+        });
 
         jButton9.setText("Backup");
         jButton9.setBorder(null);
         jButton9.setContentAreaFilled(false);
         jButton9.setDefaultCapable(false);
         jButton9.setPreferredSize(new java.awt.Dimension(80, 61));
+        jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton9MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton9MouseExited(evt);
+            }
+        });
 
         jButton10.setText("Report");
         jButton10.setBorder(null);
         jButton10.setContentAreaFilled(false);
         jButton10.setDefaultCapable(false);
         jButton10.setPreferredSize(new java.awt.Dimension(80, 61));
+        jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton10MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton10MouseExited(evt);
+            }
+        });
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
@@ -147,12 +206,28 @@ public class MySQLIdea extends javax.swing.JFrame {
         jButton11.setContentAreaFilled(false);
         jButton11.setDefaultCapable(false);
         jButton11.setPreferredSize(new java.awt.Dimension(80, 61));
+        jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton11MouseExited(evt);
+            }
+        });
 
         jButton12.setText("User");
         jButton12.setBorder(null);
         jButton12.setContentAreaFilled(false);
         jButton12.setDefaultCapable(false);
         jButton12.setPreferredSize(new java.awt.Dimension(80, 61));
+        jButton12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton12MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton12MouseExited(evt);
+            }
+        });
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton12ActionPerformed(evt);
@@ -166,6 +241,19 @@ public class MySQLIdea extends javax.swing.JFrame {
         jButton1.setContentAreaFilled(false);
         jButton1.setDefaultCapable(false);
         jButton1.setPreferredSize(new java.awt.Dimension(80, 61));
+        jButton1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jButton1MouseDragged(evt);
+            }
+        });
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton1MouseExited(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -177,6 +265,14 @@ public class MySQLIdea extends javax.swing.JFrame {
         jButton2.setContentAreaFilled(false);
         jButton2.setDefaultCapable(false);
         jButton2.setPreferredSize(new java.awt.Dimension(80, 61));
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton2MouseExited(evt);
+            }
+        });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -188,6 +284,14 @@ public class MySQLIdea extends javax.swing.JFrame {
         jButton3.setContentAreaFilled(false);
         jButton3.setDefaultCapable(false);
         jButton3.setPreferredSize(new java.awt.Dimension(80, 61));
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton3MouseExited(evt);
+            }
+        });
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -255,6 +359,14 @@ public class MySQLIdea extends javax.swing.JFrame {
         jButton19.setBorder(null);
         jButton19.setContentAreaFilled(false);
         jButton19.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton19MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton19MouseExited(evt);
+            }
+        });
         jButton19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton19ActionPerformed(evt);
@@ -309,69 +421,107 @@ public class MySQLIdea extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1))
         );
+
+        jPanel6.setPreferredSize(new java.awt.Dimension(635, 49));
 
         jButton14.setText("Open Table");
         jButton14.setBorder(null);
         jButton14.setContentAreaFilled(false);
         jButton14.setDefaultCapable(false);
-        jButton14.setEnabled(false);
+        jButton14.setFocusTraversalPolicyProvider(true);
+        jButton14.setRequestFocusEnabled(false);
+        jButton14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton14MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton14MouseExited(evt);
+            }
+        });
 
         jButton15.setText("Design Table");
         jButton15.setBorder(null);
         jButton15.setContentAreaFilled(false);
         jButton15.setDefaultCapable(false);
-        jButton15.setEnabled(false);
+        jButton15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton15MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton15MouseExited(evt);
+            }
+        });
 
         jButton16.setText("New Table");
         jButton16.setBorder(null);
         jButton16.setContentAreaFilled(false);
         jButton16.setDefaultCapable(false);
-        jButton16.setEnabled(false);
+        jButton16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton16MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton16MouseExited(evt);
+            }
+        });
 
-        jButton17.setText("New Table");
+        jButton17.setText("Delete Table");
         jButton17.setBorder(null);
         jButton17.setContentAreaFilled(false);
         jButton17.setDefaultCapable(false);
-        jButton17.setEnabled(false);
+        jButton17.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton17MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton17MouseExited(evt);
+            }
+        });
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton17ActionPerformed(evt);
+            }
+        });
 
         jButton18.setText("Import Wizard");
         jButton18.setBorder(null);
         jButton18.setContentAreaFilled(false);
         jButton18.setDefaultCapable(false);
-        jButton18.setEnabled(false);
+        jButton18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton18MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton18MouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jButton14)
+                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton15)
+                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton16)
-                .addGap(18, 18, 18)
-                .addComponent(jButton17)
-                .addGap(18, 18, 18)
-                .addComponent(jButton18)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(177, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton14)
-                    .addComponent(jButton15)
-                    .addComponent(jButton16)
-                    .addComponent(jButton17)
-                    .addComponent(jButton18))
-                .addContainerGap())
+            .addComponent(jButton15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+            .addComponent(jButton17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -386,15 +536,27 @@ public class MySQLIdea extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(1, 1, 1)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 520, Short.MAX_VALUE))
+                .addGap(0, 518, Short.MAX_VALUE))
         );
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jMenu1.setText("File");
+        jMenu1.addMenuDragMouseListener(new javax.swing.event.MenuDragMouseListener() {
+            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
+            }
+            public void menuDragMouseEntered(javax.swing.event.MenuDragMouseEvent evt) {
+                jMenu1MenuDragMouseEntered(evt);
+            }
+            public void menuDragMouseExited(javax.swing.event.MenuDragMouseEvent evt) {
+            }
+            public void menuDragMouseReleased(javax.swing.event.MenuDragMouseEvent evt) {
+            }
+        });
 
         jMenuItem1.setText("New Project");
         jMenu1.add(jMenuItem1);
@@ -547,7 +709,9 @@ public class MySQLIdea extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+   
+    
+   
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
@@ -578,6 +742,170 @@ public class MySQLIdea extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void jButton1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseDragged
+    
+    }//GEN-LAST:event_jButton1MouseDragged
+
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+      jButton1.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+
+    }//GEN-LAST:event_jButton1MouseEntered
+
+    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
+        jButton1.setBorder(null);
+    }//GEN-LAST:event_jButton1MouseExited
+
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+         jButton2.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton2MouseEntered
+
+    private void jButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseExited
+        jButton2.setBorder(null);
+    }//GEN-LAST:event_jButton2MouseExited
+
+    private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
+        jButton3.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton3MouseEntered
+
+    private void jButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseExited
+       jButton3.setBorder(null);
+    }//GEN-LAST:event_jButton3MouseExited
+
+    private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
+         jButton6.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton6MouseEntered
+
+    private void jButton6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseExited
+        jButton6.setBorder(null);
+    }//GEN-LAST:event_jButton6MouseExited
+
+    private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
+         jButton5.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton5MouseEntered
+
+    private void jButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseExited
+       jButton5.setBorder(null);
+    }//GEN-LAST:event_jButton5MouseExited
+
+    private void jButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseEntered
+         jButton4.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton4MouseEntered
+
+    private void jButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseExited
+        jButton4.setBorder(null);
+    }//GEN-LAST:event_jButton4MouseExited
+
+    private void jButton12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseEntered
+         jButton12.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton12MouseEntered
+
+    private void jButton12MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseExited
+       jButton12.setBorder(null);
+    }//GEN-LAST:event_jButton12MouseExited
+
+    private void jButton11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseEntered
+          jButton11.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton11MouseEntered
+
+    private void jButton11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseExited
+        jButton11.setBorder(null);
+    }//GEN-LAST:event_jButton11MouseExited
+
+    private void jButton10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseEntered
+         jButton10.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton10MouseEntered
+
+    private void jButton10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseExited
+       jButton10.setBorder(null);
+    }//GEN-LAST:event_jButton10MouseExited
+
+    private void jButton9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseEntered
+         jButton9.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton9MouseEntered
+
+    private void jButton9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseExited
+        jButton9.setBorder(null);
+    }//GEN-LAST:event_jButton9MouseExited
+
+    private void jButton8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseEntered
+         jButton8.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton8MouseEntered
+
+    private void jButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseExited
+       jButton8.setBorder(null);
+    }//GEN-LAST:event_jButton8MouseExited
+
+    private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
+          jButton7.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton7MouseEntered
+
+    private void jButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseExited
+        jButton7.setBorder(null);
+    }//GEN-LAST:event_jButton7MouseExited
+
+    private void jButton19MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton19MouseEntered
+         jButton19.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.gray));
+         
+    }//GEN-LAST:event_jButton19MouseEntered
+
+    private void jButton19MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton19MouseExited
+       jButton19.setBorder(null);
+    }//GEN-LAST:event_jButton19MouseExited
+
+    private void jMenu1MenuDragMouseEntered(javax.swing.event.MenuDragMouseEvent evt) {//GEN-FIRST:event_jMenu1MenuDragMouseEntered
+
+    }//GEN-LAST:event_jMenu1MenuDragMouseEntered
+
+    private void jButton14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton14MouseEntered
+//        boolean a=false;
+//        jButton14.setEnabled(a);
+//        if(a==true){
+        jButton14.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton14MouseEntered
+
+    private void jButton14MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton14MouseExited
+      jButton14.setBorder(null);
+    }//GEN-LAST:event_jButton14MouseExited
+
+    private void jButton15MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton15MouseEntered
+              jButton15.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+
+    }//GEN-LAST:event_jButton15MouseEntered
+
+    private void jButton15MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton15MouseExited
+       jButton15.setBorder(null);
+    }//GEN-LAST:event_jButton15MouseExited
+
+    private void jButton16MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton16MouseEntered
+              jButton16.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+
+    }//GEN-LAST:event_jButton16MouseEntered
+
+    private void jButton16MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton16MouseExited
+        jButton16.setBorder(null);
+    }//GEN-LAST:event_jButton16MouseExited
+
+    private void jButton17MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton17MouseEntered
+       jButton17.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_jButton17MouseEntered
+
+    private void jButton17MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton17MouseExited
+       jButton17.setBorder(null);
+    }//GEN-LAST:event_jButton17MouseExited
+
+    private void jButton18MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseEntered
+               jButton18.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+
+    }//GEN-LAST:event_jButton18MouseEntered
+
+    private void jButton18MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseExited
+       jButton18.setBorder(null);
+    }//GEN-LAST:event_jButton18MouseExited
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton17ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -592,16 +920,28 @@ public class MySQLIdea extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+                
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MySQLIdea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MySQLIdea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MySQLIdea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MySQLIdea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MySQLIdea.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+} catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MySQLIdea.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MySQLIdea.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MySQLIdea.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
