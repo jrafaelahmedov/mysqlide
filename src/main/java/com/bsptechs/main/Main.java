@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mysqlidea;
+package com.bsptechs.main;
 
 import java.awt.Color;
 import javax.swing.BorderFactory;
@@ -15,12 +15,12 @@ import javax.swing.border.Border;
  *
  * @author RafaelAhmedov
  */
-public class MySQLIdea extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame {
 
     /**
      * Creates new form MySQLIdea1
      */
-    public MySQLIdea() {
+    public Main() {
         initComponents();
     }
 
@@ -513,7 +513,7 @@ public class MySQLIdea extends javax.swing.JFrame {
                 .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -547,12 +547,12 @@ public class MySQLIdea extends javax.swing.JFrame {
 
         jMenu1.setText("File");
         jMenu1.addMenuDragMouseListener(new javax.swing.event.MenuDragMouseListener() {
-            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
-            }
             public void menuDragMouseEntered(javax.swing.event.MenuDragMouseEvent evt) {
                 jMenu1MenuDragMouseEntered(evt);
             }
             public void menuDragMouseExited(javax.swing.event.MenuDragMouseEvent evt) {
+            }
+            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
             }
             public void menuDragMouseReleased(javax.swing.event.MenuDragMouseEvent evt) {
             }
@@ -925,31 +925,33 @@ public class MySQLIdea extends javax.swing.JFrame {
 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MySQLIdea.class
+            java.util.logging.Logger.getLogger(Main.class
 .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         
 
 } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MySQLIdea.class
+            java.util.logging.Logger.getLogger(Main.class
 .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         
 
 } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MySQLIdea.class
+            java.util.logging.Logger.getLogger(Main.class
 .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         
 
 } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MySQLIdea.class
+            java.util.logging.Logger.getLogger(Main.class
 .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MySQLIdea().setVisible(true);
+                new Main().setVisible(true);
             }
         });
     }
