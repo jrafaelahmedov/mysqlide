@@ -925,30 +925,36 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jListDataBasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListDataBasesMouseClicked
-       JList list = (JList)evt.getSource();
-               DefaultListModel dm = new DefaultListModel();
-    if (evt.getClickCount() == 1) {
-        int index = list.locationToIndex(evt.getPoint());
-        if(index==1){
-            try {
-                for (String elem : JPA.allTableCarAdvertising()) {
-                    dm.addElement(elem);
-                    
-                }
-                        jListDataBases.setModel(dm);
-
-            } catch (ClassNotFoundException ex) {
-                    
-            } catch (SQLException ex) {
-            }
-        }
+        JList list = (JList) evt.getSource();
+        DefaultListModel dm = new DefaultListModel();
+        if (evt.getClickCount() == 1) {
+            int index = list.locationToIndex(evt.getPoint());
             
+            
+          if (index == 0) {
+                for (String elem : MySqlIdeDB.allTableInformationSchema()) {
+                    dm.addElement(elem);
+
+                }
+                jListDataBases.setModel(dm);
+
+            }
+           else if (index == 1) {
+
+                for (String elem : MySqlIdeDB.allTableCarAdvertising()) {
+                    dm.addElement(elem);
+
+                }
+                jListDataBases.setModel(dm);
+
+            } 
+
         }
     }//GEN-LAST:event_jListDataBasesMouseClicked
 
     public void addDataBase() throws ClassNotFoundException, SQLException {
         DefaultListModel dm = new DefaultListModel();
-        for (String elem : JPA.executeMySQLQuery()) {
+        for (String elem : MySqlIdeDB.executeMySQLQuery()) {
             dm.addElement(elem);
 
         }
