@@ -59,6 +59,7 @@ public class Main extends javax.swing.JFrame {
         jButton19 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListDataBases = new javax.swing.JList<>();
+        btnBack = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -389,6 +390,13 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jListDataBases);
 
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -396,8 +404,9 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                    .addComponent(jButton19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -405,9 +414,12 @@ public class Main extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jSeparator2)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -932,7 +944,7 @@ public class Main extends javax.swing.JFrame {
             
             
           if (index == 0) {
-                for (String elem : MySqlIdeDB.allTableInformationSchema()) {
+                for (String elem : MySqlIdeDB.allTablesInformationSchema()) {
                     dm.addElement(elem);
 
                 }
@@ -941,20 +953,54 @@ public class Main extends javax.swing.JFrame {
             }
            else if (index == 1) {
 
-                for (String elem : MySqlIdeDB.allTableCarAdvertising()) {
+                for (String elem : MySqlIdeDB.allTablesCarAdvertising()) {
                     dm.addElement(elem);
 
                 }
                 jListDataBases.setModel(dm);
 
             } 
+           else if(index==2){
+                for (String elem : MySqlIdeDB.allTablesMySql()) {
+                    dm.addElement(elem);
+
+                }
+                
+                jListDataBases.setModel(dm);
+           }
+           else if(index==3){
+                for (String elem : MySqlIdeDB.allTablesPerformanceShema()) {
+                    dm.addElement(elem);
+
+                }
+                
+                jListDataBases.setModel(dm);
+           }
+          else if(index==4){
+                for (String elem : MySqlIdeDB.allTablesTest()) {
+                    dm.addElement(elem);
+
+                }
+                
+                jListDataBases.setModel(dm);
+           }
 
         }
     }//GEN-LAST:event_jListDataBasesMouseClicked
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+ DefaultListModel dm = new DefaultListModel();
+        for (String elem : MySqlIdeDB.getAllDB()) {
+            dm.addElement(elem);
+
+        }
+         jListDataBases.setModel(dm);
+
+            }//GEN-LAST:event_btnBackActionPerformed
+
     public void addDataBase() throws ClassNotFoundException, SQLException {
         DefaultListModel dm = new DefaultListModel();
-        for (String elem : MySqlIdeDB.executeMySQLQuery()) {
+        for (String elem : MySqlIdeDB.getAllDB()) {
             dm.addElement(elem);
 
         }
@@ -1015,6 +1061,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;

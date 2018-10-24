@@ -20,7 +20,8 @@ import java.util.List;
  */
 public class MySqlIdeDB {
 
-    public static void main(String[] args){
+    public static void main(String[] args){  
+        System.out.println(allTablesTest());
           }
     
 
@@ -33,7 +34,7 @@ public class MySqlIdeDB {
         return connection;
     }
 
-    public static List<String> executeMySQLQuery() throws ClassNotFoundException, SQLException {
+    public static List<String> getAllDB(){
 
         Statement stmt = null;
         ResultSet resultset = null;
@@ -60,7 +61,7 @@ public class MySqlIdeDB {
         }
     }
 
-    public static List<String> allTableCarAdvertising() {
+    public static List<String> allTablesCarAdvertising() {
         Statement stmt = null;
         ResultSet resultset = null;
         List<String> list = new ArrayList<>();
@@ -79,13 +80,70 @@ public class MySqlIdeDB {
 
         }
     }
-         public static List<String> allTableInformationSchema() {
+         public static List<String> allTablesInformationSchema() {
         Statement stmt = null;
         ResultSet resultset = null;
         List<String> list = new ArrayList<>();
         try (Connection conn = connect();) {
             stmt = conn.createStatement();
             resultset = stmt.executeQuery("SHOW TABLES FROM information_schema");
+            while (resultset.next()) {
+                String result = resultset.getString(1);
+                list.add(result);
+            }
+            return list;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+         }
+          public static List<String> allTablesMySql() {
+        Statement stmt = null;
+        ResultSet resultset = null;
+        List<String> list = new ArrayList<>();
+        try (Connection conn = connect();) {
+            stmt = conn.createStatement();
+            resultset = stmt.executeQuery("SHOW TABLES FROM mysql");
+            while (resultset.next()) {
+                String result = resultset.getString(1);
+                list.add(result);
+            }
+            return list;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+         }
+           public static List<String> allTablesPerformanceShema() {
+        Statement stmt = null;
+        ResultSet resultset = null;
+        List<String> list = new ArrayList<>();
+        try (Connection conn = connect();) {
+            stmt = conn.createStatement();
+            resultset = stmt.executeQuery("SHOW TABLES FROM performance_schema");
+            while (resultset.next()) {
+                String result = resultset.getString(1);
+                list.add(result);
+            }
+            return list;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+         }
+            public static List<String> allTablesTest() {
+        Statement stmt = null;
+        ResultSet resultset = null;
+        List<String> list = new ArrayList<>();
+        try (Connection conn = connect();) {
+            stmt = conn.createStatement();
+            resultset = stmt.executeQuery("SHOW TABLES FROM test");
             while (resultset.next()) {
                 String result = resultset.getString(1);
                 list.add(result);
