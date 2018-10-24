@@ -6,7 +6,13 @@
 package com.bsptechs.main;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
@@ -20,8 +26,9 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form MySQLIdea1
      */
-    public Main() {
+    public Main() throws ClassNotFoundException, SQLException {
         initComponents();
+        addDataBase();
     }
 
     /**
@@ -50,6 +57,8 @@ public class Main extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
         jButton19 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListDataBases = new javax.swing.JList<>();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -373,22 +382,32 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jListDataBases.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListDataBasesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jListDataBases);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jButton19, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                    .addComponent(jButton19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jSeparator2)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jButton19)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -513,7 +532,7 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(173, Short.MAX_VALUE))
+                .addContainerGap(177, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -540,19 +559,19 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 518, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jMenu1.setText("File");
         jMenu1.addMenuDragMouseListener(new javax.swing.event.MenuDragMouseListener() {
+            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
+            }
             public void menuDragMouseEntered(javax.swing.event.MenuDragMouseEvent evt) {
                 jMenu1MenuDragMouseEntered(evt);
             }
             public void menuDragMouseExited(javax.swing.event.MenuDragMouseEvent evt) {
-            }
-            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
             }
             public void menuDragMouseReleased(javax.swing.event.MenuDragMouseEvent evt) {
             }
@@ -662,8 +681,8 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1306, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -709,13 +728,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-   
-    
-   
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-      
+
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -743,11 +761,11 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jButton1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseDragged
-    
+
     }//GEN-LAST:event_jButton1MouseDragged
 
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
-      jButton1.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton1.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
 
     }//GEN-LAST:event_jButton1MouseEntered
 
@@ -756,7 +774,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseExited
 
     private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
-         jButton2.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton2.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }//GEN-LAST:event_jButton2MouseEntered
 
     private void jButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseExited
@@ -768,11 +786,11 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3MouseEntered
 
     private void jButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseExited
-       jButton3.setBorder(null);
+        jButton3.setBorder(null);
     }//GEN-LAST:event_jButton3MouseExited
 
     private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
-         jButton6.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton6.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }//GEN-LAST:event_jButton6MouseEntered
 
     private void jButton6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseExited
@@ -780,15 +798,15 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6MouseExited
 
     private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
-         jButton5.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton5.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }//GEN-LAST:event_jButton5MouseEntered
 
     private void jButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseExited
-       jButton5.setBorder(null);
+        jButton5.setBorder(null);
     }//GEN-LAST:event_jButton5MouseExited
 
     private void jButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseEntered
-         jButton4.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton4.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }//GEN-LAST:event_jButton4MouseEntered
 
     private void jButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseExited
@@ -796,15 +814,15 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4MouseExited
 
     private void jButton12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseEntered
-         jButton12.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton12.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }//GEN-LAST:event_jButton12MouseEntered
 
     private void jButton12MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseExited
-       jButton12.setBorder(null);
+        jButton12.setBorder(null);
     }//GEN-LAST:event_jButton12MouseExited
 
     private void jButton11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseEntered
-          jButton11.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton11.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }//GEN-LAST:event_jButton11MouseEntered
 
     private void jButton11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseExited
@@ -812,15 +830,15 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton11MouseExited
 
     private void jButton10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseEntered
-         jButton10.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton10.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }//GEN-LAST:event_jButton10MouseEntered
 
     private void jButton10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseExited
-       jButton10.setBorder(null);
+        jButton10.setBorder(null);
     }//GEN-LAST:event_jButton10MouseExited
 
     private void jButton9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseEntered
-         jButton9.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton9.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }//GEN-LAST:event_jButton9MouseEntered
 
     private void jButton9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseExited
@@ -828,15 +846,15 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9MouseExited
 
     private void jButton8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseEntered
-         jButton8.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton8.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }//GEN-LAST:event_jButton8MouseEntered
 
     private void jButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseExited
-       jButton8.setBorder(null);
+        jButton8.setBorder(null);
     }//GEN-LAST:event_jButton8MouseExited
 
     private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
-          jButton7.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton7.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }//GEN-LAST:event_jButton7MouseEntered
 
     private void jButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseExited
@@ -844,12 +862,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7MouseExited
 
     private void jButton19MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton19MouseEntered
-         jButton19.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.gray));
-         
+        jButton19.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.gray));
+
     }//GEN-LAST:event_jButton19MouseEntered
 
     private void jButton19MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton19MouseExited
-       jButton19.setBorder(null);
+        jButton19.setBorder(null);
     }//GEN-LAST:event_jButton19MouseExited
 
     private void jMenu1MenuDragMouseEntered(javax.swing.event.MenuDragMouseEvent evt) {//GEN-FIRST:event_jMenu1MenuDragMouseEntered
@@ -864,20 +882,20 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton14MouseEntered
 
     private void jButton14MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton14MouseExited
-      jButton14.setBorder(null);
+        jButton14.setBorder(null);
     }//GEN-LAST:event_jButton14MouseExited
 
     private void jButton15MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton15MouseEntered
-              jButton15.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton15.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
 
     }//GEN-LAST:event_jButton15MouseEntered
 
     private void jButton15MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton15MouseExited
-       jButton15.setBorder(null);
+        jButton15.setBorder(null);
     }//GEN-LAST:event_jButton15MouseExited
 
     private void jButton16MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton16MouseEntered
-              jButton16.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton16.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
 
     }//GEN-LAST:event_jButton16MouseEntered
 
@@ -886,25 +904,63 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton16MouseExited
 
     private void jButton17MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton17MouseEntered
-       jButton17.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton17.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }//GEN-LAST:event_jButton17MouseEntered
 
     private void jButton17MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton17MouseExited
-       jButton17.setBorder(null);
+        jButton17.setBorder(null);
     }//GEN-LAST:event_jButton17MouseExited
 
     private void jButton18MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseEntered
-               jButton18.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+        jButton18.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
 
     }//GEN-LAST:event_jButton18MouseEntered
 
     private void jButton18MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseExited
-       jButton18.setBorder(null);
+        jButton18.setBorder(null);
     }//GEN-LAST:event_jButton18MouseExited
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void jListDataBasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListDataBasesMouseClicked
+        JList list = (JList) evt.getSource();
+        DefaultListModel dm = new DefaultListModel();
+        if (evt.getClickCount() == 1) {
+            int index = list.locationToIndex(evt.getPoint());
+            
+            
+          if (index == 0) {
+                for (String elem : MySqlIdeDB.allTableInformationSchema()) {
+                    dm.addElement(elem);
+
+                }
+                jListDataBases.setModel(dm);
+
+            }
+           else if (index == 1) {
+
+                for (String elem : MySqlIdeDB.allTableCarAdvertising()) {
+                    dm.addElement(elem);
+
+                }
+                jListDataBases.setModel(dm);
+
+            } 
+
+        }
+    }//GEN-LAST:event_jListDataBasesMouseClicked
+
+    public void addDataBase() throws ClassNotFoundException, SQLException {
+        DefaultListModel dm = new DefaultListModel();
+        for (String elem : MySqlIdeDB.executeMySQLQuery()) {
+            dm.addElement(elem);
+
+        }
+
+        jListDataBases.setModel(dm);
+    }
 
     /**
      * @param args the command line arguments
@@ -920,28 +976,24 @@ public class Main extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Main.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (InstantiationException ex) {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(Main.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(Main.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -951,7 +1003,13 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                try {
+                    new Main().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -976,6 +1034,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JList<String> jListDataBases;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
@@ -1004,6 +1063,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
