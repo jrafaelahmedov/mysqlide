@@ -20,9 +20,6 @@ import java.util.List;
  */
 public class MySqlIdeDB {
 
-    public static void main(String[] args){  
-        System.out.println(allTablesTest());
-          }
     
 
     public static Connection connect() throws ClassNotFoundException, SQLException {
@@ -61,89 +58,16 @@ public class MySqlIdeDB {
         }
     }
 
-    public static List<String> allTablesCarAdvertising() {
+   
+            public static List<String> allTables(String bazaName) {
         Statement stmt = null;
         ResultSet resultset = null;
         List<String> list = new ArrayList<>();
         try (Connection conn = connect();) {
             stmt = conn.createStatement();
-            resultset = stmt.executeQuery("SHOW TABLES FROM caradvertising");
-            while (resultset.next()) {
-                String result = resultset.getString(1);
-                list.add(result);
-            }
-            return list;
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-
-        }
-    }
-         public static List<String> allTablesInformationSchema() {
-        Statement stmt = null;
-        ResultSet resultset = null;
-        List<String> list = new ArrayList<>();
-        try (Connection conn = connect();) {
-            stmt = conn.createStatement();
-            resultset = stmt.executeQuery("SHOW TABLES FROM information_schema");
-            while (resultset.next()) {
-                String result = resultset.getString(1);
-                list.add(result);
-            }
-            return list;
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-
-        }
-         }
-          public static List<String> allTablesMySql() {
-        Statement stmt = null;
-        ResultSet resultset = null;
-        List<String> list = new ArrayList<>();
-        try (Connection conn = connect();) {
-            stmt = conn.createStatement();
-            resultset = stmt.executeQuery("SHOW TABLES FROM mysql");
-            while (resultset.next()) {
-                String result = resultset.getString(1);
-                list.add(result);
-            }
-            return list;
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-
-        }
-         }
-           public static List<String> allTablesPerformanceShema() {
-        Statement stmt = null;
-        ResultSet resultset = null;
-        List<String> list = new ArrayList<>();
-        try (Connection conn = connect();) {
-            stmt = conn.createStatement();
-            resultset = stmt.executeQuery("SHOW TABLES FROM performance_schema");
-            while (resultset.next()) {
-                String result = resultset.getString(1);
-                list.add(result);
-            }
-            return list;
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-
-        }
-         }
-            public static List<String> allTablesTest() {
-        Statement stmt = null;
-        ResultSet resultset = null;
-        List<String> list = new ArrayList<>();
-        try (Connection conn = connect();) {
-            stmt = conn.createStatement();
-            resultset = stmt.executeQuery("SHOW TABLES FROM test");
+            System.out.println("saasas");
+            resultset = stmt.executeQuery("SHOW TABLES FROM "+bazaName);
+            System.out.println("asr="+resultset);
             while (resultset.next()) {
                 String result = resultset.getString(1);
                 list.add(result);
