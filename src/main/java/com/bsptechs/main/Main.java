@@ -939,53 +939,23 @@ public class Main extends javax.swing.JFrame {
     private void jListDataBasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListDataBasesMouseClicked
         JList list = (JList) evt.getSource();
         DefaultListModel dm = new DefaultListModel();
-        if (evt.getClickCount() == 1) {
-            int index = list.locationToIndex(evt.getPoint());
+         int index = list.getSelectedIndex();             
+  
+       
+          String s = (String) list.getSelectedValue();
             
             
-          if (index == 0) {
-                for (String elem : MySqlIdeDB.allTablesInformationSchema()) {
+        
+                for (String elem : MySqlIdeDB.allTables(s.toString())) {
                     dm.addElement(elem);
 
                 }
                 jListDataBases.setModel(dm);
 
-            }
-           else if (index == 1) {
+            
+         
 
-                for (String elem : MySqlIdeDB.allTablesCarAdvertising()) {
-                    dm.addElement(elem);
-
-                }
-                jListDataBases.setModel(dm);
-
-            } 
-           else if(index==2){
-                for (String elem : MySqlIdeDB.allTablesMySql()) {
-                    dm.addElement(elem);
-
-                }
-                
-                jListDataBases.setModel(dm);
-           }
-           else if(index==3){
-                for (String elem : MySqlIdeDB.allTablesPerformanceShema()) {
-                    dm.addElement(elem);
-
-                }
-                
-                jListDataBases.setModel(dm);
-           }
-          else if(index==4){
-                for (String elem : MySqlIdeDB.allTablesTest()) {
-                    dm.addElement(elem);
-
-                }
-                
-                jListDataBases.setModel(dm);
-           }
-
-        }
+        
     }//GEN-LAST:event_jListDataBasesMouseClicked
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
