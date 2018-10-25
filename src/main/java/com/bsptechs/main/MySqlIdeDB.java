@@ -20,18 +20,16 @@ import java.util.List;
  */
 public class MySqlIdeDB {
 
-    
-
     public static Connection connect() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
         String url = "jdbc:mysql://localhost:3306/";
         String username = "root";
-        String password = "12345";
+        String password = "";
         Connection connection = DriverManager.getConnection(url, username, password);
         return connection;
     }
 
-    public static List<String> getAllDB(){
+    public static List<String> getAllDB() {
 
         Statement stmt = null;
         ResultSet resultset = null;
@@ -58,16 +56,15 @@ public class MySqlIdeDB {
         }
     }
 
-   
-            public static List<String> allTables(String bazaName) {
+    public static List<String> allTables(String bazaName) {
         Statement stmt = null;
         ResultSet resultset = null;
         List<String> list = new ArrayList<>();
         try (Connection conn = connect();) {
             stmt = conn.createStatement();
             System.out.println("saasas");
-            resultset = stmt.executeQuery("SHOW TABLES FROM "+bazaName);
-            System.out.println("asr="+resultset);
+            resultset = stmt.executeQuery("SHOW TABLES FROM " + bazaName);
+            System.out.println("asr=" + resultset);
             while (resultset.next()) {
                 String result = resultset.getString(1);
                 list.add(result);
@@ -79,9 +76,5 @@ public class MySqlIdeDB {
             return null;
 
         }
-         }
+    }
 }
-
-
-    
-

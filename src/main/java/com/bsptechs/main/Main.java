@@ -619,7 +619,7 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -653,12 +653,12 @@ public class Main extends javax.swing.JFrame {
 
         jMenu1.setText("File");
         jMenu1.addMenuDragMouseListener(new javax.swing.event.MenuDragMouseListener() {
-            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
-            }
             public void menuDragMouseEntered(javax.swing.event.MenuDragMouseEvent evt) {
                 jMenu1MenuDragMouseEntered(evt);
             }
             public void menuDragMouseExited(javax.swing.event.MenuDragMouseEvent evt) {
+            }
+            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
             }
             public void menuDragMouseReleased(javax.swing.event.MenuDragMouseEvent evt) {
             }
@@ -1012,19 +1012,19 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jListDataBasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListDataBasesMouseClicked
-        JList list = (JList) evt.getSource();
-        DefaultListModel dm = new DefaultListModel();
-        int index = list.getSelectedIndex();
+        if (evt.getClickCount() == 2) {
+            JList list = (JList) evt.getSource();
+            DefaultListModel dm = new DefaultListModel();
+            int index = list.getSelectedIndex();
 
-        String s = (String) list.getSelectedValue();
+            String s = (String) list.getSelectedValue();
 
-        for (String elem : MySqlIdeDB.allTables(s.toString())) {
-            dm.addElement(elem);
+            for (String elem : MySqlIdeDB.allTables(s.toString())) {
+                dm.addElement(elem);
 
+            }
+            list.setModel(dm);
         }
-        jListDataBases.setModel(dm);
-
-
     }//GEN-LAST:event_jListDataBasesMouseClicked
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -1038,10 +1038,9 @@ public class Main extends javax.swing.JFrame {
             }//GEN-LAST:event_btnBackActionPerformed
 
     private void jListDataBasesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListDataBasesMouseReleased
-      
-
-        if (evt.isPopupTrigger() && jListDataBases != null) {
-
+        System.out.println("jListDataBasesMouseReleased");
+        System.out.println(evt.getButton());
+        if (jListDataBases.getSelectedIndex() > -1 && SwingUtilities.isRightMouseButton(evt)) {
             jPopupMenu1.show(this, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_jListDataBasesMouseReleased
