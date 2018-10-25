@@ -5,14 +5,18 @@
  */
 package com.bsptechs.main;
 
+import com.sun.java.swing.SwingUtilities3;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
@@ -40,6 +44,21 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenu11 = new javax.swing.JMenu();
+        jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem22 = new javax.swing.JMenuItem();
+        jMenuItem23 = new javax.swing.JMenuItem();
+        jMenuItem24 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -93,6 +112,56 @@ public class Main extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
+
+        jMenuItem12.setText("Open Database");
+        jMenuItem12.setActionCommand("OpenDatabase");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem12);
+        jMenuItem12.getAccessibleContext().setAccessibleName("JOpenDatabaseMenuItem");
+
+        jMenuItem13.setText("New Database");
+        jPopupMenu1.add(jMenuItem13);
+
+        jMenuItem14.setText("Edit Database");
+        jPopupMenu1.add(jMenuItem14);
+
+        jMenuItem15.setText("Delete Database");
+        jPopupMenu1.add(jMenuItem15);
+
+        jMenuItem16.setText("New Query");
+        jPopupMenu1.add(jMenuItem16);
+
+        jMenuItem17.setText("Console");
+        jPopupMenu1.add(jMenuItem17);
+
+        jMenuItem18.setText("Execute SQL File");
+        jPopupMenu1.add(jMenuItem18);
+
+        jMenu11.setText("Dump SQL File");
+
+        jMenuItem19.setText("Structure and Data");
+        jMenu11.add(jMenuItem19);
+
+        jMenuItem20.setText("Structure Only");
+        jMenu11.add(jMenuItem20);
+
+        jPopupMenu1.add(jMenu11);
+
+        jMenuItem21.setText("Print Database");
+        jPopupMenu1.add(jMenuItem21);
+
+        jMenuItem22.setText("Reverse Database to Model");
+        jPopupMenu1.add(jMenuItem22);
+
+        jMenuItem23.setText("Find in Database");
+        jPopupMenu1.add(jMenuItem23);
+
+        jMenuItem24.setText("Refresh");
+        jPopupMenu1.add(jMenuItem24);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -386,6 +455,12 @@ public class Main extends javax.swing.JFrame {
         jListDataBases.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jListDataBasesMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jListDataBasesMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jListDataBasesMouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(jListDataBases);
@@ -939,34 +1014,61 @@ public class Main extends javax.swing.JFrame {
     private void jListDataBasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListDataBasesMouseClicked
         JList list = (JList) evt.getSource();
         DefaultListModel dm = new DefaultListModel();
-         int index = list.getSelectedIndex();             
-  
-       
-          String s = (String) list.getSelectedValue();
-            
-            
-        
-                for (String elem : MySqlIdeDB.allTables(s.toString())) {
-                    dm.addElement(elem);
+        int index = list.getSelectedIndex();
 
-                }
-                jListDataBases.setModel(dm);
+        String s = (String) list.getSelectedValue();
 
-            
-         
+        for (String elem : MySqlIdeDB.allTables(s.toString())) {
+            dm.addElement(elem);
 
-        
+        }
+        jListDataBases.setModel(dm);
+
+
     }//GEN-LAST:event_jListDataBasesMouseClicked
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
- DefaultListModel dm = new DefaultListModel();
+        DefaultListModel dm = new DefaultListModel();
         for (String elem : MySqlIdeDB.getAllDB()) {
             dm.addElement(elem);
 
         }
-         jListDataBases.setModel(dm);
+        jListDataBases.setModel(dm);
 
             }//GEN-LAST:event_btnBackActionPerformed
+
+    private void jListDataBasesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListDataBasesMouseReleased
+      
+
+        if (evt.isPopupTrigger() && jListDataBases != null) {
+
+            jPopupMenu1.show(this, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jListDataBasesMouseReleased
+
+    private void jListDataBasesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListDataBasesMousePressed
+//      SwingUtilities.isRightMouseButton(evt)&& 
+//        if (evt.isPopupTrigger()) {
+//           jPopupMenu1.add("Open Database");
+//           jPopupMenu1.add("New Database");
+//           jPopupMenu1.add("Edit Database");
+//           jPopupMenu1.add("Delete Database");
+//           jPopupMenu1.add("New Query");
+//           jPopupMenu1.add("Console");
+//           jPopupMenu1.add("Execute SQL File");
+//           jPopupMenu1.add("Dump SQL File");
+//           jPopupMenu1.add("Print Database");
+//           jPopupMenu1.add("Reverse Database to Model");
+//           jPopupMenu1.add("Find in Database");
+//           jPopupMenu1.add("Refresh");
+//           
+//           jPopupMenu1.show(this,evt.getX(),evt.getY());
+//        }
+    }//GEN-LAST:event_jListDataBasesMousePressed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     public void addDataBase() throws ClassNotFoundException, SQLException {
         DefaultListModel dm = new DefaultListModel();
@@ -1054,6 +1156,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JList<String> jListDataBases;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
+    private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -1066,7 +1169,20 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
+    private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -1080,6 +1196,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
