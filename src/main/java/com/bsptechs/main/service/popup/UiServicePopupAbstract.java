@@ -6,6 +6,7 @@
 package com.bsptechs.main.service.popup;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 /**
@@ -14,17 +15,23 @@ import javax.swing.JPopupMenu;
  */
 public abstract class UiServicePopupAbstract {
 
-    public JFrame frame;
-    public JPopupMenu popupMenu;
+    protected JFrame frame;
 
-    public UiServicePopupAbstract(JFrame frame, JPopupMenu popupMenu) {
+    protected UiServicePopupAbstract(JFrame frame) {
         this.frame = frame;
-        this.popupMenu = popupMenu;
     }
 
-    
-    
-    public abstract void delete();
+    public abstract JPopupMenu popup();
 
-    public abstract void properties();
+    protected void addActionListener(JMenuItem item, AbstractActionListenerAdder adder) {
+        item.addActionListener((java.awt.event.ActionEvent evt) -> {
+            adder.action();
+        });
+    }
+
+    protected JMenuItem menuItem(JPopupMenu menu, String text) {
+        JMenuItem item = new JMenuItem(text);
+        menu.add(item);
+        return item;
+    }
 }

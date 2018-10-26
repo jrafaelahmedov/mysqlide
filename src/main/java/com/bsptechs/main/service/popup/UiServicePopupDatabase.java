@@ -6,6 +6,7 @@
 package com.bsptechs.main.service.popup;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 /**
@@ -14,17 +15,15 @@ import javax.swing.JPopupMenu;
  */
 public class UiServicePopupDatabase extends UiServicePopupAbstract {
 
-    public UiServicePopupDatabase(JFrame frame, JPopupMenu popupMenu) {
-        super(frame, popupMenu);
+    public UiServicePopupDatabase(JFrame frame) {
+        super(frame);
     }
 
-    @Override
     public void delete() {
         System.out.println("delete database");
         //Tebriz burani dolduracaq
     }
 
-    @Override
     public void properties() {
         System.out.println("properites database");
         //Tebriz burani dolduracaq
@@ -33,6 +32,20 @@ public class UiServicePopupDatabase extends UiServicePopupAbstract {
     public void newQuery() {
         System.out.println("new query");
         //Rafael burani dolduracaq
+    }
+
+    @Override
+    public JPopupMenu popup() {
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem itemDelete = menuItem(popup,"Delete Database");
+        JMenuItem itemProperties = menuItem(popup, "Database Properties");
+        JMenuItem itemNewQuery = menuItem(popup, "New Query");
+
+        addActionListener(itemProperties, () -> {properties();});
+        addActionListener(itemDelete, () -> {delete();});
+        addActionListener(itemNewQuery, () -> {newQuery();});
+
+        return popup;
     }
 
 }

@@ -12,7 +12,6 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
@@ -22,7 +21,6 @@ import javax.swing.SwingUtilities;
  */
 public class UiUtil {
 
-   
     public static void fillList(List<String> textList, JFrame frame, JPopupMenu popup, JList uiList) {
         DefaultListModel dm = new DefaultListModel();
         for (String text : textList) {
@@ -40,7 +38,7 @@ public class UiUtil {
             UiElement element = (UiElement) list.getModel().getElementAt(list.getSelectedIndex());
             int mouseX = (int) MouseInfo.getPointerInfo().getLocation().getX();
             int mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY();
-            element.getPopup().show(element.getFrame(), mouseX, mouseY - 25);
+            element.getPopup().show(element.getFrame(), mouseX, mouseY - 5);
         }
     }
 

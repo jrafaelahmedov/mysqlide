@@ -5,7 +5,7 @@
  */
 package com.bsptechs.main;
 
-import com.bsptechs.main.service.UiServiceMain;
+import com.bsptechs.main.service.UiServiceMainFrame;
 import com.bsptechs.main.util.ui.UiUtil;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ import javax.swing.JFrame;
  */
 public class Main extends javax.swing.JFrame {
 
-    UiServiceMain mainUiService = new UiServiceMain(this);
+    UiServiceMainFrame mainUiService = new UiServiceMainFrame(this);
 
     /**
      * Creates new form MySQLIdea1

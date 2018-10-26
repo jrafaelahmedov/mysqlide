@@ -6,28 +6,38 @@
 package com.bsptechs.main.service.popup;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 /**
  *
  * @author sarkhanrasullu
  */
-public class UiServicePopupTable extends UiServicePopupAbstract{
+public class UiServicePopupTable extends UiServicePopupAbstract {
 
-    public UiServicePopupTable(JFrame frame, JPopupMenu popupMenu) {
-        super(frame, popupMenu);
+    public UiServicePopupTable(JFrame frame) {
+        super(frame);
     }
 
     @Override
-    public void delete() {
+    public JPopupMenu popup() {
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem itemDelete = menuItem(popup,"Delete Table");
+        JMenuItem itemProperties = menuItem(popup, "Table Properties");
+
+        addActionListener(itemProperties, () -> {properties();});
+        addActionListener(itemDelete, () -> {delete();});
+        return popup;
+    }
+
+    private void delete() {
         System.out.println("table delete");
         //Tebriz burani dolduracaq
     }
 
-    @Override
-    public void properties() {
+    private void properties() {
         System.out.println("table properties");
         //Tebriz burani dolduracaq
     }
-    
+
 }
