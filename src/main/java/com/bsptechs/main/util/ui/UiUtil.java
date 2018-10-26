@@ -32,7 +32,7 @@ public class UiUtil {
 
         uiList.setModel(dm);
     }
-
+ 
     public static void showMenuOnList(JList list, MouseEvent evt) {
         if (list.getSelectedIndex() > -1 && SwingUtilities.isRightMouseButton(evt)) {
             UiElement element = (UiElement) list.getModel().getElementAt(list.getSelectedIndex());

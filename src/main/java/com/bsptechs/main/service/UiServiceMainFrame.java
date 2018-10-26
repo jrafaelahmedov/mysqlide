@@ -5,9 +5,9 @@
  */
 package com.bsptechs.main.service;
 
-import com.bsptechs.main.service.popup.UiServicePopupAbstract;
-import com.bsptechs.main.service.popup.UiServicePopupDatabase;
-import com.bsptechs.main.service.popup.UiServicePopupTable;
+import com.bsptechs.main.popup.UiPopupAbstract;
+import com.bsptechs.main.popup.UiPopupDatabase;
+import com.bsptechs.main.popup.UiPopupTable;
 import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.dao.DatabaseDAOImpl;
 import com.bsptechs.main.dao.DatabaseDAOInter;
@@ -26,13 +26,9 @@ public class UiServiceMainFrame {
 
     private DatabaseDAOInter database = null;
     private JFrame frame = null;
-    UiServicePopupAbstract popupServiceTable = null;
-    UiServicePopupAbstract popupServiceDatabase = null;
 
     public UiServiceMainFrame(JFrame frame) {
         this.frame = frame;
-        this.popupServiceTable = new UiServicePopupTable(frame);
-        this.popupServiceDatabase = new UiServicePopupDatabase(frame);
         this.database = new DatabaseDAOImpl();
     }
 
@@ -41,13 +37,16 @@ public class UiServiceMainFrame {
             JList listUiDatabases = (JList) evt.getSource();
             UiElement element = (UiElement) listUiDatabases.getSelectedValue();
             List<String> list = database.getAllTables(element.getText());
-            UiUtil.fillList(list, frame, popupServiceTable.popup(), listUiDatabases);
+            UiPopupAbstract popupTable = new UiPopupTable();
+            UiUtil.fillList(list, frame, popupTable, listUiDatabases);
         }
     }
 
     public void fillDatabasesIntoJList(JList databaseJList) {
         List<String> databases = database.getAllDatabases();
-        UiUtil.fillList(databases, frame, popupServiceDatabase.popup(), databaseJList);
+        UiPopupAbstract popupDatabase = new UiPopupDatabase();
+
+        UiUtil.fillList(databases, frame, popupDatabase, databaseJList);
     }
 
 }

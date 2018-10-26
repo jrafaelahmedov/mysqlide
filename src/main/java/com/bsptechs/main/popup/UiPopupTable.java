@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bsptechs.main.service.popup;
+package com.bsptechs.main.popup;
 
-import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -13,21 +12,17 @@ import javax.swing.JPopupMenu;
  *
  * @author sarkhanrasullu
  */
-public class UiServicePopupTable extends UiServicePopupAbstract {
+public class UiPopupTable extends UiPopupAbstract {
 
-    public UiServicePopupTable(JFrame frame) {
-        super(frame);
-    }
 
     @Override
     public JPopupMenu popup() {
-        JPopupMenu popup = new JPopupMenu();
-        JMenuItem itemDelete = menuItem(popup,"Delete Table");
-        JMenuItem itemProperties = menuItem(popup, "Table Properties");
+        JMenuItem itemDelete = menuItem("Delete Table");
+        JMenuItem itemProperties = menuItem( "Table Properties");
 
         addActionListener(itemProperties, () -> {properties();});
         addActionListener(itemDelete, () -> {delete();});
-        return popup;
+        return this;
     }
 
     private void delete() {

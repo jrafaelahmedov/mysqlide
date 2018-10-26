@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bsptechs.main.service.popup;
+package com.bsptechs.main.popup;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -13,15 +13,13 @@ import javax.swing.JPopupMenu;
  *
  * @author sarkhanrasullu
  */
-public abstract class UiServicePopupAbstract {
+public abstract class UiPopupAbstract extends JPopupMenu{
 
-    protected JFrame frame;
-
-    protected UiServicePopupAbstract(JFrame frame) {
-        this.frame = frame;
+    protected UiPopupAbstract() {
+        popup();
     }
 
-    public abstract JPopupMenu popup();
+    protected abstract JPopupMenu popup();
 
     protected void addActionListener(JMenuItem item, AbstractActionListenerAdder adder) {
         item.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -29,9 +27,9 @@ public abstract class UiServicePopupAbstract {
         });
     }
 
-    protected JMenuItem menuItem(JPopupMenu menu, String text) {
+    protected JMenuItem menuItem(String text) {
         JMenuItem item = new JMenuItem(text);
-        menu.add(item);
+        this.add(item);
         return item;
     }
 }

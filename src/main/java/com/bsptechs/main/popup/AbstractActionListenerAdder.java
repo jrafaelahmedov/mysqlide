@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bsptechs.main.service.popup;
+package com.bsptechs.main.popup;
 
 import javax.swing.JMenuItem;
 
