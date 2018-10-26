@@ -9,8 +9,8 @@ import com.bsptechs.main.popup.UiPopupAbstract;
 import com.bsptechs.main.popup.UiPopupDatabase;
 import com.bsptechs.main.popup.UiPopupTable;
 import com.bsptechs.main.bean.UiElement;
-import com.bsptechs.main.dao.DatabaseDAOImpl;
-import com.bsptechs.main.dao.DatabaseDAOInter;
+import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
+import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import com.bsptechs.main.util.ui.UiUtil;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -22,31 +22,32 @@ import javax.swing.SwingUtilities;
  *
  * @author sarkhanrasullu
  */
-public class UiServiceMainFrame {
+public class UiServiceMainFrame  extends UiService{
 
     private DatabaseDAOInter database = null;
     private JFrame frame = null;
 
-    public UiServiceMainFrame(JFrame frame) {
+    public UiServiceMainFrame(String serviceName, JFrame frame) {
+        super(serviceName);
         this.frame = frame;
         this.database = new DatabaseDAOImpl();
     }
 
-    public void fillTablesIntoJList(MouseEvent evt) {
-        if (UiUtil.isDoubleClicked(evt) & SwingUtilities.isLeftMouseButton(evt)) {
-            JList listUiDatabases = (JList) evt.getSource();
-            UiElement element = (UiElement) listUiDatabases.getSelectedValue();
-            List<String> list = database.getAllTables(element.getText());
-            UiPopupAbstract popupTable = new UiPopupTable();
-            UiUtil.fillList(list, frame, popupTable, listUiDatabases);
-        }
-    }
-
-    public void fillDatabasesIntoJList(JList databaseJList) {
-        List<String> databases = database.getAllDatabases();
-        UiPopupAbstract popupDatabase = new UiPopupDatabase();
-
-        UiUtil.fillList(databases, frame, popupDatabase, databaseJList);
-    }
+//    public void fillTablesIntoJList(MouseEvent evt) {
+//        if (UiUtil.isLeftDoubleClicked(evt) & SwingUtilities.isLeftMouseButton(evt)) {
+//            JList listUiDatabases = (JList) evt.getSource();
+//            UiElement element = (UiElement) listUiDatabases.getSelectedValue();
+//            List<String> list = database.getAllTables(element.getText());
+//            UiPopupAbstract popupTable = new UiPopupTable(listUiDatabases);
+//            UiUtil.fillList(list, frame, popupTable, listUiDatabases);
+//        }
+//    }
+//
+//    public void fillDatabasesIntoJList(JList databaseJList) {
+//        List<String> databases = database.getAllDatabases();
+//        UiPopupAbstract popupDatabase = new UiPopupDatabase();
+//
+//        UiUtil.fillList(databases, frame, popupDatabase, databaseJList);
+//    }
 
 }

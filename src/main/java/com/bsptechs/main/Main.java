@@ -5,8 +5,11 @@
  */
 package com.bsptechs.main;
 
+import com.bsptechs.main.service.UiServiceJListConnection;
+import com.bsptechs.main.service.UiServiceJListDatabase;
 import com.bsptechs.main.service.UiServiceMainFrame;
-import com.bsptechs.main.util.ui.UiUtil;
+import com.bsptechs.main.service.UiServicePanelTable;
+import com.bsptechs.main.service.UiServiceTabbedPane;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -20,7 +23,11 @@ import javax.swing.JFrame;
  */
 public class Main extends javax.swing.JFrame {
 
-    UiServiceMainFrame mainUiService = new UiServiceMainFrame(this);
+    UiServiceTabbedPane tabPanelQueryService = null;
+    UiServiceTabbedPane tabPanelTableService = null;
+    
+    UiServiceJListDatabase listDatabaseUiService = null;
+    UiServiceJListConnection listConnectionUiService = null;
 
     /**
      * Creates new form MySQLIdea1
@@ -28,7 +35,14 @@ public class Main extends javax.swing.JFrame {
     public Main() throws ClassNotFoundException, SQLException {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        mainUiService.fillDatabasesIntoJList(listDatabases);
+        
+        tabPanelQueryService = new UiServiceTabbedPane("tabQuery",tabQuery);
+        tabPanelQueryService.addPanelToTab(new PanelQuery(), "Query");
+        
+        listDatabaseUiService = new UiServiceJListDatabase("listDatabase",this, listDatabases);
+        listConnectionUiService = new UiServiceJListConnection("listConnection",this, listConnections);
+        
+        tabPanelTableService = new UiServiceTabbedPane("tabTable", tabTables);
     }
 
     /**
@@ -67,6 +81,7 @@ public class Main extends javax.swing.JFrame {
         tabQuery = new javax.swing.JTabbedPane();
         tabDesignTable = new javax.swing.JTabbedPane();
         tabNewTable = new javax.swing.JTabbedPane();
+        tabTables = new javax.swing.JTabbedPane();
         menuBarTop = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -381,11 +396,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        listConnections.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "localhostMySQL", "RafaelMySQL" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(listConnections);
 
         javax.swing.GroupLayout panelLeftLayout = new javax.swing.GroupLayout(panelLeft);
@@ -424,6 +434,7 @@ public class Main extends javax.swing.JFrame {
 
         tabNewTable.setMaximumSize(new java.awt.Dimension(0, 0));
         tabbedPaneCenter.addTab("New Table", tabNewTable);
+        tabbedPaneCenter.addTab("Tables", tabTables);
 
         splitPaneCenter.setRightComponent(tabbedPaneCenter);
         tabbedPaneCenter.getAccessibleContext().setAccessibleName("tabbedPaneCenter");
@@ -614,35 +625,19 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1MenuDragMouseEntered
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        mainUiService.fillDatabasesIntoJList(listDatabases);
+        listDatabaseUiService.fillList();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void listDatabasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listDatabasesMouseClicked
-        mainUiService.fillTablesIntoJList(evt);
+
     }//GEN-LAST:event_listDatabasesMouseClicked
 
     private void listDatabasesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listDatabasesMouseReleased
-        UiUtil.showMenuOnList(listDatabases, evt);
+
     }//GEN-LAST:event_listDatabasesMouseReleased
 
     private void listDatabasesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listDatabasesMousePressed
-        //      SwingUtilities.isRightMouseButton(evt)&&
-        //        if (evt.isPopupTrigger()) {
-        //           jPopupMenu1.add("Open Database");
-        //           jPopupMenu1.add("New Database");
-        //           jPopupMenu1.add("Edit Database");
-        //           jPopupMenu1.add("Delete Database");
-        //           jPopupMenu1.add("New Query");
-        //           jPopupMenu1.add("Console");
-        //           jPopupMenu1.add("Execute SQL File");
-        //           jPopupMenu1.add("Dump SQL File");
-        //           jPopupMenu1.add("Print Database");
-        //           jPopupMenu1.add("Reverse Database to Model");
-        //           jPopupMenu1.add("Find in Database");
-        //           jPopupMenu1.add("Refresh");
-        //
-        //           jPopupMenu1.show(this,evt.getX(),evt.getY());
-        //        }
+
     }//GEN-LAST:event_listDatabasesMousePressed
 
     private void btnTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableActionPerformed
@@ -658,7 +653,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTableMouseExited
 
     private void btnNewQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewQueryActionPerformed
-        // TODO add your handling code here:
+        tabPanelQueryService.addPanelToTab(new PanelQuery(), "Query");
     }//GEN-LAST:event_btnNewQueryActionPerformed
 
     private void btnNewQueryMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewQueryMouseEntered
@@ -874,6 +869,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tabDesignTable;
     private javax.swing.JTabbedPane tabNewTable;
     private javax.swing.JTabbedPane tabQuery;
+    private javax.swing.JTabbedPane tabTables;
     private javax.swing.JTabbedPane tabbedPaneCenter;
     // End of variables declaration//GEN-END:variables
 }

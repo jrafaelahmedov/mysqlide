@@ -3,17 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bsptechs.main.dao;
+package com.bsptechs.main.bean;
 
-import java.util.List;
+import javax.swing.JMenuItem;
 
 /**
  *
  * @author sarkhanrasullu
  */
-public interface DatabaseDAOInter {
+public interface EmptyFI {
 
-    List<String> getAllDatabases();
-
-    List<String> getAllTables(String databaseName);
+    public abstract void action();
 }

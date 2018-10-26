@@ -12,19 +12,17 @@ import javax.swing.JPopupMenu;
  *
  * @author sarkhanrasullu
  */
-public class UiPopupDatabase extends UiPopupAbstract {
+public class UiPopupConnection extends UiPopupAbstract {
 
 
     @Override
     public JPopupMenu popup() {
         
-        JMenuItem itemDelete = menuItem("Delete Database");
-        JMenuItem itemProperties = menuItem("Database Properties");
-        JMenuItem itemNewQuery = menuItem("New Query");
+        JMenuItem itemDelete = menuItem("Delete Connection");
+        JMenuItem itemProperties = menuItem("Connection Properties");
 
         addActionListener(itemProperties, () -> {properties();});
         addActionListener(itemDelete, () -> {delete();});
-        addActionListener(itemNewQuery, () -> {newQuery();});
 
         return this;
     }
@@ -38,11 +36,6 @@ public class UiPopupDatabase extends UiPopupAbstract {
     public void properties() {
         System.out.println("properites database");
         //Tebriz burani dolduracaq
-    }
-
-    public void newQuery() {
-        System.out.println("new query");
-        //Rafael burani dolduracaq
     }
 
 }

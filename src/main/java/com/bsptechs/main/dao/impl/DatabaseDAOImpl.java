@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bsptechs.main.dao;
+package com.bsptechs.main.dao.impl;
 
+import com.bsptechs.main.dao.inter.AbstractDatabase;
+import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,7 +45,6 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
 
     @Override
     public List<String> getAllTables(String databaseName) {
-        System.out.println("databasename="+databaseName);
         List<String> list = new ArrayList<>();
         try (Connection conn = connect();) {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM information_schema.tables where table_schema = ?");

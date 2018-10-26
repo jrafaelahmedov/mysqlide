@@ -5,6 +5,7 @@
  */
 package com.bsptechs.main.popup;
 
+import com.bsptechs.main.bean.EmptyFI;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -21,7 +22,7 @@ public abstract class UiPopupAbstract extends JPopupMenu{
 
     protected abstract JPopupMenu popup();
 
-    protected void addActionListener(JMenuItem item, AbstractActionListenerAdder adder) {
+    protected void addActionListener(JMenuItem item, EmptyFI adder) {
         item.addActionListener((java.awt.event.ActionEvent evt) -> {
             adder.action();
         });
