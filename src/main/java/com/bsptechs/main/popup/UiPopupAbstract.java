@@ -15,14 +15,9 @@ import javax.swing.JPopupMenu;
  * @author sarkhanrasullu
  */
 public abstract class UiPopupAbstract extends JPopupMenu{
-
-    protected UiPopupAbstract() {
-        popup();
-    }
-
-    protected abstract JPopupMenu popup();
-
-    protected void addActionListener(JMenuItem item, EmptyFI adder) {
+ 
+    protected void addMenuItem(String text, EmptyFI adder) {
+        JMenuItem item = menuItem(text);
         item.addActionListener((java.awt.event.ActionEvent evt) -> {
             adder.action();
         });

@@ -5,7 +5,7 @@
  */
 package com.bsptechs.main;
 
-import com.bsptechs.main.service.UiServicePanelQuery;
+import com.bsptechs.main.util.ui.MainFrameUtility;
 
 /**
  *
@@ -16,8 +16,8 @@ public class PanelQuery extends javax.swing.JPanel {
     /**
      * Creates new form PanelQuery
      */
-    private UiServicePanelQuery service = new UiServicePanelQuery("panelQuery",this);
-    
+    private MainFrameUtility service = new MainFrameUtility();
+
     public PanelQuery() {
         initComponents();
     }
@@ -71,7 +71,7 @@ public class PanelQuery extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
-        service.runQuery(txtQuery);
+        service.runQuery();
     }//GEN-LAST:event_btnRunActionPerformed
 
 

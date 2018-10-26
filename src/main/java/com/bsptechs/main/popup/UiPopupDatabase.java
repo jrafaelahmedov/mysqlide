@@ -5,8 +5,9 @@
  */
 package com.bsptechs.main.popup;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
+import com.bsptechs.main.PanelQuery;
+import com.bsptechs.main.util.ui.MainFrameUtility;
+import javax.swing.JTabbedPane;
 
 /**
  *
@@ -14,22 +15,21 @@ import javax.swing.JPopupMenu;
  */
 public class UiPopupDatabase extends UiPopupAbstract {
 
+    JTabbedPane pane;
 
-    @Override
-    public JPopupMenu popup() {
-        
-        JMenuItem itemDelete = menuItem("Delete Database");
-        JMenuItem itemProperties = menuItem("Database Properties");
-        JMenuItem itemNewQuery = menuItem("New Query");
-
-        addActionListener(itemProperties, () -> {properties();});
-        addActionListener(itemDelete, () -> {delete();});
-        addActionListener(itemNewQuery, () -> {newQuery();});
-
-        return this;
+    public UiPopupDatabase(JTabbedPane pane) {
+        this.pane = pane;
+        addMenuItem("Database Properties", () -> {
+            properties();
+        });
+        addMenuItem("Delete Database", () -> {
+            delete();
+        });
+        addMenuItem("New Query", () -> {
+            newQuery();
+        });
     }
-    
-    
+
     public void delete() {
         System.out.println("delete database");
         //Tebriz burani dolduracaq
@@ -42,7 +42,7 @@ public class UiPopupDatabase extends UiPopupAbstract {
 
     public void newQuery() {
         System.out.println("new query");
-        //Rafael burani dolduracaq
+        MainFrameUtility.addPanelToTab(pane, new PanelQuery(), "Query");
     }
 
 }

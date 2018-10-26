@@ -11,13 +11,11 @@ package com.bsptechs.main;
  */
 public class PanelTable extends javax.swing.JPanel {
 
-    private String tableName = null;
     /**
      * Creates new form PanelTable
      */
-    public PanelTable(String tableName) {
+    public PanelTable() {
         initComponents();
-        this.tableName = tableName;
     }
 
     /**

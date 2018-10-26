@@ -5,29 +5,21 @@
  */
 package com.bsptechs.main.popup;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-
 /**
  *
  * @author sarkhanrasullu
  */
 public class UiPopupConnection extends UiPopupAbstract {
 
-
-    @Override
-    public JPopupMenu popup() {
-        
-        JMenuItem itemDelete = menuItem("Delete Connection");
-        JMenuItem itemProperties = menuItem("Connection Properties");
-
-        addActionListener(itemProperties, () -> {properties();});
-        addActionListener(itemDelete, () -> {delete();});
-
-        return this;
+    public UiPopupConnection() {
+        addMenuItem("Delete Connection", () -> {
+            delete();
+        });
+        addMenuItem("Connection Properties", () -> {
+            properties();
+        });
     }
-    
-    
+
     public void delete() {
         System.out.println("delete database");
         //Tebriz burani dolduracaq

@@ -5,11 +5,7 @@
  */
 package com.bsptechs.main;
 
-import com.bsptechs.main.service.UiServiceJListConnection;
-import com.bsptechs.main.service.UiServiceJListDatabase;
-import com.bsptechs.main.service.UiServiceMainFrame;
-import com.bsptechs.main.service.UiServicePanelTable;
-import com.bsptechs.main.service.UiServiceTabbedPane;
+import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -23,26 +19,17 @@ import javax.swing.JFrame;
  */
 public class Main extends javax.swing.JFrame {
 
-    UiServiceTabbedPane tabPanelQueryService = null;
-    UiServiceTabbedPane tabPanelTableService = null;
-    
-    UiServiceJListDatabase listDatabaseUiService = null;
-    UiServiceJListConnection listConnectionUiService = null;
-
     /**
      * Creates new form MySQLIdea1
      */
     public Main() throws ClassNotFoundException, SQLException {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
-        tabPanelQueryService = new UiServiceTabbedPane("tabQuery",tabQuery);
-        tabPanelQueryService.addPanelToTab(new PanelQuery(), "Query");
-        
-        listDatabaseUiService = new UiServiceJListDatabase("listDatabase",this, listDatabases);
-        listConnectionUiService = new UiServiceJListConnection("listConnection",this, listConnections);
-        
-        tabPanelTableService = new UiServiceTabbedPane("tabTable", tabTables);
+        MainFrameUtility.prepareDatabaseList(this, tabTables, listDatabases);
+        MainFrameUtility.fillDatabasesIntoJList(this, tabQuery, listDatabases);
+
+        MainFrameUtility.prepareConnectionsList(this, listConnections);
+        MainFrameUtility.fillConnectionsIntoJList(this, listConnections);
     }
 
     /**
@@ -625,7 +612,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1MenuDragMouseEntered
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        listDatabaseUiService.fillList();
+        MainFrameUtility.fillDatabasesIntoJList(this, tabQuery, listDatabases);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void listDatabasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listDatabasesMouseClicked
@@ -653,7 +640,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTableMouseExited
 
     private void btnNewQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewQueryActionPerformed
-        tabPanelQueryService.addPanelToTab(new PanelQuery(), "Query");
+        MainFrameUtility.addPanelToTab(tabQuery, new PanelQuery(), "Query");
     }//GEN-LAST:event_btnNewQueryActionPerformed
 
     private void btnNewQueryMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewQueryMouseEntered

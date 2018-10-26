@@ -16,4 +16,6 @@ public interface DatabaseDAOInter {
     List<String> getAllDatabases();
 
     List<String> getAllTables(String databaseName);
+
+    List<String> getAllConnection();
 }

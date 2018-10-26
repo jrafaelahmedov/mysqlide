@@ -5,14 +5,10 @@
  */
 package com.bsptechs.main.popup;
 
-import com.bsptechs.main.PanelTable;
 import com.bsptechs.main.bean.UiElement;
-import com.bsptechs.main.service.UiService;
-import com.bsptechs.main.service.UiServiceTabbedPane;
-import com.bsptechs.main.util.ui.UiUtil;
+import com.bsptechs.main.util.ui.MainFrameUtility;
 import javax.swing.JList;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
+import javax.swing.JTabbedPane;
 
 /**
  *
@@ -21,32 +17,25 @@ import javax.swing.JPopupMenu;
 public class UiPopupTable extends UiPopupAbstract {
 
     private JList list;
-    
-    public UiPopupTable(JList list){
-        this.list = list;
-    }
-    
-    
-    @Override
-    public JPopupMenu popup() {
-        JMenuItem itemDelete = menuItem("Delete Table");
-        JMenuItem itemProperties = menuItem("Table Properties");
-        JMenuItem itemNewQuery = menuItem("New Query");
-        JMenuItem itemViewTable = menuItem("View Table");
+    private JTabbedPane pane;
 
-        addActionListener(itemProperties, () -> {
-            properties();
-        });
-        addActionListener(itemDelete, () -> {
+    public UiPopupTable(JList list, JTabbedPane pane) {
+        this.pane = pane;
+        this.list = list;
+        addMenuItem("Delete Table", () -> {
             delete();
         });
-        addActionListener(itemNewQuery, () -> {
+        addMenuItem("Table Properties", () -> {
+            properties();
+        });
+
+        addMenuItem("New Query", () -> {
             newQuery();
         });
-        addActionListener(itemViewTable, () -> {
+
+        addMenuItem("View Table", () -> {
             viewTable();
         });
-        return this;
     }
 
     public void delete() {
@@ -65,11 +54,13 @@ public class UiPopupTable extends UiPopupAbstract {
     }
 
     public void viewTable() {
-        UiServiceTabbedPane tabPanelTableService = (UiServiceTabbedPane) UiService.getUiService("tabTable");
-        
-        UiElement element = UiUtil.getUiElement(list);
-        String tableName = element.getText();
-        tabPanelTableService.addPanelToTab(new PanelTable(tableName), tableName);
+        System.out.println("view table");
+        UiElement element = (UiElement) list.getSelectedValue();
+        System.out.println("element.getData()=" + element.getData());
+        if ("table".equals(element.getData())) {
+            MainFrameUtility.viewTable(pane, element.getText());
+        }
+        //Tebriz burani dolduracaq
     }
 
 }

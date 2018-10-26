@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -61,4 +62,11 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
             return list;
         }
     }
+
+    @Override
+    public List<String> getAllConnection() {
+        List<String> list = Arrays.asList("localhost", "rafael mysql");
+        return list;
+    }
+
 }
