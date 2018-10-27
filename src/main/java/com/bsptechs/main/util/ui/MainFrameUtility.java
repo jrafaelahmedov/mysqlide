@@ -5,11 +5,10 @@
  */
 package com.bsptechs.main.util.ui;
 
-import com.bsptechs.main.Main;
-import com.bsptechs.main.PanelQuery;
 import com.bsptechs.main.PanelTable;
 import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
+import com.bsptechs.main.dao.inter.AbstractDatabase;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import com.bsptechs.main.popup.UiPopupAbstract;
 import com.bsptechs.main.popup.UiPopupConnection;
@@ -18,6 +17,10 @@ import com.bsptechs.main.popup.UiPopupTable;
 import java.awt.MouseInfo;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -31,7 +34,9 @@ import javax.swing.SwingUtilities;
  *
  * @author sarkhanrasullu
  */
-public class MainFrameUtility {
+public class MainFrameUtility extends AbstractDatabase {
+
+    public static Connection conn;
 
     private static DatabaseDAOInter database = new DatabaseDAOImpl();
 
@@ -45,7 +50,50 @@ public class MainFrameUtility {
         tab.setSelectedIndex(tab.getTabCount() - 1);
     }
 
-    public static void runQuery() {//eger nese parameter qebul etmesi lazimdirsa deyishiklik et
+    public static void runQuery(String query) throws ClassNotFoundException, SQLException {//eger nese parameter qebul etmesi lazimdirsa deyishiklik et
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+
+            // or alternatively, if you don't know ahead of time that
+            // the query will be a SELECT...
+            if (stmt.execute(query)) {
+                rs = stmt.getResultSet();
+            }
+
+            // Now do something with the ResultSet ....
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: rafael " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        } finally {
+            // it is a good idea to release
+            // resources in a finally{} block
+            // in reverse-order of their creation
+            // if they are no-longer needed
+
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException sqlEx) {
+                } // ignore
+
+                rs = null;
+            }
+
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) {
+                } // ignore
+
+                stmt = null;
+            }
+        }
 
     }
 
@@ -54,6 +102,7 @@ public class MainFrameUtility {
             JList listUiDatabases = (JList) evt.getSource();
             UiElement element = (UiElement) listUiDatabases.getSelectedValue();
             System.out.println("element.getData()=" + element.getData());
+            System.out.println(element.getData().toString());
             if ("table".equals(element.getData())) {
                 viewTable(tab, element.getText());
                 return;
@@ -149,5 +198,9 @@ public class MainFrameUtility {
 
     public static boolean isLeftDoubleClicked(MouseEvent evt) {
         return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
+    }
+
+    public MainFrameUtility() throws ClassNotFoundException, SQLException {
+        this.conn = connect();
     }
 }

@@ -7,6 +7,9 @@ package com.bsptechs.main.popup;
 
 import com.bsptechs.main.PanelQuery;
 import com.bsptechs.main.util.ui.MainFrameUtility;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTabbedPane;
 
 /**
@@ -26,7 +29,13 @@ public class UiPopupDatabase extends UiPopupAbstract {
             delete();
         });
         addMenuItem("New Query", () -> {
-            newQuery();
+            try {
+                newQuery();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UiPopupDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(UiPopupDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
@@ -40,7 +49,7 @@ public class UiPopupDatabase extends UiPopupAbstract {
         //Tebriz burani dolduracaq
     }
 
-    public void newQuery() {
+    public void newQuery() throws ClassNotFoundException, SQLException {
         System.out.println("new query");
         MainFrameUtility.addPanelToTab(pane, new PanelQuery(), "Query");
     }
