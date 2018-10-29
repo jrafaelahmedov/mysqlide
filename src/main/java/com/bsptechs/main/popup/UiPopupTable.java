@@ -36,6 +36,9 @@ public class UiPopupTable extends UiPopupAbstract {
         addMenuItem("View Table", () -> {
             viewTable();
         });
+        addMenuItem("Rename", () -> {
+            renameTable();
+        });
     }
 
     public void delete() {
@@ -63,4 +66,7 @@ public class UiPopupTable extends UiPopupAbstract {
         //Tebriz burani dolduracaq
     }
 
+    public void renameTable() {
+        MainFrameUtility.renameTblClicked(list);
+    }
 }

@@ -19,7 +19,7 @@ public abstract class AbstractDatabase {
         Class.forName("com.mysql.jdbc.Driver");
         String url = "jdbc:mysql://localhost:3306/";
         String username = "root";
-        String password = "";
+        String password = "root";
         Connection connection = DriverManager.getConnection(url, username, password);
         return connection;
     }

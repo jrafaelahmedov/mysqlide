@@ -5,8 +5,6 @@
  */
 package com.bsptechs.main.util.ui;
 
-import com.bsptechs.main.Main;
-import com.bsptechs.main.PanelQuery;
 import com.bsptechs.main.PanelTable;
 import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
@@ -22,6 +20,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
@@ -76,7 +75,6 @@ public class MainFrameUtility {
 
     public static void fillConnectionsIntoJList(JFrame frame, JList uiList) {
         List<String> list = database.getAllConnection();
-
         UiPopupConnection popup = new UiPopupConnection();
         MainFrameUtility.fillList(list, frame, popup, null, uiList);
     }
@@ -149,5 +147,13 @@ public class MainFrameUtility {
 
     public static boolean isLeftDoubleClicked(MouseEvent evt) {
         return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
+    }
+
+    public static boolean renameTblClicked(JList list) {
+        List<String> databases = database.getAllConnection();
+        List<String> tables = database.getAllTables(databases.get(list.getSelectedIndex()));
+        String newTblName = JOptionPane.showInputDialog(null, "Enter new name:", "Rename Table", JOptionPane.QUESTION_MESSAGE);
+        return database.renameTable(databases.get(list.getSelectedIndex()), tables.get(list.getSelectedIndex()), newTblName);
+
     }
 }
