@@ -34,5 +34,9 @@ public class TableName {
         this.databaseName = databaseName;
     }
     
+    @Override
+    public String toString(){
+        return this.tableName;
+    }
     
 }

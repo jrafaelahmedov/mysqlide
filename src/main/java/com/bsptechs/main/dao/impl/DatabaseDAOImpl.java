@@ -73,8 +73,10 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     @Override
     public boolean renameTable(String DBname, String oldTblName, String newTblName) {
         try (Connection conn = connect()) {
-            PreparedStatement stmt = conn.prepareStatement("RENAME TABLE " + DBname + "." + oldTblName + " TO " + DBname + "." + newTblName);//PrepapredStatement ile edende dirnaqlara gore ishlemirdi ona gore bele etdim
+            PreparedStatement stmt = conn.prepareStatement("RENAME TABLE `" + DBname + "`.`" + oldTblName + "` TO `" + DBname + "`.`" + newTblName+"`");//PrepapredStatement ile edende dirnaqlara gore ishlemirdi ona gore bele etdim
             stmt.executeUpdate();
+            
+            ///'alma/'=/'alma/' and 1=1  escape
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
