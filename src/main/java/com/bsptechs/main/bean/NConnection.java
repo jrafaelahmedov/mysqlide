@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 public class NConnection implements Serializable {
 
+    private String name;
     private String ipAdr;
     private String port;
     private String userName;
@@ -21,7 +22,8 @@ public class NConnection implements Serializable {
     public NConnection() {
     }
 
-    public NConnection(String ipAdr, String port, String userName, String password) {
+    public NConnection(String name,String ipAdr, String port, String userName, String password) {
+        this.name = name;
         this.ipAdr = ipAdr;
         this.port = port;
         this.userName = userName;
@@ -58,6 +60,14 @@ public class NConnection implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

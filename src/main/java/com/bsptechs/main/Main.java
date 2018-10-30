@@ -5,6 +5,7 @@
  */
 package com.bsptechs.main;
 
+import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -19,16 +20,16 @@ import javax.swing.JFrame;
  */
 public class Main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MySQLIdea1
-     */
-    public Main() throws ClassNotFoundException, SQLException {
+    public Main() throws Exception {
         initComponents();
+        Config.initialize();
+
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         MainFrameUtility.prepareDatabaseList(this, tabTables, listDatabases);
-        MainFrameUtility.fillDatabasesIntoJList(this, tabQuery, listDatabases);
 
         MainFrameUtility.prepareConnectionsList(this, listConnections);
+
+//        MainFrameUtility.fillDatabasesIntoJList(this, tabQuery, listDatabases);
         MainFrameUtility.fillConnectionsIntoJList(this, listConnections);
     }
 
@@ -787,7 +788,9 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEventMouseEntered
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-     new FrameMysqlConnection().setVisible(true);
+        new FrameMysqlConnection().setVisible(true);
+        MainFrameUtility.fillConnectionsIntoJList(this, listConnections);
+
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
@@ -840,6 +843,8 @@ public class Main extends javax.swing.JFrame {
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

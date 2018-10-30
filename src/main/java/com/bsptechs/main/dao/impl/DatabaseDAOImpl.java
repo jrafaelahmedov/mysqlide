@@ -26,8 +26,8 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     @Override
     public List<String> getAllDatabases() {
         List<String> list = new ArrayList<>();
-
-        try (Connection conn = connect(Config.instance().getSelectedConnection())) {
+        
+        try (Connection conn = connect(Config.getSelectedConnection())) {
             Statement stmt = conn.createStatement();
             ResultSet resultset = stmt.executeQuery("SHOW DATABASES;");
 
@@ -49,7 +49,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     @Override
     public List<String> getAllTables(String databaseName) {
         List<String> list = new ArrayList<>();
-        try (Connection conn = connect(Config.instance().getSelectedConnection());) {
+        try (Connection conn = connect(Config.getSelectedConnection());) {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM information_schema.tables where table_schema = ?");
             stmt.setString(1, databaseName);
             ResultSet resultset = stmt.executeQuery();
@@ -65,10 +65,5 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
         }
     }
 
-    @Override
-    public List<String> getAllConnection() {
-        List<String> list = Arrays.asList("localhost", "rafael mysql");
-        return list;
-    }
 
 }

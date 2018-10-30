@@ -5,6 +5,7 @@
  */
 package com.bsptechs.main.bean;
 
+import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +16,17 @@ import java.util.List;
  */
 public final class Config implements Serializable {
 
+    private static final String fileName = "mySql.txt";
     private List<NConnection> connections = null;
-    private NConnection selectedConnection = null;
-    
+    private static NConnection selectedConnection = null;
+
     private static Config config = null;
 
-    public static Config instance() {
-        if (config == null) {
-            config = new Config();
-        }
+    public static void initialize(){
+          config = MainFrameUtility.readConfig();
+    }
 
+    public static Config instance() {
         return config;
     }
 
@@ -42,16 +44,17 @@ public final class Config implements Serializable {
         }
         connections.add(connection);
     }
-    
-    
-    public void setConnection(NConnection connection){
-        this.selectedConnection = connection;
+
+    public static void setConnection(NConnection connection) {
+        selectedConnection = connection;
     }
 
-    public NConnection getSelectedConnection() {
+    public static NConnection getSelectedConnection() {
         return selectedConnection;
     }
-    
-    
+
+    public static String getFileName() {
+        return fileName;
+    }
 
 }

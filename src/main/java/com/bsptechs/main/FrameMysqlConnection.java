@@ -2,13 +2,7 @@ package com.bsptechs.main;
 
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.NConnection;
-import com.bsptechs.main.util.ui.WriteAndReadObjectFromFile;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.bsptechs.main.util.ui.MainFrameUtility;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,8 +14,6 @@ import java.util.logging.Logger;
  * @author Penthos
  */
 public class FrameMysqlConnection extends javax.swing.JFrame {
-
-    public static final String FILENAME = "mySql.txt";
 
     /**
      * Creates new form MySqlConnection
@@ -45,7 +37,7 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnOk = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -71,10 +63,10 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
 
         jButton1.setText("General");
 
-        jButton6.setText("OK");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnOk.setText("OK");
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnOkActionPerformed(evt);
             }
         });
 
@@ -122,7 +114,7 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
                 .addComponent(btnCancel))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -181,7 +173,7 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(171, 171, 171)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
+                    .addComponent(btnOk)
                     .addComponent(btnCancel))
                 .addContainerGap())
         );
@@ -202,30 +194,21 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         NConnection n = getAllInformFromUser();
+        Config.instance().appendConnection(n);
+        MainFrameUtility.saveConfig();
+        this.dispose();
+    }//GEN-LAST:event_btnOkActionPerformed
 
-        try {
-            WriteAndReadObjectFromFile.writeObjectToFile(n, FILENAME);
-        } catch (IOException ex) {
-            Logger.getLogger(FrameMysqlConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_jButton6ActionPerformed
     public NConnection getAllInformFromUser() {
+        String name = txtConnectionName.getText();
         String ipAdr = txtHostNameIpAdr.getText();
         String port = txtPort.getText();
         String username = txtUserName.getText();
-        String password = txtPassword.getText();
-        NConnection connection = new NConnection(ipAdr, port, username, password);
+        String password = txtPassword.getSelectedText();
 
-        Config.instance().appendConnection(connection);
-        try {
-            WriteAndReadObjectFromFile.writeObjectToFile(Config.instance(), FILENAME);
-        } catch (IOException ex) {
-            Logger.getLogger(FrameMysqlConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        NConnection connection = new NConnection(name, ipAdr, port, username, password);
         return connection;
     }
 
@@ -267,12 +250,12 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnOk;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

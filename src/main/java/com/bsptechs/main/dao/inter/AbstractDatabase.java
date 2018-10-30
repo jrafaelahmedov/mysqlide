@@ -5,11 +5,7 @@
  */
 package com.bsptechs.main.dao.inter;
 
-import static com.bsptechs.main.FrameMysqlConnection.FILENAME;
-import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.NConnection;
-import com.bsptechs.main.util.ui.WriteAndReadObjectFromFile;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,16 +16,6 @@ import java.sql.SQLException;
  */
 public abstract class AbstractDatabase {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException, Exception {
-        Config nc=  (Config) WriteAndReadObjectFromFile.readObjectFromFile(FILENAME);
-        
-        System.out.println(nc);
-        System.out.println("u="+nc.getConnections());
-//        System.out.println("2nc="+nc);
-//            System.out.println(list);
-
-    }
-
     public Connection connect(NConnection connection) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
         String url = "jdbc:mysql://" + connection.getIpAdr() + ":" + connection.getPort() + "/";
@@ -39,9 +25,4 @@ public abstract class AbstractDatabase {
         return c;
     }
 
-//    public Connection connected() throws IOException, ClassNotFoundException, SQLException {
-//        User user = (User) WriteAndReadObjectFromFile.readObjectFromFile(FILENAME);
-//        return connect(user.getIpAdr(), user.getPort(), user.getUserName(), user.getPassword());
-//
-//    }
 }

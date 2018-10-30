@@ -5,13 +5,24 @@
  */
 package com.bsptechs.main.popup;
 
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.UiElement;
+import javax.swing.JFrame;
+import javax.swing.JList;
+
 /**
  *
  * @author sarkhanrasullu
  */
 public class UiPopupConnection extends UiPopupAbstract {
 
-    public UiPopupConnection() {
+    private JFrame frame;
+    private JList list;
+
+    public UiPopupConnection(JFrame frame, JList list) {
+        this.frame = frame;
+        this.list = list;
+
         addMenuItem("Delete Connection", () -> {
             delete();
         });
@@ -21,12 +32,18 @@ public class UiPopupConnection extends UiPopupAbstract {
     }
 
     public void delete() {
-        System.out.println("delete database");
+        System.out.println("delete connection");
         //Tebriz burani dolduracaq
     }
 
     public void properties() {
-        System.out.println("properites database");
+        System.out.println("properites connection");
+        //Tebriz burani dolduracaq
+    }
+
+    public void connection() {
+        UiElement ui = (UiElement) list.getModel().getElementAt(list.getSelectedIndex());
+        System.out.println("connection connection");
         //Tebriz burani dolduracaq
     }
 
