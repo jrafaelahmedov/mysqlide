@@ -7,11 +7,20 @@ package com.bsptechs.main;
 
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -30,8 +39,21 @@ public class Main extends javax.swing.JFrame {
 
         MainFrameUtility.prepareConnectionsList(this, listConnections);
         MainFrameUtility.fillConnectionsIntoJList(this, listConnections);
+        checkConnectionKind();
+        
     }
 
+    
+    public void checkConnectionKind(){
+        List<String> myArray = new ArrayList<>();
+        for (int i = 0; i < listConnections.getModel().getSize(); i++) {
+          myArray.add(String.valueOf(listConnections.getModel().getElementAt(i)));
+            System.out.println("myarray"+myArray.toString());
+
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,9 +75,9 @@ public class Main extends javax.swing.JFrame {
         btnQuery = new javax.swing.JButton();
         btnUsers = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        btnConnections = new javax.swing.JButton();
-        btnNewQuery = new javax.swing.JButton();
+        btnConnection = new javax.swing.JButton();
         btnTable = new javax.swing.JButton();
+        btnNewQuery = new javax.swing.JButton();
         panelCenter = new javax.swing.JPanel();
         splitPaneCenter = new javax.swing.JSplitPane();
         panelLeft = new javax.swing.JPanel();
@@ -94,14 +116,16 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnlMainTop.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlMainTop.setPreferredSize(new java.awt.Dimension(1050, 61));
 
+        btnEvent.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\event.png")); // NOI18N
         btnEvent.setText("Event");
         btnEvent.setBorder(null);
         btnEvent.setContentAreaFilled(false);
         btnEvent.setDefaultCapable(false);
+        btnEvent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnEvent.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnEvent.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnEvent.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEventMouseEntered(evt);
@@ -111,11 +135,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnFunctions.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\function-mathematical-symbol.png")); // NOI18N
         btnFunctions.setText("Function");
         btnFunctions.setBorder(null);
         btnFunctions.setContentAreaFilled(false);
         btnFunctions.setDefaultCapable(false);
+        btnFunctions.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnFunctions.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnFunctions.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnFunctions.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnFunctionsMouseEntered(evt);
@@ -125,11 +152,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnView.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\view.png")); // NOI18N
         btnView.setText("View");
         btnView.setBorder(null);
         btnView.setContentAreaFilled(false);
         btnView.setDefaultCapable(false);
+        btnView.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnView.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnView.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnView.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnViewMouseEntered(evt);
@@ -144,11 +174,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnModel.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\model.png")); // NOI18N
         btnModel.setText("Model");
         btnModel.setBorder(null);
         btnModel.setContentAreaFilled(false);
         btnModel.setDefaultCapable(false);
+        btnModel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnModel.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnModel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnModel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnModelMouseEntered(evt);
@@ -163,11 +196,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnAutomation.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\automation.png")); // NOI18N
         btnAutomation.setText("Automation");
         btnAutomation.setBorder(null);
         btnAutomation.setContentAreaFilled(false);
         btnAutomation.setDefaultCapable(false);
+        btnAutomation.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnAutomation.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnAutomation.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnAutomation.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAutomationMouseEntered(evt);
@@ -177,11 +213,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnBackup.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\backup.png")); // NOI18N
         btnBackup.setText("Backup");
         btnBackup.setBorder(null);
         btnBackup.setContentAreaFilled(false);
         btnBackup.setDefaultCapable(false);
+        btnBackup.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnBackup.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnBackup.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnBackup.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnBackupMouseEntered(evt);
@@ -191,11 +230,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnReport.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\report.png")); // NOI18N
         btnReport.setText("Report");
         btnReport.setBorder(null);
         btnReport.setContentAreaFilled(false);
         btnReport.setDefaultCapable(false);
+        btnReport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnReport.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnReport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnReport.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnReportMouseEntered(evt);
@@ -210,11 +252,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnQuery.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\query.png")); // NOI18N
         btnQuery.setText("Query");
         btnQuery.setBorder(null);
         btnQuery.setContentAreaFilled(false);
         btnQuery.setDefaultCapable(false);
+        btnQuery.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnQuery.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnQuery.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnQuery.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnQueryMouseEntered(evt);
@@ -224,11 +269,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnUsers.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\user.png")); // NOI18N
         btnUsers.setText("User");
         btnUsers.setBorder(null);
         btnUsers.setContentAreaFilled(false);
         btnUsers.setDefaultCapable(false);
+        btnUsers.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnUsers.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnUsers.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnUsers.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnUsersMouseEntered(evt);
@@ -245,54 +293,37 @@ public class Main extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        btnConnections.setText("Connection");
-        btnConnections.setBorder(null);
-        btnConnections.setContentAreaFilled(false);
-        btnConnections.setDefaultCapable(false);
-        btnConnections.setPreferredSize(new java.awt.Dimension(80, 61));
-        btnConnections.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                btnConnectionsMouseDragged(evt);
-            }
-        });
-        btnConnections.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnConnectionsMouseExited(evt);
-            }
+        btnConnection.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\connection.png")); // NOI18N
+        btnConnection.setText("Connection");
+        btnConnection.setBorder(null);
+        btnConnection.setContentAreaFilled(false);
+        btnConnection.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnConnection.setDefaultCapable(false);
+        btnConnection.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnConnection.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnConnection.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnConnection.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnConnectionsMouseEntered(evt);
+                btnConnectionMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnConnectionMouseExited(evt);
             }
         });
-        btnConnections.addActionListener(new java.awt.event.ActionListener() {
+        btnConnection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConnectionsActionPerformed(evt);
+                btnConnectionActionPerformed(evt);
             }
         });
 
-        btnNewQuery.setText("New Query");
-        btnNewQuery.setBorder(null);
-        btnNewQuery.setContentAreaFilled(false);
-        btnNewQuery.setDefaultCapable(false);
-        btnNewQuery.setPreferredSize(new java.awt.Dimension(80, 61));
-        btnNewQuery.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnNewQueryMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnNewQueryMouseEntered(evt);
-            }
-        });
-        btnNewQuery.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewQueryActionPerformed(evt);
-            }
-        });
-
+        btnTable.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\table.png")); // NOI18N
         btnTable.setText("Table");
         btnTable.setBorder(null);
         btnTable.setContentAreaFilled(false);
         btnTable.setDefaultCapable(false);
+        btnTable.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnTable.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnTable.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnTableMouseExited(evt);
@@ -307,14 +338,38 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnNewQuery.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\newquery.png")); // NOI18N
+        btnNewQuery.setText("New Query");
+        btnNewQuery.setBorder(null);
+        btnNewQuery.setContentAreaFilled(false);
+        btnNewQuery.setDefaultCapable(false);
+        btnNewQuery.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnNewQuery.setName(""); // NOI18N
+        btnNewQuery.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnNewQuery.setVerifyInputWhenFocusTarget(false);
+        btnNewQuery.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnNewQuery.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNewQueryMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnNewQueryMouseExited(evt);
+            }
+        });
+        btnNewQuery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewQueryActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlMainTopLayout = new javax.swing.GroupLayout(pnlMainTop);
         pnlMainTop.setLayout(pnlMainTopLayout);
         pnlMainTopLayout.setHorizontalGroup(
             pnlMainTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMainTopLayout.createSequentialGroup()
-                .addComponent(btnConnections, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btnNewQuery, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnConnection, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNewQuery, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
@@ -337,7 +392,7 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(btnAutomation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btnModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 243, Short.MAX_VALUE))
+                .addGap(0, 237, Short.MAX_VALUE))
         );
         pnlMainTopLayout.setVerticalGroup(
             pnlMainTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,10 +407,12 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(btnAutomation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnModel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(pnlMainTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(btnConnections, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnNewQuery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jSeparator1)
+            .addGroup(pnlMainTopLayout.createSequentialGroup()
+                .addGroup(pnlMainTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnConnection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNewQuery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         splitPaneCenter.setMaximumSize(new java.awt.Dimension(0, 0));
@@ -411,6 +468,7 @@ public class Main extends javax.swing.JFrame {
         splitPaneCenter.setLeftComponent(panelLeft);
 
         tabbedPaneCenter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tabbedPaneCenter.setEnabled(false);
         tabbedPaneCenter.setMaximumSize(new java.awt.Dimension(0, 0));
 
         tabQuery.setMaximumSize(new java.awt.Dimension(0, 0));
@@ -460,12 +518,12 @@ public class Main extends javax.swing.JFrame {
 
         jMenu1.setText("File");
         jMenu1.addMenuDragMouseListener(new javax.swing.event.MenuDragMouseListener() {
+            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
+            }
             public void menuDragMouseEntered(javax.swing.event.MenuDragMouseEvent evt) {
                 jMenu1MenuDragMouseEntered(evt);
             }
             public void menuDragMouseExited(javax.swing.event.MenuDragMouseEvent evt) {
-            }
-            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
             }
             public void menuDragMouseReleased(javax.swing.event.MenuDragMouseEvent evt) {
             }
@@ -639,39 +697,17 @@ public class Main extends javax.swing.JFrame {
         btnTable.setBorder(null);
     }//GEN-LAST:event_btnTableMouseExited
 
-    private void btnNewQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewQueryActionPerformed
-        try {
-            MainFrameUtility.addPanelToTab(tabQuery, new PanelQuery(), "Query");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnNewQueryActionPerformed
+    private void btnConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectionActionPerformed
 
-    private void btnNewQueryMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewQueryMouseEntered
-        btnNewQuery.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
-    }//GEN-LAST:event_btnNewQueryMouseEntered
+    }//GEN-LAST:event_btnConnectionActionPerformed
 
-    private void btnNewQueryMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewQueryMouseExited
-        btnNewQuery.setBorder(null);
-    }//GEN-LAST:event_btnNewQueryMouseExited
+    private void btnConnectionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConnectionMouseEntered
+        btnConnection.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_btnConnectionMouseEntered
 
-    private void btnConnectionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectionsActionPerformed
-
-    }//GEN-LAST:event_btnConnectionsActionPerformed
-
-    private void btnConnectionsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConnectionsMouseEntered
-        btnConnections.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
-    }//GEN-LAST:event_btnConnectionsMouseEntered
-
-    private void btnConnectionsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConnectionsMouseExited
-        btnConnections.setBorder(null);
-    }//GEN-LAST:event_btnConnectionsMouseExited
-
-    private void btnConnectionsMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConnectionsMouseDragged
-
-    }//GEN-LAST:event_btnConnectionsMouseDragged
+    private void btnConnectionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConnectionMouseExited
+        btnConnection.setBorder(null);
+    }//GEN-LAST:event_btnConnectionMouseExited
 
     private void btnUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsersActionPerformed
         // TODO add your handling code here:
@@ -761,6 +797,25 @@ public class Main extends javax.swing.JFrame {
         btnEvent.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }//GEN-LAST:event_btnEventMouseEntered
 
+    private void btnNewQueryMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewQueryMouseEntered
+        btnNewQuery.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_btnNewQueryMouseEntered
+
+    private void btnNewQueryMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewQueryMouseExited
+        btnNewQuery.setBorder(null);
+    }//GEN-LAST:event_btnNewQueryMouseExited
+
+    private void btnNewQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewQueryActionPerformed
+        try {
+            tabbedPaneCenter.setEnabled(true);
+            MainFrameUtility.addPanelToTab(tabQuery, new PanelQuery(), "Query");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnNewQueryActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -817,7 +872,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnAutomation;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnBackup;
-    private javax.swing.JButton btnConnections;
+    private javax.swing.JButton btnConnection;
     private javax.swing.JButton btnEvent;
     private javax.swing.JButton btnFunctions;
     private javax.swing.JButton btnModel;

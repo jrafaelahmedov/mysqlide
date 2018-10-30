@@ -19,8 +19,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -36,6 +38,8 @@ import javax.swing.SwingUtilities;
  */
 public class MainFrameUtility extends AbstractDatabase {
 
+    public static List<String> columname = new ArrayList<>();
+
     public static Connection conn;
 
     private static DatabaseDAOInter database = new DatabaseDAOImpl();
@@ -50,38 +54,54 @@ public class MainFrameUtility extends AbstractDatabase {
         tab.setSelectedIndex(tab.getTabCount() - 1);
     }
 
-    public static void runQuery(String query) throws ClassNotFoundException, SQLException {//eger nese parameter qebul etmesi lazimdirsa deyishiklik et
+    public static void fillTableToRunnedQuery() {
+
+    }
+
+    public static List<String> runQuery(String query) throws ClassNotFoundException, SQLException {//eger nese parameter qebul etmesi lazimdirsa deyishiklik et
         Statement stmt = null;
         ResultSet rs = null;
 
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
+            rs.beforeFirst();
 
-            // or alternatively, if you don't know ahead of time that
-            // the query will be a SELECT...
+            // System.out.println("result setin rowlarinin sayina baxiram" + rs.getRow());
+            ResultSetMetaData metdata = rs.getMetaData();
+//            System.out.println(metdata.toString());
             if (stmt.execute(query)) {
                 rs = stmt.getResultSet();
+                int count = metdata.getColumnCount();
+                for (int i = 1; i < count; i++) {
+                    System.out.println("column count " + count);
+                    while (rs.next()) {
+                        //  System.out.println(rs.getRow());
+                        
+                        
+//                        System.out.println("resultsetin datasini goturmeye calsihacam" + rs.getString(i));
+                    
+                    String columnames = metdata.getColumnName(i);
+                    String s = rs.getString(columnames);
+                    System.out.println(s);
+//                    String rowdata = rs.getNString(i);
+//                    System.out.println("columnarin adlari rowlar ne bilim ne esas netice alinsin " + rowdata);
+                    }                    
+
+//columname.add(columnames);
+                }
             }
 
-            // Now do something with the ResultSet ....
         } catch (SQLException ex) {
-            // handle any errors
             System.out.println("SQLException: rafael " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         } finally {
-            // it is a good idea to release
-            // resources in a finally{} block
-            // in reverse-order of their creation
-            // if they are no-longer needed
-
             if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException sqlEx) {
-                } // ignore
-
+                }
                 rs = null;
             }
 
@@ -94,7 +114,7 @@ public class MainFrameUtility extends AbstractDatabase {
                 stmt = null;
             }
         }
-
+        return null;
     }
 
     public static void onMouseClick_OnTablesList(JFrame frame, JTabbedPane tab, MouseEvent evt) {
@@ -125,7 +145,6 @@ public class MainFrameUtility extends AbstractDatabase {
 
     public static void fillConnectionsIntoJList(JFrame frame, JList uiList) {
         List<String> list = database.getAllConnection();
-
         UiPopupConnection popup = new UiPopupConnection();
         MainFrameUtility.fillList(list, frame, popup, null, uiList);
     }
