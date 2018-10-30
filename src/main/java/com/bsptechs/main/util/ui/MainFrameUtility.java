@@ -8,6 +8,7 @@ package com.bsptechs.main.util.ui;
 import com.bsptechs.main.PanelTable;
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.NConnection;
+import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
@@ -25,6 +26,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
@@ -56,13 +58,15 @@ public class MainFrameUtility {
         if (MainFrameUtility.isLeftDoubleClicked(evt)) {
             JList listUiDatabases = (JList) evt.getSource();
             UiElement element = (UiElement) listUiDatabases.getSelectedValue();
+
             System.out.println("element.getData()=" + element.getData());
             if ("table".equals(element.getData())) {
                 viewTable(tab, element.getText());
                 return;
             }
-            List<String> list = database.getAllTables(element.getText());
-            MainFrameUtility.fillList(list, frame, new UiPopupTable(listUiDatabases, tab), "table", listUiDatabases);
+            List<TableName> list = database.getAllTables(element.getText());
+
+            MainFrameUtility.fillList(list, frame, new UiPopupTable(frame, listUiDatabases, tab), "table", listUiDatabases);
 
         }
     }
@@ -99,17 +103,16 @@ public class MainFrameUtility {
         MainFrameUtility.fillList(databases, frame, popup, "database", list);
     }
 
-    public static void fillList(List<String> textList, JFrame frame, JPopupMenu popup, Object data, JList uiList) {
+    public static void fillList(List<?> textList, JFrame frame, JPopupMenu popup, Object data, JList uiList) {
         if(textList==null){
            return;
         }
-        
         DefaultListModel dm = new DefaultListModel();
-        for (String text : textList) {
-            UiElement uiElement = new UiElement(text);
+        for (Object t : textList) {
+            UiElement uiElement = new UiElement(t.toString());
             uiElement.setFrame(frame);
             uiElement.setPopup(popup);
-            uiElement.setData(data);
+            uiElement.setData(t);
             dm.addElement(uiElement);
         }
 
@@ -178,7 +181,5 @@ public class MainFrameUtility {
           return (Config) configObj;
       }
     }
-    
-       
 
 }

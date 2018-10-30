@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.bsptechs.main.dao.inter;
 
+import com.bsptechs.main.bean.TableName;
 import java.util.List;
 
 /**
@@ -15,6 +11,8 @@ public interface DatabaseDAOInter {
 
     List<String> getAllDatabases();
 
-    List<String> getAllTables(String databaseName);
+    List<TableName> getAllTables(String databaseName);
+
+    boolean renameTable(String DBname,String oldTblName, String newTblName);
 
 }
