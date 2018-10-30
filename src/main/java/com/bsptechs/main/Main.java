@@ -15,7 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
 /**
- *
+ * 
  * @author RafaelAhmedov
  */
 public class Main extends javax.swing.JFrame {
@@ -30,7 +30,7 @@ public class Main extends javax.swing.JFrame {
         MainFrameUtility.prepareConnectionsList(this, listConnections);
 
 //        MainFrameUtility.fillDatabasesIntoJList(this, tabQuery, listDatabases);
-        MainFrameUtility.fillConnectionsIntoJList(this, listConnections);
+        MainFrameUtility.fillConnectionsIntoJList(this, tabTables, listConnections, listDatabases);
     }
 
     /**
@@ -789,7 +789,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         new FrameMysqlConnection().setVisible(true);
-        MainFrameUtility.fillConnectionsIntoJList(this, listConnections);
+        MainFrameUtility.fillConnectionsIntoJList(this, tabTables, listConnections, listDatabases);
 
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
