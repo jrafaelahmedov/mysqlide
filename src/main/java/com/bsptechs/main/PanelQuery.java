@@ -5,6 +5,8 @@
  */
 package com.bsptechs.main;
 
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import com.bsptechs.main.util.ui.MainFrameUtility;
@@ -34,10 +36,11 @@ public class PanelQuery extends javax.swing.JPanel {
     public PanelQuery() throws ClassNotFoundException, SQLException {
         this.service = new MainFrameUtility();
         initComponents();
-        List<String> list = database.getAllConnection();
+        List<NConnection> list = Config.instance().getConnections();
         jComboBoxconnections.addItem("");
-        for (String text : list) {
-            jComboBoxconnections.addItem(text);
+        for (int i=0;i<list.size();i++) {
+            NConnection c = list.get(i);
+            jComboBoxconnections.addItem(c.getName());
         }
         jComboBoxtables.addItem("");
         List<String> listdatabase = database.getAllDatabases();
