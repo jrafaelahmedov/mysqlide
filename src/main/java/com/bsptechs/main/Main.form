@@ -300,9 +300,6 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btnEvent">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\RafaelAhmedov\Documents\MySqLIde\bin\main\event.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Event"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -322,9 +319,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnFunctions">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\RafaelAhmedov\Documents\MySqLIde\bin\main\function-mathematical-symbol.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Function"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -344,9 +338,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnView">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\RafaelAhmedov\Documents\MySqLIde\bin\main\view.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="View"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -367,9 +358,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnModel">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\RafaelAhmedov\Documents\MySqLIde\bin\main\model.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Model"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -390,9 +378,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnAutomation">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\RafaelAhmedov\Documents\MySqLIde\bin\main\automation.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Automation"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -412,9 +397,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnBackup">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\RafaelAhmedov\Documents\MySqLIde\bin\main\backup.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Backup"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -434,9 +416,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnReport">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\RafaelAhmedov\Documents\MySqLIde\bin\main\report.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Report"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -457,9 +436,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnQuery">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\RafaelAhmedov\Documents\MySqLIde\bin\main\query.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Query"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -479,9 +455,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnUsers">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\RafaelAhmedov\Documents\MySqLIde\bin\main\user.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="User"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -507,9 +480,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnConnection">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\RafaelAhmedov\Documents\MySqLIde\bin\main\connection.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Connection"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -533,9 +503,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnTable">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\RafaelAhmedov\Documents\MySqLIde\bin\main\table.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Table"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -556,9 +523,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnNewQuery">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\RafaelAhmedov\Documents\MySqLIde\bin\main\newquery.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="New Query"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>

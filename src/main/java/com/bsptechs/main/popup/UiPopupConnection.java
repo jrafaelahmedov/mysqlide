@@ -51,11 +51,10 @@ public class UiPopupConnection extends UiPopupAbstract {
         //Tebriz burani dolduracaq
     }
 
-    public void connect() {
+    public void connect() { 
         System.out.println("connection connection");
-        int index = listConnections.getSelectedIndex();
-        NConnection selectedConnection = Config.instance().getConnections().get(index);
-        MainFrameUtility.connect(selectedConnection, frame, tab, listDatabases);
+       
+        MainFrameUtility.connect(frame, tab, listDatabases, listConnections);
         //Tebriz burani dolduracaq
     }
 

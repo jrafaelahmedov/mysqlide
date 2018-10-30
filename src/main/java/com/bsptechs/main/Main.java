@@ -8,23 +8,14 @@ package com.bsptechs.main;
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
- * 
+ *
  * @author RafaelAhmedov
  */
 public class Main extends javax.swing.JFrame {
@@ -34,26 +25,15 @@ public class Main extends javax.swing.JFrame {
         Config.initialize();
 
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        MainFrameUtility.prepareDatabaseList(this, tabTables, listDatabases);
 
-        MainFrameUtility.prepareConnectionsList(this, listConnections);
+        MainFrameUtility.prepareDatabaseList(this, tabTables, listDatabases);
+        MainFrameUtility.prepareConnectionsList(this, tabTables, listConnections, listDatabases);
 
 //        MainFrameUtility.fillDatabasesIntoJList(this, tabQuery, listDatabases);
         MainFrameUtility.fillConnectionsIntoJList(this, tabTables, listConnections, listDatabases);
-        checkConnectionKind();
     }
 
-    
-    public void checkConnectionKind(){
-        List<String> myArray = new ArrayList<>();
-        for (int i = 0; i < listConnections.getModel().getSize(); i++) {
-          myArray.add(String.valueOf(listConnections.getModel().getElementAt(i)));
-            System.out.println("myarray"+myArray.toString());
 
-        }
-        
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -836,7 +816,7 @@ public class Main extends javax.swing.JFrame {
         btnNewQuery.setBorder(null);
     }//GEN-LAST:event_btnNewQueryMouseExited
 
-    private void btnNewQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewQueryActionPerformed
+    private void btnNewQueryActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             tabbedPaneCenter.setEnabled(true);
             MainFrameUtility.addPanelToTab(tabQuery, new PanelQuery(), "Query");
@@ -852,7 +832,7 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
-    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 

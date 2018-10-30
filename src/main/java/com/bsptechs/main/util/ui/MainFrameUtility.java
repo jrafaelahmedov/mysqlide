@@ -83,16 +83,14 @@ public class MainFrameUtility extends AbstractDatabase {
                     System.out.println("column count " + count);
                     while (rs.next()) {
                         //  System.out.println(rs.getRow());
-                        
-                        
+
 //                        System.out.println("resultsetin datasini goturmeye calsihacam" + rs.getString(i));
-                    
-                    String columnames = metdata.getColumnName(i);
-                    String s = rs.getString(columnames);
-                    System.out.println(s);
+                        String columnames = metdata.getColumnName(i);
+                        String s = rs.getString(columnames);
+                        System.out.println(s);
 //                    String rowdata = rs.getNString(i);
 //                    System.out.println("columnarin adlari rowlar ne bilim ne esas netice alinsin " + rowdata);
-                    }                    
+                    }
 
 //columname.add(columnames);
                 }
@@ -141,9 +139,9 @@ public class MainFrameUtility extends AbstractDatabase {
         }
     }
 
-    public static void prepareConnectionsList(JFrame frame, JList uiList) {
-        MouseAdapter m = MainFrameUtility.getAdapterForConnectionList(frame, uiList);
-        uiList.addMouseListener(m);
+    public static void prepareConnectionsList(JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
+        MouseAdapter m = MainFrameUtility.getAdapterForConnectionList(frame, tab, listConnections, listDatabases);
+        listConnections.addMouseListener(m);
     }
 
     public static void prepareDatabaseList(JFrame frame, JTabbedPane tab, JList list) {
@@ -156,7 +154,7 @@ public class MainFrameUtility extends AbstractDatabase {
         if (list == null) {
             return;
         }
-        UiPopupConnection popup = new UiPopupConnection(frame, tab, listConnections,listDatabases);
+        UiPopupConnection popup = new UiPopupConnection(frame, tab, listConnections, listDatabases);
 
         List<String> l = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
@@ -202,16 +200,17 @@ public class MainFrameUtility extends AbstractDatabase {
         }
     }
 
-    public static MouseAdapter getAdapterForConnectionList(JFrame frame, JList uiList) {
+    public static MouseAdapter getAdapterForConnectionList(JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
         MouseAdapter m = new java.awt.event.MouseAdapter() {
             @Override
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                MainFrameUtility.showMenuOnList(uiList, evt);
+                MainFrameUtility.showMenuOnList(listConnections, evt);
             }
 
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 System.out.println("I am connection name");
+                MainFrameUtility.onMouseClick_OnConnectionsList(evt, frame, tab, listConnections, listDatabases);
             }
         };
         return m;
@@ -252,9 +251,16 @@ public class MainFrameUtility extends AbstractDatabase {
         }
     }
 
-    public static void connect(NConnection connection, JFrame frame, JTabbedPane tab, JList list) {
-        Config.setConnection(connection);
-        MainFrameUtility.fillDatabasesIntoJList(frame, tab, list);
+    public static void onMouseClick_OnConnectionsList(MouseEvent evt, JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
+        if (MainFrameUtility.isLeftDoubleClicked(evt)) {
+            connect(frame, tab, listConnections, listDatabases);
+        }
     }
 
+    public static void connect(JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
+        int index = listConnections.getSelectedIndex();
+        NConnection selectedConnection = Config.instance().getConnections().get(index);
+        Config.setConnection(selectedConnection);
+        MainFrameUtility.fillDatabasesIntoJList(frame, tab, listDatabases);
+    }
 }
