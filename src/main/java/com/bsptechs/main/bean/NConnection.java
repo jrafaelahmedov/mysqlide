@@ -70,4 +70,9 @@ public class NConnection implements Serializable {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "NConnection{" + "name=" + name + ", ipAdr=" + ipAdr + ", port=" + port + ", userName=" + userName + ", password=" + password + '}';
+    }
+
 }

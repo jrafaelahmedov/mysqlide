@@ -12,6 +12,7 @@ import java.sql.SQLException;
 public abstract class AbstractDatabase {
 
     public Connection connect(NConnection connection) throws ClassNotFoundException, SQLException {
+        System.out.println(connection);
         Class.forName("com.mysql.jdbc.Driver");
         String url = "jdbc:mysql://" + connection.getIpAdr() + ":" + connection.getPort() + "/";
         String username = connection.getUserName();

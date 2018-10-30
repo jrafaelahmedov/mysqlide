@@ -206,7 +206,7 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
         String ipAdr = txtHostNameIpAdr.getText();
         String port = txtPort.getText();
         String username = txtUserName.getText();
-        String password = txtPassword.getSelectedText();
+        String password = new String(txtPassword.getPassword());
 
         NConnection connection = new NConnection(name, ipAdr, port, username, password);
         return connection;
