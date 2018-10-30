@@ -81,31 +81,31 @@ public class MainFrameUtility {
         list.addMouseListener(m);
     }
 
-    public static void fillConnectionsIntoJList(JFrame frame, JList uiList) {
+    public static void fillConnectionsIntoJList(JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
         List<NConnection> list = Config.instance().getConnections();
-        if(list==null){
+        if (list == null) {
             return;
         }
-        UiPopupConnection popup = new UiPopupConnection(frame, uiList);
-        
+        UiPopupConnection popup = new UiPopupConnection(frame, tab, listConnections,listDatabases);
+
         List<String> l = new ArrayList<>();
-        for(int i=0;i<list.size();i++){
+        for (int i = 0; i < list.size(); i++) {
             l.add(list.get(i).getName());
         }
-        MainFrameUtility.fillList(l, frame, popup, null, uiList);
+        MainFrameUtility.fillList(l, frame, popup, null, listConnections);
     }
 
     public static void fillDatabasesIntoJList(JFrame frame, JTabbedPane tab, JList list) {
         List<String> databases = database.getAllDatabases();
-       
+
         UiPopupAbstract popup = new UiPopupDatabase(tab);
 
         MainFrameUtility.fillList(databases, frame, popup, "database", list);
     }
 
     public static void fillList(List<?> textList, JFrame frame, JPopupMenu popup, Object data, JList uiList) {
-        if(textList==null){
-           return;
+        if (textList == null) {
+            return;
         }
         DefaultListModel dm = new DefaultListModel();
         for (Object t : textList) {
@@ -168,18 +168,23 @@ public class MainFrameUtility {
     public static boolean isLeftDoubleClicked(MouseEvent evt) {
         return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
     }
-    
-    public static void saveConfig(){
-         WriteToFileIO.writeObjectToFile(Config.instance(), Config.getFileName());
+
+    public static void saveConfig() {
+        WriteToFileIO.writeObjectToFile(Config.instance(), Config.getFileName());
     }
-    
-    public static Config readConfig(){
-      Object configObj =  ReadFileIO.readFileDeserialize(Config.getFileName());
-      if(configObj==null){
-          return new Config();
-      }else{
-          return (Config) configObj;
-      }
+
+    public static Config readConfig() {
+        Object configObj = ReadFileIO.readFileDeserialize(Config.getFileName());
+        if (configObj == null) {
+            return new Config();
+        } else {
+            return (Config) configObj;
+        }
+    }
+
+    public static void connect(NConnection connection, JFrame frame, JTabbedPane tab, JList list) {
+        Config.setConnection(connection);
+        MainFrameUtility.fillDatabasesIntoJList(frame, tab, list);
     }
 
 }
