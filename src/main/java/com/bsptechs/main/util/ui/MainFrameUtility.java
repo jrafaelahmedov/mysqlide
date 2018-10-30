@@ -6,6 +6,9 @@
 package com.bsptechs.main.util.ui;
 
 import com.bsptechs.main.PanelTable;
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.NConnection;
+import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.AbstractDatabase;
@@ -14,6 +17,8 @@ import com.bsptechs.main.popup.UiPopupAbstract;
 import com.bsptechs.main.popup.UiPopupConnection;
 import com.bsptechs.main.popup.UiPopupDatabase;
 import com.bsptechs.main.popup.UiPopupTable;
+import com.bsptechs.main.util.file.ReadFileIO;
+import com.bsptechs.main.util.file.WriteToFileIO;
 import java.awt.MouseInfo;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -27,6 +32,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
@@ -121,14 +127,16 @@ public class MainFrameUtility extends AbstractDatabase {
         if (MainFrameUtility.isLeftDoubleClicked(evt)) {
             JList listUiDatabases = (JList) evt.getSource();
             UiElement element = (UiElement) listUiDatabases.getSelectedValue();
+
             System.out.println("element.getData()=" + element.getData());
             System.out.println(element.getData().toString());
             if ("table".equals(element.getData())) {
                 viewTable(tab, element.getText());
                 return;
             }
-            List<String> list = database.getAllTables(element.getText());
-            MainFrameUtility.fillList(list, frame, new UiPopupTable(listUiDatabases, tab), "table", listUiDatabases);
+            List<TableName> list = database.getAllTables(element.getText());
+
+            MainFrameUtility.fillList(list, frame, new UiPopupTable(frame, listUiDatabases, tab), "table", listUiDatabases);
 
         }
     }
@@ -143,26 +151,38 @@ public class MainFrameUtility extends AbstractDatabase {
         list.addMouseListener(m);
     }
 
-    public static void fillConnectionsIntoJList(JFrame frame, JList uiList) {
-        List<String> list = database.getAllConnection();
-        UiPopupConnection popup = new UiPopupConnection();
-        MainFrameUtility.fillList(list, frame, popup, null, uiList);
+    public static void fillConnectionsIntoJList(JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
+        List<NConnection> list = Config.instance().getConnections();
+        if (list == null) {
+            return;
+        }
+        UiPopupConnection popup = new UiPopupConnection(frame, tab, listConnections,listDatabases);
+
+        List<String> l = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            l.add(list.get(i).getName());
+        }
+        MainFrameUtility.fillList(l, frame, popup, null, listConnections);
     }
 
     public static void fillDatabasesIntoJList(JFrame frame, JTabbedPane tab, JList list) {
         List<String> databases = database.getAllDatabases();
+
         UiPopupAbstract popup = new UiPopupDatabase(tab);
 
         MainFrameUtility.fillList(databases, frame, popup, "database", list);
     }
 
-    public static void fillList(List<String> textList, JFrame frame, JPopupMenu popup, Object data, JList uiList) {
+    public static void fillList(List<?> textList, JFrame frame, JPopupMenu popup, Object data, JList uiList) {
+        if (textList == null) {
+            return;
+        }
         DefaultListModel dm = new DefaultListModel();
-        for (String text : textList) {
-            UiElement uiElement = new UiElement(text);
+        for (Object t : textList) {
+            UiElement uiElement = new UiElement(t.toString());
             uiElement.setFrame(frame);
             uiElement.setPopup(popup);
-            uiElement.setData(data);
+            uiElement.setData(t);
             dm.addElement(uiElement);
         }
 
@@ -219,7 +239,22 @@ public class MainFrameUtility extends AbstractDatabase {
         return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
     }
 
-    public MainFrameUtility() throws ClassNotFoundException, SQLException {
-        this.conn = connect();
+    public static void saveConfig() {
+        WriteToFileIO.writeObjectToFile(Config.instance(), Config.getFileName());
     }
+
+    public static Config readConfig() {
+        Object configObj = ReadFileIO.readFileDeserialize(Config.getFileName());
+        if (configObj == null) {
+            return new Config();
+        } else {
+            return (Config) configObj;
+        }
+    }
+
+    public static void connect(NConnection connection, JFrame frame, JTabbedPane tab, JList list) {
+        Config.setConnection(connection);
+        MainFrameUtility.fillDatabasesIntoJList(frame, tab, list);
+    }
+
 }

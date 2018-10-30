@@ -5,9 +5,15 @@
  */
 package com.bsptechs.main.popup;
 
+import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.UiElement;
+import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
+import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import com.bsptechs.main.util.ui.MainFrameUtility;
+import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 /**
@@ -16,12 +22,16 @@ import javax.swing.JTabbedPane;
  */
 public class UiPopupTable extends UiPopupAbstract {
 
+    private static DatabaseDAOInter database = new DatabaseDAOImpl();
+
     private JList list;
     private JTabbedPane pane;
+    private JFrame frame;
 
-    public UiPopupTable(JList list, JTabbedPane pane) {
+    public UiPopupTable(JFrame frame, JList list, JTabbedPane pane) {
         this.pane = pane;
         this.list = list;
+        this.frame = frame;
         addMenuItem("Delete Table", () -> {
             delete();
         });
@@ -35,6 +45,9 @@ public class UiPopupTable extends UiPopupAbstract {
 
         addMenuItem("View Table", () -> {
             viewTable();
+        });
+        addMenuItem("Rename", () -> {
+            renameTable();
         });
     }
 
@@ -63,4 +76,15 @@ public class UiPopupTable extends UiPopupAbstract {
         //Tebriz burani dolduracaq
     }
 
+    public void renameTable() {
+        int selectedIndex = list.getSelectedIndex();
+        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
+        TableName tb = (TableName) selectedElement.getData();
+        String newTblName = (String) JOptionPane.showInputDialog(null, "Enter new name:", "Rename Table",
+                JOptionPane.QUESTION_MESSAGE, null, null, tb.getTableName());
+        database.renameTable(tb.getDatabaseName(), tb.getTableName(), newTblName);
+
+        List<TableName> tbNames = database.getAllTables(tb.getDatabaseName());
+        MainFrameUtility.fillList(tbNames, frame, new UiPopupTable(frame, list, pane), "table", list);
+    }
 }

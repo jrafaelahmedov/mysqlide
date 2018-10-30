@@ -5,6 +5,7 @@
  */
 package com.bsptechs.main;
 
+import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -23,24 +24,23 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- *
+ * 
  * @author RafaelAhmedov
  */
 public class Main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MySQLIdea1
-     */
-    public Main() throws ClassNotFoundException, SQLException {
+    public Main() throws Exception {
         initComponents();
+        Config.initialize();
+
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         MainFrameUtility.prepareDatabaseList(this, tabTables, listDatabases);
-        MainFrameUtility.fillDatabasesIntoJList(this, tabQuery, listDatabases);
 
         MainFrameUtility.prepareConnectionsList(this, listConnections);
-        MainFrameUtility.fillConnectionsIntoJList(this, listConnections);
+
+//        MainFrameUtility.fillDatabasesIntoJList(this, tabQuery, listDatabases);
+        MainFrameUtility.fillConnectionsIntoJList(this, tabTables, listConnections, listDatabases);
         checkConnectionKind();
-        
     }
 
     
@@ -95,6 +95,11 @@ public class Main extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
@@ -533,6 +538,32 @@ public class Main extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenu8.setText("New Connection");
+
+        jMenuItem13.setText("MySQL");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem13);
+
+        jMenuItem12.setText("PostgreSQL");
+        jMenu8.add(jMenuItem12);
+
+        jMenuItem14.setText("Oracle");
+        jMenu8.add(jMenuItem14);
+
+        jMenuItem15.setText("SQLite");
+        jMenu8.add(jMenuItem15);
+
+        jMenuItem16.setText("SQL Server");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem16);
+
         jMenu1.add(jMenu8);
 
         jMenu9.setText("New");
@@ -814,7 +845,16 @@ public class Main extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnNewQueryActionPerformed
+    }
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        new FrameMysqlConnection().setVisible(true);
+        MainFrameUtility.fillConnectionsIntoJList(this, tabTables, listConnections, listDatabases);
+
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        // TODO add your handling code here:
+    }
 
     /**
      * @param args the command line arguments
@@ -863,6 +903,8 @@ public class Main extends javax.swing.JFrame {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -895,6 +937,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

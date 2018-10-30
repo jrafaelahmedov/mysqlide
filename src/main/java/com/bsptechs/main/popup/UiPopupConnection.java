@@ -5,28 +5,57 @@
  */
 package com.bsptechs.main.popup;
 
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.NConnection;
+import com.bsptechs.main.util.ui.MainFrameUtility;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JTabbedPane;
+
 /**
  *
  * @author sarkhanrasullu
  */
 public class UiPopupConnection extends UiPopupAbstract {
 
-    public UiPopupConnection() {
+    private JFrame frame;
+    private JList listConnections;
+    private JList listDatabases;
+    private JTabbedPane tab;
+
+    public UiPopupConnection(JFrame frame, JTabbedPane tab, JList listConnections,JList listDatabases) {
+        this.frame = frame;
+        this.listConnections = listConnections;
+        this.listDatabases = listDatabases;
+        this.tab = tab;
+
         addMenuItem("Delete Connection", () -> {
             delete();
         });
         addMenuItem("Connection Properties", () -> {
             properties();
         });
+
+        addMenuItem("Connect", () -> {
+            connect();
+        });
     }
 
     public void delete() {
-        System.out.println("delete database");
+        System.out.println("delete connection");
         //Tebriz burani dolduracaq
     }
 
     public void properties() {
-        System.out.println("properites database");
+        System.out.println("properites connection");
+        //Tebriz burani dolduracaq
+    }
+
+    public void connect() {
+        System.out.println("connection connection");
+        int index = listConnections.getSelectedIndex();
+        NConnection selectedConnection = Config.instance().getConnections().get(index);
+        MainFrameUtility.connect(selectedConnection, frame, tab, listDatabases);
         //Tebriz burani dolduracaq
     }
 
