@@ -5,6 +5,7 @@
  */
 package com.bsptechs.main.dao.impl;
 
+import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.dao.inter.AbstractDatabase;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
@@ -21,12 +22,13 @@ import java.util.List;
  * @author Penthos
  */
 public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInter {
+    
 
     @Override
     public List<String> getAllDatabases() {
         List<String> list = new ArrayList<>();
-
-        try (Connection conn = connect()) {
+        
+        try (Connection conn = connect(Config.getSelectedConnection())) {
             Statement stmt = conn.createStatement();
             ResultSet resultset = stmt.executeQuery("SHOW DATABASES;");
 
@@ -48,7 +50,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     @Override
     public List<TableName> getAllTables(String databaseName) {
         List<TableName> list = new ArrayList<>();
-        try (Connection conn = connect();) {
+        try (Connection conn = connect(Config.getSelectedConnection())) {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM information_schema.tables where table_schema = ?");
             stmt.setString(1, databaseName);
             ResultSet resultset = stmt.executeQuery();
@@ -64,11 +66,6 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
         }
     }
 
-    @Override
-    public List<String> getAllConnection() {
-        List<String> list = Arrays.asList("localhost", "rafael mysql");
-        return list;
-    }
 
     @Override
     public boolean renameTable(String DBname, String oldTblName, String newTblName) {

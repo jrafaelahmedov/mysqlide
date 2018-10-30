@@ -6,6 +6,8 @@
 package com.bsptechs.main.util.ui;
 
 import com.bsptechs.main.PanelTable;
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
@@ -14,9 +16,12 @@ import com.bsptechs.main.popup.UiPopupAbstract;
 import com.bsptechs.main.popup.UiPopupConnection;
 import com.bsptechs.main.popup.UiPopupDatabase;
 import com.bsptechs.main.popup.UiPopupTable;
+import com.bsptechs.main.util.file.ReadFileIO;
+import com.bsptechs.main.util.file.WriteToFileIO;
 import java.awt.MouseInfo;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -77,19 +82,31 @@ public class MainFrameUtility {
     }
 
     public static void fillConnectionsIntoJList(JFrame frame, JList uiList) {
-        List<String> list = database.getAllConnection();
-        UiPopupConnection popup = new UiPopupConnection();
-        MainFrameUtility.fillList(list, frame, popup, null, uiList);
+        List<NConnection> list = Config.instance().getConnections();
+        if(list==null){
+            return;
+        }
+        UiPopupConnection popup = new UiPopupConnection(frame, uiList);
+        
+        List<String> l = new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            l.add(list.get(i).getName());
+        }
+        MainFrameUtility.fillList(l, frame, popup, null, uiList);
     }
 
     public static void fillDatabasesIntoJList(JFrame frame, JTabbedPane tab, JList list) {
         List<String> databases = database.getAllDatabases();
+       
         UiPopupAbstract popup = new UiPopupDatabase(tab);
 
         MainFrameUtility.fillList(databases, frame, popup, "database", list);
     }
 
     public static void fillList(List<?> textList, JFrame frame, JPopupMenu popup, Object data, JList uiList) {
+        if(textList==null){
+           return;
+        }
         DefaultListModel dm = new DefaultListModel();
         for (Object t : textList) {
             UiElement uiElement = new UiElement(t.toString());
@@ -151,6 +168,18 @@ public class MainFrameUtility {
     public static boolean isLeftDoubleClicked(MouseEvent evt) {
         return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
     }
-
+    
+    public static void saveConfig(){
+         WriteToFileIO.writeObjectToFile(Config.instance(), Config.getFileName());
+    }
+    
+    public static Config readConfig(){
+      Object configObj =  ReadFileIO.readFileDeserialize(Config.getFileName());
+      if(configObj==null){
+          return new Config();
+      }else{
+          return (Config) configObj;
+      }
+    }
 
 }
