@@ -6,6 +6,7 @@
 package com.bsptechs.main.bean;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 /**
@@ -17,6 +18,16 @@ public class UiElement {
     private Object data;
     private JPopupMenu popup;
     private JFrame frame;
+    private JPanel panel;
+
+    public JPanel getPanel() {
+        return panel;
+    }
+
+    public void setPanel(JPanel panel) {
+        this.panel = panel;
+    }
+    
 
     public UiElement() {
     }
