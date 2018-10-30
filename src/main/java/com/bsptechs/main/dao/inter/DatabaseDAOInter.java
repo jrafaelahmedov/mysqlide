@@ -5,6 +5,7 @@
  */
 package com.bsptechs.main.dao.inter;
 
+import com.bsptechs.main.bean.TableName;
 import java.util.List;
 
 /**
@@ -15,7 +16,10 @@ public interface DatabaseDAOInter {
 
     List<String> getAllDatabases();
 
-    List<String> getAllTables(String databaseName);
+    List<TableName> getAllTables(String databaseName);
 
     List<String> getAllConnection();
+
+    boolean renameTable(String DBname,String oldTblName, String newTblName);
+
 }

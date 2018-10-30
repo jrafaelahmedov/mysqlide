@@ -5,6 +5,7 @@
  */
 package com.bsptechs.main.dao.impl;
 
+import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.dao.inter.AbstractDatabase;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import java.sql.Connection;
@@ -45,15 +46,15 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public List<String> getAllTables(String databaseName) {
-        List<String> list = new ArrayList<>();
+    public List<TableName> getAllTables(String databaseName) {
+        List<TableName> list = new ArrayList<>();
         try (Connection conn = connect();) {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM information_schema.tables where table_schema = ?");
             stmt.setString(1, databaseName);
             ResultSet resultset = stmt.executeQuery();
             while (resultset.next()) {
                 String result = resultset.getString("table_name");
-                list.add(result);
+                list.add(new TableName(result, databaseName));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -67,6 +68,20 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     public List<String> getAllConnection() {
         List<String> list = Arrays.asList("localhost", "rafael mysql");
         return list;
+    }
+
+    @Override
+    public boolean renameTable(String DBname, String oldTblName, String newTblName) {
+        try (Connection conn = connect()) {
+            PreparedStatement stmt = conn.prepareStatement("RENAME TABLE `" + DBname + "`.`" + oldTblName + "` TO `" + DBname + "`.`" + newTblName+"`");//PrepapredStatement ile edende dirnaqlara gore ishlemirdi ona gore bele etdim
+            stmt.executeUpdate();
+            
+            ///'alma/'=/'alma/' and 1=1  escape
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }
