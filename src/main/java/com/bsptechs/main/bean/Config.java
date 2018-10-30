@@ -5,13 +5,53 @@
  */
 package com.bsptechs.main.bean;
 
-import com.bsptechs.main.util.ui.WriteAndReadObjectFromFile;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Penthos
  */
-public class Config {
+public final class Config implements Serializable {
 
+    private List<NConnection> connections = null;
+    private NConnection selectedConnection = null;
     
+    private static Config config = null;
+
+    public static Config instance() {
+        if (config == null) {
+            config = new Config();
+        }
+
+        return config;
+    }
+
+    public List<NConnection> getConnections() {
+        return connections;
+    }
+
+    public void setConnections(List<NConnection> connections) {
+        this.connections = connections;
+    }
+
+    public void appendConnection(NConnection connection) {
+        if (connections == null) {
+            connections = new ArrayList<>();
+        }
+        connections.add(connection);
+    }
+    
+    
+    public void setConnection(NConnection connection){
+        this.selectedConnection = connection;
+    }
+
+    public NConnection getSelectedConnection() {
+        return selectedConnection;
+    }
+    
+    
+
 }

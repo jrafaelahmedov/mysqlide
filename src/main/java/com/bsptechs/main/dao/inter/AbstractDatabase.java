@@ -6,15 +6,13 @@
 package com.bsptechs.main.dao.inter;
 
 import static com.bsptechs.main.FrameMysqlConnection.FILENAME;
-import com.bsptechs.main.NConnection;
-import com.bsptechs.main.bean.User;
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.util.ui.WriteAndReadObjectFromFile;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Vector;
 
 /**
  *
@@ -23,22 +21,22 @@ import java.util.Vector;
 public abstract class AbstractDatabase {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, Exception {
-      User nc=  (User) WriteAndReadObjectFromFile.readObjectFromFile(FILENAME);
+        Config nc=  (Config) WriteAndReadObjectFromFile.readObjectFromFile(FILENAME);
         
         System.out.println(nc);
-        System.out.println("u="+nc.getUsers());
+        System.out.println("u="+nc.getConnections());
 //        System.out.println("2nc="+nc);
 //            System.out.println(list);
 
     }
 
-    public Connection connect(String ipAdr, String port, String userName, String pass) throws ClassNotFoundException, SQLException {
+    public Connection connect(NConnection connection) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
-        String url = "jdbc:mysql://" + ipAdr + ":" + port + "/";
-        String username = userName;
-        String password = pass;
-        Connection connection = DriverManager.getConnection(url, username, password);
-        return connection;
+        String url = "jdbc:mysql://" + connection.getIpAdr() + ":" + connection.getPort() + "/";
+        String username = connection.getUserName();
+        String password = connection.getPassword();
+        Connection c = DriverManager.getConnection(url, username, password);
+        return c;
     }
 
 //    public Connection connected() throws IOException, ClassNotFoundException, SQLException {

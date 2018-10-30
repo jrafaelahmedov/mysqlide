@@ -5,6 +5,7 @@
  */
 package com.bsptechs.main.dao.impl;
 
+import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.dao.inter.AbstractDatabase;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import java.sql.Connection;
@@ -26,7 +27,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     public List<String> getAllDatabases() {
         List<String> list = new ArrayList<>();
 
-        try (Connection conn = connect()) {
+        try (Connection conn = connect(Config.instance().getSelectedConnection())) {
             Statement stmt = conn.createStatement();
             ResultSet resultset = stmt.executeQuery("SHOW DATABASES;");
 
@@ -48,7 +49,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     @Override
     public List<String> getAllTables(String databaseName) {
         List<String> list = new ArrayList<>();
-        try (Connection conn = connect();) {
+        try (Connection conn = connect(Config.instance().getSelectedConnection());) {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM information_schema.tables where table_schema = ?");
             stmt.setString(1, databaseName);
             ResultSet resultset = stmt.executeQuery();

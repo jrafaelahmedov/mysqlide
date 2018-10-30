@@ -5,39 +5,28 @@
  */
 package com.bsptechs.main.bean;
 
-import com.bsptechs.main.NConnection;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *
  * @author Penthos
  */
-public class User  implements Serializable {
-    
+public class NConnection implements Serializable {
 
-    
-    
     private String ipAdr;
     private String port;
     private String userName;
     private String password;
-    private List<User>users;
-  
 
-    public User() {
+    public NConnection() {
     }
 
-    public User(String ipAdr, String port, String userName, String password) {
+    public NConnection(String ipAdr, String port, String userName, String password) {
         this.ipAdr = ipAdr;
         this.port = port;
         this.userName = userName;
         this.password = password;
     }
-
-   
-
-   
 
     public String getIpAdr() {
         return ipAdr;
@@ -71,20 +60,4 @@ public class User  implements Serializable {
         this.password = password;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-    
-
-    @Override
-    public String toString() {
-        return "User{" + "ipAdr=" + ipAdr + ", port=" + port + ", userName=" + userName + ", password=" + password + '}';
-    }
-    
-
-    
 }

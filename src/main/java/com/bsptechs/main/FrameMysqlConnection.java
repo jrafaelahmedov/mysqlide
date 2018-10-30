@@ -1,8 +1,7 @@
 package com.bsptechs.main;
 
-import static com.bsptechs.main.NConnection.refreshConfig;
-import com.bsptechs.main.bean.User;
-import com.bsptechs.main.util.ui.Initialization;
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.util.ui.WriteAndReadObjectFromFile;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -204,7 +203,7 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        User n = getAllInformFromUser();
+        NConnection n = getAllInformFromUser();
 
         try {
             WriteAndReadObjectFromFile.writeObjectToFile(n, FILENAME);
@@ -213,26 +212,21 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton6ActionPerformed
-    public User getAllInformFromUser() {
-//NConnection nc = new NConnection();
+    public NConnection getAllInformFromUser() {
         String ipAdr = txtHostNameIpAdr.getText();
         String port = txtPort.getText();
         String username = txtUserName.getText();
         String password = txtPassword.getText();
-        User user = new User(ipAdr, port, username, password);
-        List<User> list = new ArrayList<>();
-        list.add(user);
-        user.setUsers(list);
+        NConnection connection = new NConnection(ipAdr, port, username, password);
+
+        Config.instance().appendConnection(connection);
         try {
-            // nc.setUser(user);
-//        nc.setConnections(list);
-refreshConfig(user);
+            WriteAndReadObjectFromFile.writeObjectToFile(Config.instance(), FILENAME);
         } catch (IOException ex) {
             Logger.getLogger(FrameMysqlConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return user;
-
+        return connection;
     }
 
     /**
