@@ -73,15 +73,50 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     @Override
     public boolean renameTable(String DBname, String oldTblName, String newTblName) {
         try (Connection conn = connect()) {
-            PreparedStatement stmt = conn.prepareStatement("RENAME TABLE `" + DBname + "`.`" + oldTblName + "` TO `" + DBname + "`.`" + newTblName+"`");//PrepapredStatement ile edende dirnaqlara gore ishlemirdi ona gore bele etdim
+            PreparedStatement stmt = conn.prepareStatement("RENAME TABLE `" + DBname + "`.`" + oldTblName + "` TO `" + DBname + "`.`" + newTblName + "`");
             stmt.executeUpdate();
-            
-            ///'alma/'=/'alma/' and 1=1  escape
+
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public boolean emptyTable(String DBName, String tblName) {
+        try (Connection conn = connect()) {
+
+            PreparedStatement stmt = conn.prepareStatement("delete  from " + DBName + "." + tblName);
+
+            stmt.executeUpdate();
+
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean truncateTable(String DBName, String tblName) {
+        try (Connection conn = connect()) {
+
+            PreparedStatement stmt = conn.prepareStatement("TRUNCATE TABLE " + DBName + "." + tblName);
+
+            stmt.executeUpdate();
+
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean dublicateTable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

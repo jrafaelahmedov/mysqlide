@@ -20,6 +20,11 @@ public interface DatabaseDAOInter {
 
     List<String> getAllConnection();
 
-    boolean renameTable(String DBname,String oldTblName, String newTblName);
+    boolean renameTable(String DBname, String oldTblName, String newTblName);
 
+    boolean emptyTable(String DBName, String tblName);
+
+    boolean truncateTable(String DBName, String tblName);
+
+    boolean dublicateTable();
 }

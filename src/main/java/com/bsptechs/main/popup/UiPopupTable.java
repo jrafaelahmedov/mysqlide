@@ -49,6 +49,31 @@ public class UiPopupTable extends UiPopupAbstract {
         addMenuItem("Rename", () -> {
             renameTable();
         });
+        addMenuItem("Refresh", () -> {
+            refreshDB();
+        });
+        addMenuItem("Empty Table", () -> {
+            emptyTable();
+        });
+        addMenuItem("Truncate Table", () -> {
+            truncateTeable();
+        });
+        addMenuItem("Copy", () -> {
+            copyTable();
+        });
+        addMenuItem("Paste", () -> {
+            pasteTable();
+        });
+        addMenuItem("Dublicate Table", () -> {
+            dublicateTable();
+        });
+        addMenuItem("Dump Sql file", () -> {
+            dumpSqlFile();
+        });
+        addMenuItem("Object Information", () -> {
+            objectInformation();
+        });
+
     }
 
     public void delete() {
@@ -83,8 +108,44 @@ public class UiPopupTable extends UiPopupAbstract {
         String newTblName = (String) JOptionPane.showInputDialog(null, "Enter new name:", "Rename Table",
                 JOptionPane.QUESTION_MESSAGE, null, null, tb.getTableName());
         database.renameTable(tb.getDatabaseName(), tb.getTableName(), newTblName);
-
         List<TableName> tbNames = database.getAllTables(tb.getDatabaseName());
         MainFrameUtility.fillList(tbNames, frame, new UiPopupTable(frame, list, pane), "table", list);
+    }
+
+    private void refreshDB() {
+        int selectedIndex = list.getSelectedIndex();
+        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
+        TableName tb = (TableName) selectedElement.getData();
+        List<TableName> tbNames = database.getAllTables(tb.getDatabaseName());
+        MainFrameUtility.fillList(tbNames, frame, new UiPopupTable(frame, list, pane), "table", list);
+    }
+
+    private void emptyTable() {
+        int selectedIndex = list.getSelectedIndex();
+        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
+        TableName tb = (TableName) selectedElement.getData();
+        database.emptyTable(tb.getDatabaseName(), tb.getTableName());
+    }
+
+    private void truncateTeable() {
+        int selectedIndex = list.getSelectedIndex();
+        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
+        TableName tb = (TableName) selectedElement.getData();
+        database.truncateTable(tb.getDatabaseName(), tb.getTableName());
+    }
+
+    private void copyTable() {
+    }
+
+    private void pasteTable() {
+    }
+
+    private void dublicateTable() {
+    }
+
+    private void dumpSqlFile() {
+    }
+
+    private void objectInformation() {
     }
 }
