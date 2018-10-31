@@ -7,6 +7,7 @@ package com.bsptechs.main;
 
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.NConnection;
+import com.bsptechs.main.bean.table.TableData;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import com.bsptechs.main.util.ui.MainFrameUtility;
@@ -19,6 +20,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,14 +34,13 @@ public class PanelQuery extends javax.swing.JPanel {
     public static Connection conn;
 
     private static DatabaseDAOInter database = new DatabaseDAOImpl();
- 
 
     public PanelQuery() throws ClassNotFoundException, SQLException {
-         
+
         initComponents();
         List<NConnection> list = Config.instance().getConnections();
         jComboBoxconnections.addItem("");
-        for (int i=0;i<list.size();i++) {
+        for (int i = 0; i < list.size(); i++) {
             NConnection c = list.get(i);
             jComboBoxconnections.addItem(c.getName());
         }
@@ -46,7 +49,7 @@ public class PanelQuery extends javax.swing.JPanel {
         for (String text : listdatabase) {
             jComboBoxtables.addItem(text);
         }
-        pnltable.setVisible(false);
+        pnlTable.setVisible(false);
     }
 
     public void refreshMyTable(List<String> f) {
@@ -57,17 +60,17 @@ public class PanelQuery extends javax.swing.JPanel {
         }
         Vector<Vector<String>> data = new Vector<>();
         for (int i = 0; i < f.size(); i++) {
-           // FilesAndFolders ff = f.get(i);
+            // FilesAndFolders ff = f.get(i);
             Vector<String> sVector = new Vector<>();
             //sVector.add(ff.getPath());
             //List<User> usr = alluserforstatus(1);
-           // Integer row = cmbboxUsersList.getSelectedIndex();
-           // String username = usr.get(row).getUsername();
-           // sVector.add(username);
+            // Integer row = cmbboxUsersList.getSelectedIndex();
+            // String username = usr.get(row).getUsername();
+            // sVector.add(username);
             data.add(sVector);
         }
         dtm.setDataVector(data, columns);
-        tblqueryresult.setModel(dtm);
+        tblQueryResult.setModel(dtm);
 
     }
 
@@ -98,9 +101,9 @@ public class PanelQuery extends javax.swing.JPanel {
         jComboBoxtables = new javax.swing.JComboBox<>();
         btnstop = new javax.swing.JButton();
         btnexplain = new javax.swing.JButton();
-        pnltable = new javax.swing.JPanel();
+        pnlTable = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tblqueryresult = new javax.swing.JTable();
+        tblQueryResult = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         btnQueryBuilder = new javax.swing.JButton();
         btnBeautfySQL = new javax.swing.JButton();
@@ -109,16 +112,15 @@ public class PanelQuery extends javax.swing.JPanel {
         btnExportResult = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
 
-        btnRun.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\play-arrow.png")); // NOI18N
         btnRun.setText("Run");
         btnRun.setBorder(null);
         btnRun.setContentAreaFilled(false);
         btnRun.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnRunMouseEntered(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnRunMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRunMouseEntered(evt);
             }
         });
         btnRun.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +133,6 @@ public class PanelQuery extends javax.swing.JPanel {
         txtQuery.setRows(5);
         jScrollPane1.setViewportView(txtQuery);
 
-        jComboBoxconnections.setBorder(null);
         jComboBoxconnections.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jComboBoxconnections.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,14 +140,12 @@ public class PanelQuery extends javax.swing.JPanel {
             }
         });
 
-        jComboBoxtables.setBorder(null);
         jComboBoxtables.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxtablesActionPerformed(evt);
             }
         });
 
-        btnstop.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\stop.png")); // NOI18N
         btnstop.setText("Stop");
         btnstop.setBorder(null);
         btnstop.setContentAreaFilled(false);
@@ -160,7 +159,6 @@ public class PanelQuery extends javax.swing.JPanel {
             }
         });
 
-        btnexplain.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\explain-.png")); // NOI18N
         btnexplain.setText("Explain");
         btnexplain.setBorder(null);
         btnexplain.setContentAreaFilled(false);
@@ -173,7 +171,7 @@ public class PanelQuery extends javax.swing.JPanel {
             }
         });
 
-        tblqueryresult.setModel(new javax.swing.table.DefaultTableModel(
+        tblQueryResult.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -184,20 +182,19 @@ public class PanelQuery extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane4.setViewportView(tblqueryresult);
+        jScrollPane4.setViewportView(tblQueryResult);
 
-        javax.swing.GroupLayout pnltableLayout = new javax.swing.GroupLayout(pnltable);
-        pnltable.setLayout(pnltableLayout);
-        pnltableLayout.setHorizontalGroup(
-            pnltableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
+        pnlTable.setLayout(pnlTableLayout);
+        pnlTableLayout.setHorizontalGroup(
+            pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
         );
-        pnltableLayout.setVerticalGroup(
-            pnltableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlTableLayout.setVerticalGroup(
+            pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
         );
 
-        btnQueryBuilder.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\querybuilder.png")); // NOI18N
         btnQueryBuilder.setText("Query bulder");
         btnQueryBuilder.setBorder(null);
         btnQueryBuilder.setContentAreaFilled(false);
@@ -210,7 +207,6 @@ public class PanelQuery extends javax.swing.JPanel {
             }
         });
 
-        btnBeautfySQL.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\beauty.png")); // NOI18N
         btnBeautfySQL.setText("Beautfy SQL");
         btnBeautfySQL.setBorder(null);
         btnBeautfySQL.setContentAreaFilled(false);
@@ -223,7 +219,6 @@ public class PanelQuery extends javax.swing.JPanel {
             }
         });
 
-        btnCodeSnipped.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\if_snippet-brief-information-fraction-particle_3209234.png")); // NOI18N
         btnCodeSnipped.setText("Code Snipped");
         btnCodeSnipped.setBorder(null);
         btnCodeSnipped.setContentAreaFilled(false);
@@ -236,7 +231,6 @@ public class PanelQuery extends javax.swing.JPanel {
             }
         });
 
-        btnText.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\text-document.png")); // NOI18N
         btnText.setText("Text");
         btnText.setBorder(null);
         btnText.setContentAreaFilled(false);
@@ -254,7 +248,6 @@ public class PanelQuery extends javax.swing.JPanel {
             }
         });
 
-        btnExportResult.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\export-file.png")); // NOI18N
         btnExportResult.setText("Export Result");
         btnExportResult.setBorder(null);
         btnExportResult.setContentAreaFilled(false);
@@ -267,7 +260,6 @@ public class PanelQuery extends javax.swing.JPanel {
             }
         });
 
-        btnSave.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\save.png")); // NOI18N
         btnSave.setText("Save");
         btnSave.setBorder(null);
         btnSave.setContentAreaFilled(false);
@@ -322,24 +314,20 @@ public class PanelQuery extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBoxconnections, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBoxtables, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(btnRun, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(btnstop, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(btnexplain, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(27, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(pnltable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jComboBoxconnections, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBoxtables, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnRun, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnstop, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnexplain, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,21 +344,30 @@ public class PanelQuery extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnltable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(42, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
-        pnltable.setVisible(true);
+    public void setQuery(String txt) {
+        txtQuery.setText(txt);
+    }
+
+    public void runQuery() {
+        pnlTable.setVisible(true);
         try {
-            database.runQuery(txtQuery.getText());
+            TableData data = database.runQuery(txtQuery.getText());
+            DefaultTableModel model = MainFrameUtility.buildTableModel(data);
+            tblQueryResult.setModel(model);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PanelQuery.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(PanelQuery.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+    }
+
+    private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
+        runQuery();
     }//GEN-LAST:event_btnRunActionPerformed
 
     private void jComboBoxtablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxtablesActionPerformed
@@ -473,8 +470,8 @@ public class PanelQuery extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JPanel pnltable;
-    private javax.swing.JTable tblqueryresult;
+    private javax.swing.JPanel pnlTable;
+    private javax.swing.JTable tblQueryResult;
     private javax.swing.JTextArea txtQuery;
     // End of variables declaration//GEN-END:variables
 }

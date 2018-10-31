@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -98,29 +99,32 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
 
     @Override
     public TableData runQuery(String query) throws ClassNotFoundException, SQLException {
-        TableData table = null;
-        try (Connection conn = connect(Config.getCurrentConnection());) {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            List<String> columns = getColumns(rs);
-            List<TableRow> rows = new ArrayList<>();
-            while (rs.next()) {
-                List<TableCell> rowCells = new ArrayList<>();
-
-                for (String column : columns) {
-                    Object o = rs.getObject(column);
-                    rowCells.add(new TableCell(column, o));
-                }
-
-                rows.add(new TableRow(rowCells));
-            }
-            table = new TableData(rows, columns);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            return table;
+        if (Config.getCurrentDatabaseName() == null || Config.getCurrentDatabaseName().isEmpty()) {
+            JOptionPane.showMessageDialog(Config.getMain(), "Choose a database");
+            return null;
         }
+        TableData table = null;
+        Connection conn = connect(Config.getCurrentConnection());
+        Statement stmt = conn.createStatement();
+        String setDatabase = "USE " + Config.getCurrentDatabaseName() + ";";
+
+        stmt.executeQuery(setDatabase);
+        ResultSet rs = stmt.executeQuery(query);
+
+        List<String> columns = getColumns(rs);
+        List<TableRow> rows = new ArrayList<>();
+        while (rs.next()) {
+            List<TableCell> rowCells = new ArrayList<>();
+
+            for (String column : columns) {
+                Object o = rs.getObject(column);
+                rowCells.add(new TableCell(column, o));
+            }
+
+            rows.add(new TableRow(rowCells));
+        }
+        table = new TableData(rows, columns);
+        return table;
     }
 
     public static void main(String[] args) throws Exception {
@@ -134,8 +138,8 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
             System.out.println(r);
             System.out.println("-------------------");
             List<TableCell> cells = r.getCells();
-            
-            for(TableCell c: cells){
+
+            for (TableCell c : cells) {
                 System.out.println(c);
             }
             System.out.println("");

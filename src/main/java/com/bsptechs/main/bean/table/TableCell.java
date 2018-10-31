@@ -42,7 +42,7 @@ public class TableCell {
 
     @Override
     public String toString() {
-        return "TableCell{" + "columnName=" + columnName + ", columnValue=" + columnValue + '}';
+        return columnValue.toString();
     }
     
     

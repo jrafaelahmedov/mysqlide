@@ -21,8 +21,9 @@ public final class Config implements Serializable {
     private static final String fileName = "mySql.txt";
     private List<NConnection> connections = null;
     private static NConnection currentConnection = null;
+    private static String currentDatabaseName = null;
     private static Config config = null;
-
+    
     public static void initialize() {
         config = MainFrameUtility.readConfig();
     }
@@ -66,5 +67,15 @@ public final class Config implements Serializable {
     public static Main getMain() {
         return main;
     }
+
+    public static String getCurrentDatabaseName() {
+        return currentDatabaseName;
+    }
+
+    public static void setCurrentDatabaseName(String currentDatabaseName) {
+        Config.currentDatabaseName = currentDatabaseName;
+    }
+    
+    
 
 }

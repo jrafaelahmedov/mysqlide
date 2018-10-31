@@ -32,7 +32,7 @@
                       <Component id="btnexplain" min="-2" pref="65" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" alignment="0" min="-2" pref="540" max="-2" attributes="0"/>
-                  <Component id="pnltable" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlTable" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -54,7 +54,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="232" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="pnltable" min="-2" max="-2" attributes="0"/>
+              <Component id="pnlTable" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="42" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -148,7 +148,7 @@
         <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnexplainMouseExited"/>
       </Events>
     </Component>
-    <Container class="javax.swing.JPanel" name="pnltable">
+    <Container class="javax.swing.JPanel" name="pnlTable">
 
       <Layout>
         <DimensionLayout dim="0">
@@ -170,7 +170,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tblqueryresult">
+            <Component class="javax.swing.JTable" name="tblQueryResult">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">

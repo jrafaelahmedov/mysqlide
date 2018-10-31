@@ -7,15 +7,14 @@ package com.bsptechs.main.util.ui;
 
 import com.bsptechs.main.FrameMysqlConnection;
 import com.bsptechs.main.Main;
+import com.bsptechs.main.PanelQuery;
 import com.bsptechs.main.PanelTable;
 import com.bsptechs.main.bean.Config;
-import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.NConnection;
-import com.bsptechs.main.bean.table.TableCell;
-import com.bsptechs.main.bean.table.TableRow;
 import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.bean.table.TableData;
+import com.bsptechs.main.bean.table.TableRow;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.AbstractDatabase;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
@@ -28,13 +27,10 @@ import com.bsptechs.main.util.file.WriteToFileIO;
 import java.awt.MouseInfo;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -44,6 +40,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -54,11 +51,7 @@ public class MainFrameUtility extends AbstractDatabase {
     public static List<String> columname = new ArrayList<>();
 
     private static DatabaseDAOInter database = new DatabaseDAOImpl();
-
-    public static void viewTable(JTabbedPane tabQuery, String title) {
-        MainFrameUtility.addPanelToTab(tabQuery, new PanelTable(), title);
-    }
-
+ 
     public static void addPanelToTab(JTabbedPane tab, JPanel panel, String title) {
         int count = tab.getTabCount();
         tab.addTab(title, panel);
@@ -69,22 +62,24 @@ public class MainFrameUtility extends AbstractDatabase {
 
     }
 
-  
-     
-
     public static void onMouseClick_OnTablesList(MouseEvent evt) {
         if (MainFrameUtility.isLeftDoubleClicked(evt)) {
+
             JList listUiDatabases = Config.getMain().getListTable();
             UiElement element = (UiElement) listUiDatabases.getSelectedValue();
-
-            if ("table".equals(element.getData())) {
-                viewTable(Config.getMain().getTabPaneTable(), element.getText());
+            System.out.println("element.getData()="+element.getData());
+            if (element.getData() instanceof TableName) {
+                TableName tb = (TableName) element.getData();
+                runQuery("select * from "+tb.getTableName());
                 return;
             }
+
+            String dbName = element.getText();
+            Config.setCurrentDatabaseName(dbName);
+            Config.getMain().enableNewQuery();
             List<TableName> list = database.getAllTables(element.getText());
 
-            MainFrameUtility.fillList(list, Config.getMain(), new UiPopupTable(), "table", listUiDatabases);
-
+            MainFrameUtility.fillList(list, Config.getMain(), new UiPopupTable(), null, listUiDatabases);
         }
     }
 
@@ -261,5 +256,27 @@ public class MainFrameUtility extends AbstractDatabase {
         int index = Config.instance().getConnections().indexOf(getSelectedConnectionFromList());
         return index;
     }
+
+    public static DefaultTableModel buildTableModel(TableData tableData) {
+
+        Vector<String> columnNames = new Vector<String>(tableData.getColumns());
+
+        Vector<Vector<Object>> rowsVector = new Vector<Vector<Object>>();
+        List<TableRow> rows = tableData.getRows();
+        for (TableRow row : rows) {
+            Vector<Object> vector = new Vector<Object>(row.getCells());
+            rowsVector.add(vector);
+        }
+
+        DefaultTableModel dtm = new DefaultTableModel(rowsVector, columnNames);
+        return dtm;
+    }
+    
+    public static void runQuery(String txt){
+        Config.getMain().prepareNewQuery();
+        Config.getMain().getPanelQuery().setQuery(txt);
+        Config.getMain().getPanelQuery().runQuery();
+    }
+ 
 
 }

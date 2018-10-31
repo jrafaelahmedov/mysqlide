@@ -6,7 +6,6 @@
 package com.bsptechs.main;
 
 import com.bsptechs.main.bean.Config;
-import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -23,16 +22,23 @@ import javax.swing.JTabbedPane;
  */
 public class Main extends javax.swing.JFrame {
 
-    public Main() throws Exception {
+    public Main() {
         initComponents();
+        btnNewQuery.setEnabled(false);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-    public void prepare() {
+    public void enableNewQuery() {
+        btnNewQuery.setEnabled(true);
+    }
+    private PanelQuery panelQuery = null;
+
+    public void prepare() throws Exception {
         Config.initialize();
         MainFrameUtility.prepareDatabaseList();
         MainFrameUtility.prepareConnectionsList();
         refreshData();
+
     }
 
     public void refreshData() {
@@ -833,15 +839,24 @@ public class Main extends javax.swing.JFrame {
         btnNewQuery.setBorder(null);
     }//GEN-LAST:event_btnNewQueryMouseExited
 
-    private void btnNewQueryActionPerformed(java.awt.event.ActionEvent evt) {
+    public PanelQuery getPanelQuery() {
+        return panelQuery;
+    }
+
+    public void prepareNewQuery() {
         try {
+            panelQuery = new PanelQuery();
             tabbedPaneCenter.setEnabled(true);
-            MainFrameUtility.addPanelToTab(tabQuery, new PanelQuery(), "Query");
+            MainFrameUtility.addPanelToTab(tabQuery, panelQuery, "Query");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void btnNewQueryActionPerformed(java.awt.event.ActionEvent evt) {
+        prepareNewQuery();
     }
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         MainFrameUtility.showFrameForMySQLConnection(this, tabTables, listConnections, listDatabases);

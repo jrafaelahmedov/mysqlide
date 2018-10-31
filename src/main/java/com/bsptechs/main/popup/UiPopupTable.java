@@ -67,8 +67,9 @@ public class UiPopupTable extends UiPopupAbstract {
 
         UiElement element = (UiElement) m.getListTable().getSelectedValue();
         System.out.println("element.getData()=" + element.getData());
-        if ("table".equals(element.getData())) {
-            MainFrameUtility.viewTable(m.getTabPaneTable(), element.getText());
+        if (element.getData() instanceof TableName) {
+            TableName tb = (TableName) element.getData();
+            MainFrameUtility.runQuery("select * from "+tb.getTableName());
         }
         //Tebriz burani dolduracaq
     }
