@@ -6,6 +6,7 @@
 package com.bsptechs.main.bean;
 
 import java.io.Serializable;
+import java.sql.Connection;
 
 /**
  *
@@ -18,6 +19,7 @@ public class NConnection implements Serializable {
     private String port;
     private String userName;
     private String password;
+    private transient Connection parentConnection;
 
     public NConnection() {
     }
@@ -69,5 +71,16 @@ public class NConnection implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Connection getParentConnection() {
+        return parentConnection;
+    }
+
+    public void setParentConnection(Connection parentConnection) {
+        this.parentConnection = parentConnection;
+    }
+    
+    
+    
 
 }

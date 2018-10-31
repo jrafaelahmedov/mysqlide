@@ -5,10 +5,12 @@
  */
 package com.bsptechs.main.bean;
 
+import com.bsptechs.main.Main;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 
 /**
  *
@@ -18,12 +20,11 @@ public final class Config implements Serializable {
 
     private static final String fileName = "mySql.txt";
     private List<NConnection> connections = null;
-    private static NConnection selectedConnection = null;
-
+    private static NConnection currentConnection = null;
     private static Config config = null;
 
-    public static void initialize(){
-          config = MainFrameUtility.readConfig();
+    public static void initialize() {
+        config = MainFrameUtility.readConfig();
     }
 
     public static Config instance() {
@@ -46,15 +47,24 @@ public final class Config implements Serializable {
     }
 
     public static void setConnection(NConnection connection) {
-        selectedConnection = connection;
+        currentConnection = connection;
     }
 
-    public static NConnection getSelectedConnection() {
-        return selectedConnection;
+    public static NConnection getCurrentConnection() {
+        return currentConnection;
     }
 
     public static String getFileName() {
         return fileName;
+    }
+    private static volatile Main main;
+
+    public static void setMain(Main frame) {
+        main = frame;
+    }
+
+    public static Main getMain() {
+        return main;
     }
 
 }

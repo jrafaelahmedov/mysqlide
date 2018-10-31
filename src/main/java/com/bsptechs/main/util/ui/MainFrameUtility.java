@@ -5,11 +5,17 @@
  */
 package com.bsptechs.main.util.ui;
 
+import com.bsptechs.main.FrameMysqlConnection;
+import com.bsptechs.main.Main;
 import com.bsptechs.main.PanelTable;
 import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.NConnection;
+import com.bsptechs.main.bean.table.TableCell;
+import com.bsptechs.main.bean.table.TableRow;
 import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.UiElement;
+import com.bsptechs.main.bean.table.TableData;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.AbstractDatabase;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
@@ -29,10 +35,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
@@ -45,8 +52,6 @@ import javax.swing.SwingUtilities;
 public class MainFrameUtility extends AbstractDatabase {
 
     public static List<String> columname = new ArrayList<>();
-
-    public static Connection conn;
 
     private static DatabaseDAOInter database = new DatabaseDAOImpl();
 
@@ -64,111 +69,65 @@ public class MainFrameUtility extends AbstractDatabase {
 
     }
 
-    public static List<String> runQuery(String query) throws ClassNotFoundException, SQLException {//eger nese parameter qebul etmesi lazimdirsa deyishiklik et
-        Statement stmt = null;
-        ResultSet rs = null;
+  
+     
 
-        try {
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
-            rs.beforeFirst();
-
-            // System.out.println("result setin rowlarinin sayina baxiram" + rs.getRow());
-            ResultSetMetaData metdata = rs.getMetaData();
-//            System.out.println(metdata.toString());
-            if (stmt.execute(query)) {
-                rs = stmt.getResultSet();
-                int count = metdata.getColumnCount();
-                for (int i = 1; i < count; i++) {
-                    System.out.println("column count " + count);
-                    while (rs.next()) {
-                        //  System.out.println(rs.getRow());
-
-//                        System.out.println("resultsetin datasini goturmeye calsihacam" + rs.getString(i));
-                        String columnames = metdata.getColumnName(i);
-                        String s = rs.getString(columnames);
-                        System.out.println(s);
-//                    String rowdata = rs.getNString(i);
-//                    System.out.println("columnarin adlari rowlar ne bilim ne esas netice alinsin " + rowdata);
-                    }
-
-//columname.add(columnames);
-                }
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("SQLException: rafael " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException sqlEx) {
-                }
-                rs = null;
-            }
-
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException sqlEx) {
-                } // ignore
-
-                stmt = null;
-            }
-        }
-        return null;
-    }
-
-    public static void onMouseClick_OnTablesList(JFrame frame, JTabbedPane tab, MouseEvent evt) {
+    public static void onMouseClick_OnTablesList(MouseEvent evt) {
         if (MainFrameUtility.isLeftDoubleClicked(evt)) {
-            JList listUiDatabases = (JList) evt.getSource();
+            JList listUiDatabases = Config.getMain().getListTable();
             UiElement element = (UiElement) listUiDatabases.getSelectedValue();
 
-            System.out.println("element.getData()=" + element.getData());
-            System.out.println(element.getData().toString());
             if ("table".equals(element.getData())) {
-                viewTable(tab, element.getText());
+                viewTable(Config.getMain().getTabPaneTable(), element.getText());
                 return;
             }
             List<TableName> list = database.getAllTables(element.getText());
 
-            MainFrameUtility.fillList(list, frame, new UiPopupTable(frame, listUiDatabases, tab), "table", listUiDatabases);
+            MainFrameUtility.fillList(list, Config.getMain(), new UiPopupTable(), "table", listUiDatabases);
 
         }
     }
 
-    public static void prepareConnectionsList(JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
-        MouseAdapter m = MainFrameUtility.getAdapterForConnectionList(frame, tab, listConnections, listDatabases);
-        listConnections.addMouseListener(m);
+    public static void prepareConnectionsList() {
+        MouseAdapter m = MainFrameUtility.getAdapterForConnectionList();
+        Config.getMain().getListConnections().addMouseListener(m);
     }
 
-    public static void prepareDatabaseList(JFrame frame, JTabbedPane tab, JList list) {
-        MouseAdapter m = MainFrameUtility.getAdapterForDatabaseList(frame, tab, list);
-        list.addMouseListener(m);
+    public static void prepareDatabaseList() {
+        MouseAdapter ma = MainFrameUtility.getAdapterForDatabaseList();
+        Main m = Config.getMain();
+        JList listTable = m.getListTable();
+        listTable.addMouseListener(ma);
     }
 
-    public static void fillConnectionsIntoJList(JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
+    public static void showFrameForMySQLConnection(JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
+
+        new FrameMysqlConnection().setVisible(true);
+        MainFrameUtility.fillConnectionsIntoJList();
+
+    }
+
+    public static void fillConnectionsIntoJList() {
+        Main m = Config.getMain();
         List<NConnection> list = Config.instance().getConnections();
         if (list == null) {
             return;
         }
-        UiPopupConnection popup = new UiPopupConnection(frame, tab, listConnections, listDatabases);
+        UiPopupConnection popup = new UiPopupConnection();
 
         List<String> l = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             l.add(list.get(i).getName());
         }
-        MainFrameUtility.fillList(l, frame, popup, null, listConnections);
+        MainFrameUtility.fillList(l, m, popup, null, m.getListConnections());
     }
 
-    public static void fillDatabasesIntoJList(JFrame frame, JTabbedPane tab, JList list) {
+    public static void fillDatabasesIntoJList() {
         List<String> databases = database.getAllDatabases();
 
-        UiPopupAbstract popup = new UiPopupDatabase(tab);
-
-        MainFrameUtility.fillList(databases, frame, popup, "database", list);
+        UiPopupAbstract popup = new UiPopupDatabase();
+        Main m = Config.getMain();
+        MainFrameUtility.fillList(databases, m, popup, "database", m.getListTable());
     }
 
     public static void fillList(List<?> textList, JFrame frame, JPopupMenu popup, Object data, JList uiList) {
@@ -200,34 +159,36 @@ public class MainFrameUtility extends AbstractDatabase {
         }
     }
 
-    public static MouseAdapter getAdapterForConnectionList(JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
+    public static MouseAdapter getAdapterForConnectionList() {
+        Main main = Config.getMain();
+
         MouseAdapter m = new java.awt.event.MouseAdapter() {
             @Override
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                MainFrameUtility.showMenuOnList(listConnections, evt);
+                MainFrameUtility.showMenuOnList(main.getListConnections(), evt);
             }
 
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 System.out.println("I am connection name");
-                MainFrameUtility.onMouseClick_OnConnectionsList(evt, frame, tab, listConnections, listDatabases);
+                MainFrameUtility.onMouseClick_OnConnectionsList(evt);
             }
         };
         return m;
     }
 
-    public static MouseAdapter getAdapterForDatabaseList(JFrame frame, JTabbedPane tab, JList list) {
+    public static MouseAdapter getAdapterForDatabaseList() {
         MouseAdapter m = new java.awt.event.MouseAdapter() {
             @Override
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 System.out.println("I am released on database list");
-                MainFrameUtility.showMenuOnList(list, evt);
+                MainFrameUtility.showMenuOnList(Config.getMain().getListTable(), evt);
             }
 
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 System.out.println("I am cliecked on database list");
-                MainFrameUtility.onMouseClick_OnTablesList(frame, tab, evt);
+                MainFrameUtility.onMouseClick_OnTablesList(evt);
             }
         };
 
@@ -251,16 +212,54 @@ public class MainFrameUtility extends AbstractDatabase {
         }
     }
 
-    public static void onMouseClick_OnConnectionsList(MouseEvent evt, JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
+    public static void onMouseClick_OnConnectionsList(MouseEvent evt) {
         if (MainFrameUtility.isLeftDoubleClicked(evt)) {
-            connect(frame, tab, listConnections, listDatabases);
+            connect();
         }
     }
 
-    public static void connect(JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
-        int index = listConnections.getSelectedIndex();
+    public static void connect() {
+        Main m = Config.getMain();
+        int index = m.getListConnections().getSelectedIndex();
+        System.out.println("selected index=" + index);
         NConnection selectedConnection = Config.instance().getConnections().get(index);
         Config.setConnection(selectedConnection);
-        MainFrameUtility.fillDatabasesIntoJList(frame, tab, listDatabases);
+        MainFrameUtility.fillDatabasesIntoJList();
     }
+
+    public static void disconnect() {
+        try {
+            NConnection connection = getSelectedConnectionFromList();
+            if (connection.getParentConnection() != null) {
+                connection.getParentConnection().close();
+            }
+            if (Config.getCurrentConnection() == connection) {
+                Config.getMain().getListTable().setModel(new DefaultListModel());
+            }
+            connection.setParentConnection(null);
+            System.out.println(connection.getName() + " connection is closed");
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrameUtility.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void showMySQLConnectionAsUpdate() {
+        FrameMysqlConnection f = new FrameMysqlConnection();
+        f.showAsUpdate();
+    }
+
+    public static NConnection getSelectedConnectionFromList() {
+        Main m = Config.getMain();
+
+        int index = m.getListConnections().getSelectedIndex();
+        System.out.println("selected index=" + index);
+        NConnection selectedConnection = Config.instance().getConnections().get(index);
+        return selectedConnection;
+    }
+
+    public static int getSelectedConnectionIndexFromList() {
+        int index = Config.instance().getConnections().indexOf(getSelectedConnectionFromList());
+        return index;
+    }
+
 }

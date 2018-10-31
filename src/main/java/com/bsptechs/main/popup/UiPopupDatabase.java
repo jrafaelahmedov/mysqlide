@@ -6,11 +6,12 @@
 package com.bsptechs.main.popup;
 
 import com.bsptechs.main.PanelQuery;
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTabbedPane;
 
 /**
  *
@@ -18,10 +19,7 @@ import javax.swing.JTabbedPane;
  */
 public class UiPopupDatabase extends UiPopupAbstract {
 
-    JTabbedPane pane;
-
-    public UiPopupDatabase(JTabbedPane pane) {
-        this.pane = pane;
+    public UiPopupDatabase() {
         addMenuItem("Database Properties", () -> {
             properties();
         });
@@ -51,7 +49,7 @@ public class UiPopupDatabase extends UiPopupAbstract {
 
     public void newQuery() throws ClassNotFoundException, SQLException {
         System.out.println("new query");
-        MainFrameUtility.addPanelToTab(pane, new PanelQuery(), "Query");
+        MainFrameUtility.addPanelToTab(Config.getMain().getTabPaneTable(), new PanelQuery(), "Query");
     }
 
 }

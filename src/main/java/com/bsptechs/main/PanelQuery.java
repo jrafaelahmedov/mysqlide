@@ -30,11 +30,10 @@ public class PanelQuery extends javax.swing.JPanel {
     public static Connection conn;
 
     private static DatabaseDAOInter database = new DatabaseDAOImpl();
-
-    private final MainFrameUtility service;
+ 
 
     public PanelQuery() throws ClassNotFoundException, SQLException {
-        this.service = new MainFrameUtility();
+         
         initComponents();
         List<NConnection> list = Config.instance().getConnections();
         jComboBoxconnections.addItem("");
@@ -365,12 +364,13 @@ public class PanelQuery extends javax.swing.JPanel {
     private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
         pnltable.setVisible(true);
         try {
-            service.runQuery(txtQuery.getText());
+            database.runQuery(txtQuery.getText());
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PanelQuery.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(PanelQuery.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_btnRunActionPerformed
 
     private void jComboBoxtablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxtablesActionPerformed

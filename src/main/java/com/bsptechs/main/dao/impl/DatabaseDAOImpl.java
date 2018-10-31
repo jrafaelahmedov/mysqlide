@@ -6,15 +6,20 @@
 package com.bsptechs.main.dao.impl;
 
 import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.bean.TableName;
+import com.bsptechs.main.bean.table.TableCell;
+import com.bsptechs.main.bean.table.TableData;
+import com.bsptechs.main.bean.table.TableRow;
 import com.bsptechs.main.dao.inter.AbstractDatabase;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,13 +27,13 @@ import java.util.List;
  * @author Penthos
  */
 public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInter {
-    
 
     @Override
     public List<String> getAllDatabases() {
         List<String> list = new ArrayList<>();
-        
-        try (Connection conn = connect(Config.getSelectedConnection())) {
+
+        try {
+            Connection conn = connect(Config.getCurrentConnection());
             Statement stmt = conn.createStatement();
             ResultSet resultset = stmt.executeQuery("SHOW DATABASES;");
 
@@ -50,7 +55,8 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     @Override
     public List<TableName> getAllTables(String databaseName) {
         List<TableName> list = new ArrayList<>();
-        try (Connection conn = connect(Config.getSelectedConnection())) {
+        try {
+            Connection conn = connect(Config.getCurrentConnection());
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM information_schema.tables where table_schema = ?");
             stmt.setString(1, databaseName);
             ResultSet resultset = stmt.executeQuery();
@@ -66,18 +72,73 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
         }
     }
 
-
     @Override
     public boolean renameTable(String DBname, String oldTblName, String newTblName) {
-        try (Connection conn = connect(Config.getSelectedConnection())) {
-            PreparedStatement stmt = conn.prepareStatement("RENAME TABLE `" + DBname + "`.`" + oldTblName + "` TO `" + DBname + "`.`" + newTblName+"`");//PrepapredStatement ile edende dirnaqlara gore ishlemirdi ona gore bele etdim
+        try {
+            Connection conn = connect(Config.getCurrentConnection());
+            PreparedStatement stmt = conn.prepareStatement("RENAME TABLE `" + DBname + "`.`" + oldTblName + "` TO `" + DBname + "`.`" + newTblName + "`");//PrepapredStatement ile edende dirnaqlara gore ishlemirdi ona gore bele etdim
             stmt.executeUpdate();
-            
-            ///'alma/'=/'alma/' and 1=1  escape
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
+        }
+    }
+
+    public static List<String> getColumns(ResultSet rs) throws SQLException {
+        ResultSetMetaData metdata = rs.getMetaData();
+        int cnt = metdata.getColumnCount();
+        List<String> columns = new ArrayList<>();
+        for (int i = 0; i < cnt; i++) {
+            String columnName = metdata.getColumnName(i + 1);
+            columns.add(columnName);
+        }
+        return columns;
+    }
+
+    @Override
+    public TableData runQuery(String query) throws ClassNotFoundException, SQLException {
+        TableData table = null;
+        try (Connection conn = connect(Config.getCurrentConnection());) {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            List<String> columns = getColumns(rs);
+            List<TableRow> rows = new ArrayList<>();
+            while (rs.next()) {
+                List<TableCell> rowCells = new ArrayList<>();
+
+                for (String column : columns) {
+                    Object o = rs.getObject(column);
+                    rowCells.add(new TableCell(column, o));
+                }
+
+                rows.add(new TableRow(rowCells));
+            }
+            table = new TableData(rows, columns);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            return table;
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        NConnection conn = new NConnection("localhost", "localhost", "3306", "root", "");
+        Config.setConnection(conn);
+
+        TableData data = new DatabaseDAOImpl().runQuery("SELECT * FROM filemanagementsystem.user;");
+
+        List<TableRow> rows = data.getRows();
+        for (TableRow r : rows) {
+            System.out.println(r);
+            System.out.println("-------------------");
+            List<TableCell> cells = r.getCells();
+            
+            for(TableCell c: cells){
+                System.out.println(c);
+            }
+            System.out.println("");
         }
     }
 

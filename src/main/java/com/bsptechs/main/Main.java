@@ -6,6 +6,7 @@
 package com.bsptechs.main;
 
 import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -13,6 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JTabbedPane;
 
 /**
  *
@@ -22,17 +25,31 @@ public class Main extends javax.swing.JFrame {
 
     public Main() throws Exception {
         initComponents();
-        Config.initialize();
-
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-        MainFrameUtility.prepareDatabaseList(this, tabTables, listDatabases);
-        MainFrameUtility.prepareConnectionsList(this, tabTables, listConnections, listDatabases);
-
-//        MainFrameUtility.fillDatabasesIntoJList(this, tabQuery, listDatabases);
-        MainFrameUtility.fillConnectionsIntoJList(this, tabTables, listConnections, listDatabases);
     }
 
+    public void prepare() {
+        Config.initialize();
+        MainFrameUtility.prepareDatabaseList();
+        MainFrameUtility.prepareConnectionsList();
+        refreshData();
+    }
+
+    public void refreshData() {
+        MainFrameUtility.fillConnectionsIntoJList();
+    }
+
+    public JTabbedPane getTabPaneTable() {
+        return tabTables;
+    }
+
+    public JList getListTable() {
+        return listDatabases;
+    }
+
+    public JList getListConnections() {
+        return listConnections;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -681,7 +698,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1MenuDragMouseEntered
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        MainFrameUtility.fillDatabasesIntoJList(this, tabQuery, listDatabases);
+        MainFrameUtility.fillDatabasesIntoJList();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void listDatabasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listDatabasesMouseClicked
@@ -827,9 +844,7 @@ public class Main extends javax.swing.JFrame {
         }
     }
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        new FrameMysqlConnection().setVisible(true);
-        MainFrameUtility.fillConnectionsIntoJList(this, tabTables, listConnections, listDatabases);
-
+        MainFrameUtility.showFrameForMySQLConnection(this, tabTables, listConnections, listDatabases);
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -878,7 +893,9 @@ public class Main extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new Main().setVisible(true);
+                    Config.setMain(new Main());
+                    Config.getMain().prepare();
+                    Config.getMain().setVisible(true);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {

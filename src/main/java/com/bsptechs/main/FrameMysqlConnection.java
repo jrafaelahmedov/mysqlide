@@ -1,6 +1,7 @@
 package com.bsptechs.main;
 
 import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 
@@ -20,6 +21,19 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
      */
     public FrameMysqlConnection() {
         initComponents();
+    }
+
+    private boolean updateMode = false;
+
+    public void showAsUpdate() {
+        updateMode = true;
+        NConnection c = MainFrameUtility.getSelectedConnectionFromList();
+        txtConnectionName.setText(c.getName());
+        txtHostNameIpAdr.setText(c.getIpAdr());
+        txtPort.setText(c.getPort());
+        txtUserName.setText(c.getUserName());
+        txtPassword.setText(c.getPassword());
+        this.setVisible(true);
     }
 
     /**
@@ -196,9 +210,16 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         NConnection n = getAllInformFromUser();
-        Config.instance().appendConnection(n);
+        if (updateMode) {
+            int index = MainFrameUtility.getSelectedConnectionIndexFromList();
+            Config.instance().getConnections().set(index, n);
+        } else {
+            Config.instance().appendConnection(n);
+        }
         MainFrameUtility.saveConfig();
         this.dispose();
+        Config.getMain().refreshData();
+
     }//GEN-LAST:event_btnOkActionPerformed
 
     public NConnection getAllInformFromUser() {

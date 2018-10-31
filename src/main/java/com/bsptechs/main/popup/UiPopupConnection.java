@@ -5,12 +5,7 @@
  */
 package com.bsptechs.main.popup;
 
-import com.bsptechs.main.bean.Config;
-import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.util.ui.MainFrameUtility;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JTabbedPane;
 
 /**
  *
@@ -18,17 +13,7 @@ import javax.swing.JTabbedPane;
  */
 public class UiPopupConnection extends UiPopupAbstract {
 
-    private JFrame frame;
-    private JList listConnections;
-    private JList listDatabases;
-    private JTabbedPane tab;
-
-    public UiPopupConnection(JFrame frame, JTabbedPane tab, JList listConnections,JList listDatabases) {
-        this.frame = frame;
-        this.listConnections = listConnections;
-        this.listDatabases = listDatabases;
-        this.tab = tab;
-
+    public UiPopupConnection() {
         addMenuItem("Delete Connection", () -> {
             delete();
         });
@@ -39,6 +24,10 @@ public class UiPopupConnection extends UiPopupAbstract {
         addMenuItem("Connect", () -> {
             connect();
         });
+
+        addMenuItem("Disconnect", () -> {
+            disconnect();
+        });
     }
 
     public void delete() {
@@ -48,13 +37,20 @@ public class UiPopupConnection extends UiPopupAbstract {
 
     public void properties() {
         System.out.println("properites connection");
+        MainFrameUtility.showMySQLConnectionAsUpdate();
+    }
+
+    public void connect() {
+        System.out.println("connection connection");
+
+        MainFrameUtility.connect();
         //Tebriz burani dolduracaq
     }
 
-    public void connect() { 
-        System.out.println("connection connection");
-       
-        MainFrameUtility.connect(frame, tab, listDatabases, listConnections);
+    public void disconnect() {
+        System.out.println("disconnection connection");
+
+        MainFrameUtility.disconnect();
         //Tebriz burani dolduracaq
     }
 
