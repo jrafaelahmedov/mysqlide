@@ -6,7 +6,14 @@
 package com.bsptechs.main.popup;
 
 import com.bsptechs.main.PanelQuery;
+import com.bsptechs.main.bean.TableName;
+import com.bsptechs.main.bean.UiElement;
+import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
+import com.bsptechs.main.popup.file.FileUtility;
 import com.bsptechs.main.util.ui.MainFrameUtility;
+import static java.util.Collections.list;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 /**
@@ -15,7 +22,9 @@ import javax.swing.JTabbedPane;
  */
 public class UiPopupDatabase extends UiPopupAbstract {
 
+    DatabaseDAOImpl database = new DatabaseDAOImpl();
     JTabbedPane pane;
+    JList list;
 
     public UiPopupDatabase(JTabbedPane pane) {
         this.pane = pane;
@@ -28,6 +37,7 @@ public class UiPopupDatabase extends UiPopupAbstract {
         addMenuItem("New Query", () -> {
             newQuery();
         });
+
     }
 
     public void delete() {

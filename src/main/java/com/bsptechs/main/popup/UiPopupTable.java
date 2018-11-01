@@ -9,6 +9,7 @@ import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
+import com.bsptechs.main.popup.file.FileUtility;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.util.List;
 import javax.swing.JFrame;
@@ -135,9 +136,22 @@ public class UiPopupTable extends UiPopupAbstract {
     }
 
     private void copyTable() {
+        int selectedIndex = list.getSelectedIndex();
+        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
+        TableName tb = (TableName) selectedElement.getData();
+        FileUtility.writeDBAndTblNameFile(tb.getDatabaseName(), tb.getTableName());
     }
 
     private void pasteTable() {
+        int selectedIndex = list.getSelectedIndex();
+        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
+        TableName tb = (TableName) selectedElement.getData();
+        String options[] = new String[3];
+
+        String newTblName = (String) JOptionPane.showInputDialog(null, "Enter name:", "Paste Table",
+                JOptionPane.QUESTION_MESSAGE, null, null, tb.getTableName());
+        database.pasteTable(FileUtility.readDBAndTblName(), tb.getDatabaseName(), newTblName);
+        refreshDB();
     }
 
     private void dublicateTable() {

@@ -116,7 +116,24 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
 
     @Override
     public boolean dublicateTable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        return true;
+    }
+
+    @Override
+    public boolean pasteTable(String information, String DBName, String TblName) {
+
+        try (Connection conn = connect()) {
+            PreparedStatement stmt = conn.prepareStatement("CREATE TABLE " + DBName + "." + TblName + " LIKE " + information);
+            PreparedStatement stmt1 = conn.prepareStatement("INSERT " + DBName + "." + TblName + "SELECT * FROM " + information);
+            stmt.executeUpdate();
+
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
     }
 
 }
