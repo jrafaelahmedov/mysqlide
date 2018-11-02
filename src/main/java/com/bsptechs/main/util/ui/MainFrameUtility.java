@@ -48,6 +48,27 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MainFrameUtility extends AbstractDatabase {
 
+    public static NConnection connectedConnection;
+
+    public static NConnection getConnectedConnection() {
+        return connectedConnection;
+    }
+
+    public static void setConnectedConnection(NConnection connectedConnection) {
+        MainFrameUtility.connectedConnection = connectedConnection;
+    }
+
+   
+    public static String connectedDatabase;
+
+    public static String getConnectedDatabase() {
+        return connectedDatabase;
+    }
+
+    public static void setConnectedDatabase(String connectedDatabase) {
+        MainFrameUtility.connectedDatabase = connectedDatabase;
+    }
+    
     public static List<String> columname = new ArrayList<>();
 
     private static DatabaseDAOInter database = new DatabaseDAOImpl();
@@ -68,6 +89,7 @@ public class MainFrameUtility extends AbstractDatabase {
             JList listUiDatabases = Config.getMain().getListTable();
             UiElement element = (UiElement) listUiDatabases.getSelectedValue();
             System.out.println("element.getData()="+element.getData());
+            setConnectedDatabase((String) element.getData());
             if (element.getData() instanceof TableName) {
                 TableName tb = (TableName) element.getData();
                 runQuery("select * from "+tb.getTableName());
@@ -94,7 +116,7 @@ public class MainFrameUtility extends AbstractDatabase {
         JList listTable = m.getListTable();
         listTable.addMouseListener(ma);
     }
-
+  
     public static void showFrameForMySQLConnection(JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
 
         new FrameMysqlConnection().setVisible(true);
@@ -219,7 +241,9 @@ public class MainFrameUtility extends AbstractDatabase {
         System.out.println("selected index=" + index);
         NConnection selectedConnection = Config.instance().getConnections().get(index);
         Config.setConnection(selectedConnection);
+        setConnectedConnection(selectedConnection);
         MainFrameUtility.fillDatabasesIntoJList();
+//        System.out.println("secilmish connection: " +selectedConnection);
     }
 
     public static void disconnect() {
@@ -249,6 +273,7 @@ public class MainFrameUtility extends AbstractDatabase {
         int index = m.getListConnections().getSelectedIndex();
         System.out.println("selected index=" + index);
         NConnection selectedConnection = Config.instance().getConnections().get(index);
+        System.out.println("secilmish connection:  "+selectedConnection.getName());
         return selectedConnection;
     }
 

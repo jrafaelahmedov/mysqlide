@@ -6,9 +6,11 @@
 package com.bsptechs.main;
 
 import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -35,12 +37,12 @@ public class Main extends javax.swing.JFrame {
 
     public void prepare() throws Exception {
         Config.initialize();
-        MainFrameUtility.prepareDatabaseList();
+       MainFrameUtility.prepareDatabaseList();
         MainFrameUtility.prepareConnectionsList();
         refreshData();
 
     }
-
+    
     public void refreshData() {
         MainFrameUtility.fillConnectionsIntoJList();
     }
@@ -56,7 +58,7 @@ public class Main extends javax.swing.JFrame {
     public JList getListConnections() {
         return listConnections;
     }
-
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,7 +100,7 @@ public class Main extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
-        jMenuItem13 = new javax.swing.JMenuItem();
+        menuitemMysqlConnection = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
@@ -126,7 +128,6 @@ public class Main extends javax.swing.JFrame {
 
         pnlMainTop.setPreferredSize(new java.awt.Dimension(1050, 61));
 
-        btnEvent.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\event.png")); // NOI18N
         btnEvent.setText("Event");
         btnEvent.setBorder(null);
         btnEvent.setContentAreaFilled(false);
@@ -143,7 +144,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnFunctions.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\function-mathematical-symbol.png")); // NOI18N
         btnFunctions.setText("Function");
         btnFunctions.setBorder(null);
         btnFunctions.setContentAreaFilled(false);
@@ -160,7 +160,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnView.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\view.png")); // NOI18N
         btnView.setText("View");
         btnView.setBorder(null);
         btnView.setContentAreaFilled(false);
@@ -182,7 +181,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnModel.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\model.png")); // NOI18N
         btnModel.setText("Model");
         btnModel.setBorder(null);
         btnModel.setContentAreaFilled(false);
@@ -204,7 +202,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnAutomation.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\automation.png")); // NOI18N
         btnAutomation.setText("Automation");
         btnAutomation.setBorder(null);
         btnAutomation.setContentAreaFilled(false);
@@ -221,7 +218,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnBackup.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\backup.png")); // NOI18N
         btnBackup.setText("Backup");
         btnBackup.setBorder(null);
         btnBackup.setContentAreaFilled(false);
@@ -238,7 +234,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnReport.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\report.png")); // NOI18N
         btnReport.setText("Report");
         btnReport.setBorder(null);
         btnReport.setContentAreaFilled(false);
@@ -260,7 +255,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnQuery.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\query.png")); // NOI18N
         btnQuery.setText("Query");
         btnQuery.setBorder(null);
         btnQuery.setContentAreaFilled(false);
@@ -277,7 +271,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnUsers.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\user.png")); // NOI18N
         btnUsers.setText("User");
         btnUsers.setBorder(null);
         btnUsers.setContentAreaFilled(false);
@@ -301,7 +294,6 @@ public class Main extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        btnConnection.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\connection.png")); // NOI18N
         btnConnection.setText("Connection");
         btnConnection.setBorder(null);
         btnConnection.setContentAreaFilled(false);
@@ -324,7 +316,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnTable.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\table.png")); // NOI18N
         btnTable.setText("Table");
         btnTable.setBorder(null);
         btnTable.setContentAreaFilled(false);
@@ -333,11 +324,11 @@ public class Main extends javax.swing.JFrame {
         btnTable.setPreferredSize(new java.awt.Dimension(80, 61));
         btnTable.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnTableMouseExited(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnTableMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnTableMouseExited(evt);
             }
         });
         btnTable.addActionListener(new java.awt.event.ActionListener() {
@@ -346,7 +337,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnNewQuery.setIcon(new javax.swing.ImageIcon("C:\\Users\\RafaelAhmedov\\Documents\\MySqLIde\\bin\\main\\newquery.png")); // NOI18N
         btnNewQuery.setText("New Query");
         btnNewQuery.setBorder(null);
         btnNewQuery.setContentAreaFilled(false);
@@ -357,11 +347,11 @@ public class Main extends javax.swing.JFrame {
         btnNewQuery.setVerifyInputWhenFocusTarget(false);
         btnNewQuery.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnNewQuery.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnNewQueryMouseEntered(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnNewQueryMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNewQueryMouseEntered(evt);
             }
         });
         btnNewQuery.addActionListener(new java.awt.event.ActionListener() {
@@ -542,13 +532,13 @@ public class Main extends javax.swing.JFrame {
 
         jMenu8.setText("New Connection");
 
-        jMenuItem13.setText("MySQL");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        menuitemMysqlConnection.setText("MySQL");
+        menuitemMysqlConnection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
+                menuitemMysqlConnectionActionPerformed(evt);
             }
         });
-        jMenu8.add(jMenuItem13);
+        jMenu8.add(menuitemMysqlConnection);
 
         jMenuItem12.setText("PostgreSQL");
         jMenu8.add(jMenuItem12);
@@ -804,7 +794,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModelMouseEntered
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-        // TODO add your handling code here:
+//        MainFrameUtility.getSelectedConnectionFromList();
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnViewMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewMouseExited
@@ -858,9 +848,9 @@ public class Main extends javax.swing.JFrame {
     private void btnNewQueryActionPerformed(java.awt.event.ActionEvent evt) {
         prepareNewQuery();
     }
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+    private void menuitemMysqlConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuitemMysqlConnectionActionPerformed
         MainFrameUtility.showFrameForMySQLConnection(this, tabTables, listConnections, listDatabases);
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+    }//GEN-LAST:event_menuitemMysqlConnectionActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -950,7 +940,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
@@ -968,6 +957,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JList<String> listConnections;
     private javax.swing.JList<String> listDatabases;
     private javax.swing.JMenuBar menuBarTop;
+    private javax.swing.JMenuItem menuitemMysqlConnection;
     private javax.swing.JPanel panelCenter;
     private javax.swing.JPanel panelLeft;
     private javax.swing.JPanel panelWrapper;
