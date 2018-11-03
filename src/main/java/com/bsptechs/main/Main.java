@@ -6,11 +6,9 @@
 package com.bsptechs.main;
 
 import com.bsptechs.main.bean.Config;
-import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.awt.Color;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -37,12 +35,12 @@ public class Main extends javax.swing.JFrame {
 
     public void prepare() throws Exception {
         Config.initialize();
-       MainFrameUtility.prepareDatabaseList();
+        MainFrameUtility.prepareDatabaseList();
         MainFrameUtility.prepareConnectionsList();
         refreshData();
 
     }
-    
+
     public void refreshData() {
         MainFrameUtility.fillConnectionsIntoJList();
     }
@@ -58,7 +56,7 @@ public class Main extends javax.swing.JFrame {
     public JList getListConnections() {
         return listConnections;
     }
-  
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -80,7 +78,7 @@ public class Main extends javax.swing.JFrame {
         btnQuery = new javax.swing.JButton();
         btnUsers = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        btnConnection = new javax.swing.JButton();
+        btnNewConnection = new javax.swing.JButton();
         btnTable = new javax.swing.JButton();
         btnNewQuery = new javax.swing.JButton();
         panelCenter = new javax.swing.JPanel();
@@ -99,12 +97,7 @@ public class Main extends javax.swing.JFrame {
         menuBarTop = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu8 = new javax.swing.JMenu();
-        menuitemMysqlConnection = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
+        menuNewMySQLConnection = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
@@ -294,25 +287,24 @@ public class Main extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        btnConnection.setText("Connection");
-        btnConnection.setBorder(null);
-        btnConnection.setContentAreaFilled(false);
-        btnConnection.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnConnection.setDefaultCapable(false);
-        btnConnection.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnConnection.setPreferredSize(new java.awt.Dimension(80, 61));
-        btnConnection.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnConnection.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnConnectionMouseEntered(evt);
-            }
+        btnNewConnection.setText("New Connection");
+        btnNewConnection.setContentAreaFilled(false);
+        btnNewConnection.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnNewConnection.setDefaultCapable(false);
+        btnNewConnection.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnNewConnection.setPreferredSize(new java.awt.Dimension(80, 61));
+        btnNewConnection.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnNewConnection.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnConnectionMouseExited(evt);
+                btnNewConnectionMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNewConnectionMouseEntered(evt);
             }
         });
-        btnConnection.addActionListener(new java.awt.event.ActionListener() {
+        btnNewConnection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConnectionActionPerformed(evt);
+                btnNewConnectionActionPerformed(evt);
             }
         });
 
@@ -365,7 +357,7 @@ public class Main extends javax.swing.JFrame {
         pnlMainTopLayout.setHorizontalGroup(
             pnlMainTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMainTopLayout.createSequentialGroup()
-                .addComponent(btnConnection, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNewConnection, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNewQuery, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
@@ -390,7 +382,7 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(btnAutomation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btnModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 237, Short.MAX_VALUE))
+                .addGap(0, 189, Short.MAX_VALUE))
         );
         pnlMainTopLayout.setVerticalGroup(
             pnlMainTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,7 +400,7 @@ public class Main extends javax.swing.JFrame {
             .addComponent(jSeparator1)
             .addGroup(pnlMainTopLayout.createSequentialGroup()
                 .addGroup(pnlMainTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnConnection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNewConnection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNewQuery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -516,12 +508,12 @@ public class Main extends javax.swing.JFrame {
 
         jMenu1.setText("File");
         jMenu1.addMenuDragMouseListener(new javax.swing.event.MenuDragMouseListener() {
-            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
-            }
             public void menuDragMouseEntered(javax.swing.event.MenuDragMouseEvent evt) {
                 jMenu1MenuDragMouseEntered(evt);
             }
             public void menuDragMouseExited(javax.swing.event.MenuDragMouseEvent evt) {
+            }
+            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
             }
             public void menuDragMouseReleased(javax.swing.event.MenuDragMouseEvent evt) {
             }
@@ -530,34 +522,13 @@ public class Main extends javax.swing.JFrame {
         jMenuItem1.setText("New Project");
         jMenu1.add(jMenuItem1);
 
-        jMenu8.setText("New Connection");
-
-        menuitemMysqlConnection.setText("MySQL");
-        menuitemMysqlConnection.addActionListener(new java.awt.event.ActionListener() {
+        menuNewMySQLConnection.setText("New Connection");
+        menuNewMySQLConnection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuitemMysqlConnectionActionPerformed(evt);
+                menuNewMySQLConnectionActionPerformed(evt);
             }
         });
-        jMenu8.add(menuitemMysqlConnection);
-
-        jMenuItem12.setText("PostgreSQL");
-        jMenu8.add(jMenuItem12);
-
-        jMenuItem14.setText("Oracle");
-        jMenu8.add(jMenuItem14);
-
-        jMenuItem15.setText("SQLite");
-        jMenu8.add(jMenuItem15);
-
-        jMenuItem16.setText("SQL Server");
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
-            }
-        });
-        jMenu8.add(jMenuItem16);
-
-        jMenu1.add(jMenu8);
+        jMenu1.add(menuNewMySQLConnection);
 
         jMenu9.setText("New");
         jMenu1.add(jMenu9);
@@ -721,17 +692,17 @@ public class Main extends javax.swing.JFrame {
         btnTable.setBorder(null);
     }//GEN-LAST:event_btnTableMouseExited
 
-    private void btnConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectionActionPerformed
+    private void btnNewConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewConnectionActionPerformed
+        MainFrameUtility.showFrameForMySQLConnection(this, tabTables, listConnections, listDatabases);
+    }//GEN-LAST:event_btnNewConnectionActionPerformed
 
-    }//GEN-LAST:event_btnConnectionActionPerformed
+    private void btnNewConnectionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewConnectionMouseEntered
+        btnNewConnection.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
+    }//GEN-LAST:event_btnNewConnectionMouseEntered
 
-    private void btnConnectionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConnectionMouseEntered
-        btnConnection.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
-    }//GEN-LAST:event_btnConnectionMouseEntered
-
-    private void btnConnectionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConnectionMouseExited
-        btnConnection.setBorder(null);
-    }//GEN-LAST:event_btnConnectionMouseExited
+    private void btnNewConnectionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewConnectionMouseExited
+        btnNewConnection.setBorder(null);
+    }//GEN-LAST:event_btnNewConnectionMouseExited
 
     private void btnUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsersActionPerformed
         // TODO add your handling code here:
@@ -829,6 +800,10 @@ public class Main extends javax.swing.JFrame {
         btnNewQuery.setBorder(null);
     }//GEN-LAST:event_btnNewQueryMouseExited
 
+    private void menuNewMySQLConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNewMySQLConnectionActionPerformed
+        MainFrameUtility.showFrameForMySQLConnection(this, tabTables, listConnections, listDatabases);
+    }//GEN-LAST:event_menuNewMySQLConnectionActionPerformed
+
     public PanelQuery getPanelQuery() {
         return panelQuery;
     }
@@ -848,9 +823,6 @@ public class Main extends javax.swing.JFrame {
     private void btnNewQueryActionPerformed(java.awt.event.ActionEvent evt) {
         prepareNewQuery();
     }
-    private void menuitemMysqlConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuitemMysqlConnectionActionPerformed
-        MainFrameUtility.showFrameForMySQLConnection(this, tabTables, listConnections, listDatabases);
-    }//GEN-LAST:event_menuitemMysqlConnectionActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -916,10 +888,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnAutomation;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnBackup;
-    private javax.swing.JButton btnConnection;
     private javax.swing.JButton btnEvent;
     private javax.swing.JButton btnFunctions;
     private javax.swing.JButton btnModel;
+    private javax.swing.JButton btnNewConnection;
     private javax.swing.JButton btnNewQuery;
     private javax.swing.JButton btnQuery;
     private javax.swing.JButton btnReport;
@@ -934,15 +906,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
-    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -957,7 +924,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JList<String> listConnections;
     private javax.swing.JList<String> listDatabases;
     private javax.swing.JMenuBar menuBarTop;
-    private javax.swing.JMenuItem menuitemMysqlConnection;
+    private javax.swing.JMenuItem menuNewMySQLConnection;
     private javax.swing.JPanel panelCenter;
     private javax.swing.JPanel panelLeft;
     private javax.swing.JPanel panelWrapper;

@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,7 +24,7 @@ public final class Config implements Serializable {
     private static NConnection currentConnection = null;
     private static String currentDatabaseName = null;
     private static Config config = null;
-    
+
     public static void initialize() {
         config = MainFrameUtility.readConfig();
     }
@@ -34,6 +35,19 @@ public final class Config implements Serializable {
 
     public List<NConnection> getConnections() {
         return connections;
+    }
+
+    public NConnection getConnectionByName(String connectionName) {
+        if(connections==null){
+            return null;
+        }
+        for (int i = 0; i < connections.size(); i++) {
+            NConnection connection = connections.get(i);
+            if (connection.getName().equalsIgnoreCase(connectionName)) {
+                return connection;
+            }
+        }
+        return null;
     }
 
     public void setConnections(List<NConnection> connections) {
@@ -75,7 +89,5 @@ public final class Config implements Serializable {
     public static void setCurrentDatabaseName(String currentDatabaseName) {
         Config.currentDatabaseName = currentDatabaseName;
     }
-    
-    
 
 }

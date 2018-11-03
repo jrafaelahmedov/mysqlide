@@ -7,6 +7,7 @@ package com.bsptechs.main.bean;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.util.List;
 
 /**
  *
@@ -20,16 +21,25 @@ public class NConnection implements Serializable {
     private String userName;
     private String password;
     private transient Connection parentConnection;
+    private transient List<String> databases;
 
     public NConnection() {
     }
 
-    public NConnection(String name,String ipAdr, String port, String userName, String password) {
+    public NConnection(String name, String ipAdr, String port, String userName, String password) {
         this.name = name;
         this.ipAdr = ipAdr;
         this.port = port;
         this.userName = userName;
         this.password = password;
+    }
+
+    public List<String> getDatabases() {
+        return databases;
+    }
+
+    public void setDatabases(List<String> databases) {
+        this.databases = databases;
     }
 
     public String getIpAdr() {
@@ -79,13 +89,10 @@ public class NConnection implements Serializable {
     public void setParentConnection(Connection parentConnection) {
         this.parentConnection = parentConnection;
     }
-    
-    
-    
-
+ 
     @Override
     public String toString() {
-        return "NConnection{" + "name=" + name + ", ipAdr=" + ipAdr + ", port=" + port + ", userName=" + userName + ", password=" + password + '}';
+        return name;
     }
 
 }

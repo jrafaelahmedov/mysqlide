@@ -1,5 +1,6 @@
 package com.bsptechs.main.dao.inter;
 
+import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.table.TableData;
 import java.sql.SQLException;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface DatabaseDAOInter {
 
-    List<String> getAllDatabases();
+    List<String> getAllDatabases(NConnection connection);
 
     List<TableName> getAllTables(String databaseName);
 

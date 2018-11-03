@@ -1,9 +1,10 @@
 package com.bsptechs.main;
 
 import com.bsptechs.main.bean.Config;
-import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.util.ui.MainFrameUtility;
+import javax.swing.JOptionPane;
+import org.apache.commons.lang3.StringUtils;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,7 +21,9 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
      * Creates new form MySqlConnection
      */
     public FrameMysqlConnection() {
+//        MainFrameUtility.centralizeJFrame(this);
         initComponents();
+        clearErrMsgs();
     }
 
     private boolean updateMode = false;
@@ -44,172 +47,308 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        btnOk = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        tabbedPane = new javax.swing.JTabbedPane();
+        panelGeneral = new javax.swing.JPanel();
+        lblPort = new javax.swing.JLabel();
+        lblConnectionNameErrMsg = new javax.swing.JLabel();
+        lblHostName = new javax.swing.JLabel();
+        lblPortErrMsg = new javax.swing.JLabel();
+        lblPasswordErrMsg = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        txtConnectionName = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
+        jLabel2 = new javax.swing.JLabel();
         txtHostNameIpAdr = new javax.swing.JTextField();
         txtUserName = new javax.swing.JTextField();
-        txtPort = new javax.swing.JTextField();
+        txtConnectionName = new javax.swing.JTextField();
+        lblUserNameErrMsg = new javax.swing.JLabel();
+        lblHostNameErrMsg = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        btnOk = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
-        txtPassword = new javax.swing.JPasswordField();
-        jLabel6 = new javax.swing.JLabel();
+        txtPort = new javax.swing.JTextField();
+        panelAdvanced = new javax.swing.JPanel();
+        panelSSL = new javax.swing.JPanel();
+        panelSSH = new javax.swing.JPanel();
+        panelHTTP = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton2.setText("HTTP");
+        panelGeneral.setLayout(new java.awt.GridBagLayout());
 
-        jButton3.setText("Advanced");
+        lblPort.setText("Port:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 54;
+        gridBagConstraints.ipady = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 28, 0, 0);
+        panelGeneral.add(lblPort, gridBagConstraints);
 
-        jButton4.setText("SSL");
+        lblConnectionNameErrMsg.setForeground(new java.awt.Color(255, 51, 51));
+        lblConnectionNameErrMsg.setText("Connection Name Error Message");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 22);
+        panelGeneral.add(lblConnectionNameErrMsg, gridBagConstraints);
 
-        jButton5.setText("SSH");
+        lblHostName.setText("Host Name/IP Adress:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipady = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 28, 0, 0);
+        panelGeneral.add(lblHostName, gridBagConstraints);
 
-        jButton1.setText("General");
+        lblPortErrMsg.setForeground(new java.awt.Color(255, 51, 51));
+        lblPortErrMsg.setText("Port Error Message");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 87;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 22);
+        panelGeneral.add(lblPortErrMsg, gridBagConstraints);
+
+        lblPasswordErrMsg.setForeground(new java.awt.Color(255, 51, 51));
+        lblPasswordErrMsg.setText("Password Error Message");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 13;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 53;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 22);
+        panelGeneral.add(lblPasswordErrMsg, gridBagConstraints);
+
+        jLabel3.setText("User Name:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 2;
+        gridBagConstraints.ipady = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 28, 0, 0);
+        panelGeneral.add(jLabel3, gridBagConstraints);
+
+        txtPassword.setMaximumSize(new java.awt.Dimension(200, 200));
+        txtPassword.setMinimumSize(new java.awt.Dimension(200, 26));
+        txtPassword.setPreferredSize(new java.awt.Dimension(200, 26));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 22);
+        panelGeneral.add(txtPassword, gridBagConstraints);
+
+        jLabel2.setText("Connection Name:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipady = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(37, 28, 0, 0);
+        panelGeneral.add(jLabel2, gridBagConstraints);
+
+        txtHostNameIpAdr.setMaximumSize(new java.awt.Dimension(200, 200));
+        txtHostNameIpAdr.setMinimumSize(new java.awt.Dimension(200, 26));
+        txtHostNameIpAdr.setPreferredSize(new java.awt.Dimension(200, 26));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 6, 0, 22);
+        panelGeneral.add(txtHostNameIpAdr, gridBagConstraints);
+
+        txtUserName.setMaximumSize(new java.awt.Dimension(200, 200));
+        txtUserName.setMinimumSize(new java.awt.Dimension(200, 26));
+        txtUserName.setPreferredSize(new java.awt.Dimension(200, 26));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 22);
+        panelGeneral.add(txtUserName, gridBagConstraints);
+
+        txtConnectionName.setMaximumSize(new java.awt.Dimension(200, 200));
+        txtConnectionName.setMinimumSize(new java.awt.Dimension(200, 26));
+        txtConnectionName.setPreferredSize(new java.awt.Dimension(200, 26));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(36, 6, 0, 22);
+        panelGeneral.add(txtConnectionName, gridBagConstraints);
+
+        lblUserNameErrMsg.setForeground(new java.awt.Color(255, 51, 51));
+        lblUserNameErrMsg.setText("Username Error Message");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(4, 6, 0, 22);
+        panelGeneral.add(lblUserNameErrMsg, gridBagConstraints);
+
+        lblHostNameErrMsg.setForeground(new java.awt.Color(255, 51, 51));
+        lblHostNameErrMsg.setText("Host Error Message");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 82;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(1, 6, 0, 22);
+        panelGeneral.add(lblHostNameErrMsg, gridBagConstraints);
+
+        jLabel5.setText("Password");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 24;
+        gridBagConstraints.ipady = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 28, 0, 0);
+        panelGeneral.add(jLabel5, gridBagConstraints);
 
         btnOk.setText("OK");
+        btnOk.setPreferredSize(new java.awt.Dimension(80, 29));
         btnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOkActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("Host Name/IP Adress:");
-
-        jLabel2.setText("Connection Name:");
-
-        jLabel3.setText("User Name:");
-
-        jLabel4.setText("Port:");
-
-        jLabel5.setText("Password");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = -5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 49, 12, 0);
+        panelGeneral.add(btnOk, gridBagConstraints);
 
         btnCancel.setText("Cancel");
+        btnCancel.setPreferredSize(new java.awt.Dimension(80, 29));
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 14;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 6, 12, 22);
+        panelGeneral.add(btnCancel, gridBagConstraints);
 
-        jLabel6.setText("MySQL - New Connection");
+        txtPort.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPortKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPortKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPortKeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 84;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
+        panelGeneral.add(txtPort, gridBagConstraints);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(71, 71, 71)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtConnectionName)
-                                    .addComponent(txtHostNameIpAdr)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(28, 28, 28))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addComponent(btnCancel))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        tabbedPane.addTab("General", panelGeneral);
+
+        javax.swing.GroupLayout panelAdvancedLayout = new javax.swing.GroupLayout(panelAdvanced);
+        panelAdvanced.setLayout(panelAdvancedLayout);
+        panelAdvancedLayout.setHorizontalGroup(
+            panelAdvancedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButton2))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtConnectionName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtHostNameIpAdr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(171, 171, 171)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnOk)
-                    .addComponent(btnCancel))
-                .addContainerGap())
+        panelAdvancedLayout.setVerticalGroup(
+            panelAdvancedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 358, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 26, Short.MAX_VALUE))
+        tabbedPane.addTab("Advanced", panelAdvanced);
+
+        javax.swing.GroupLayout panelSSLLayout = new javax.swing.GroupLayout(panelSSL);
+        panelSSL.setLayout(panelSSLLayout);
+        panelSSLLayout.setHorizontalGroup(
+            panelSSLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        panelSSLLayout.setVerticalGroup(
+            panelSSLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 358, Short.MAX_VALUE)
         );
+
+        tabbedPane.addTab("SSL", panelSSL);
+
+        javax.swing.GroupLayout panelSSHLayout = new javax.swing.GroupLayout(panelSSH);
+        panelSSH.setLayout(panelSSHLayout);
+        panelSSHLayout.setHorizontalGroup(
+            panelSSHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        panelSSHLayout.setVerticalGroup(
+            panelSSHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 358, Short.MAX_VALUE)
+        );
+
+        tabbedPane.addTab("SSH", panelSSH);
+
+        javax.swing.GroupLayout panelHTTPLayout = new javax.swing.GroupLayout(panelHTTP);
+        panelHTTP.setLayout(panelHTTPLayout);
+        panelHTTPLayout.setHorizontalGroup(
+            panelHTTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        panelHTTPLayout.setVerticalGroup(
+            panelHTTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 358, Short.MAX_VALUE)
+        );
+
+        tabbedPane.addTab("HTTP", panelHTTP);
+
+        getContentPane().add(tabbedPane, java.awt.BorderLayout.CENTER);
+        tabbedPane.getAccessibleContext().setAccessibleName("general");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         NConnection n = getAllInformFromUser();
+        if (!validateFields()) {
+            return;
+        }
         if (updateMode) {
             int index = MainFrameUtility.getSelectedConnectionIndexFromList();
             Config.instance().getConnections().set(index, n);
@@ -219,12 +358,88 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
         MainFrameUtility.saveConfig();
         this.dispose();
         Config.getMain().refreshData();
-
     }//GEN-LAST:event_btnOkActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void txtPortKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPortKeyPressed
+       
+    }//GEN-LAST:event_txtPortKeyPressed
+
+    private void txtPortKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPortKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPortKeyReleased
+
+    private void txtPortKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPortKeyTyped
+        boolean isValid = evt.getKeyChar()>= 48 && evt.getKeyChar()<= 57;
+        if (!isValid) {
+            evt.consume();
+            return;
+        }
+        String txt = txtPort.getText()+evt.getKeyChar();
+        if(Integer.parseInt(txt)>65536){
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_txtPortKeyTyped
+
+    private void clearErrMsgs() {
+        lblConnectionNameErrMsg.setText("");
+        lblHostNameErrMsg.setText("");
+        lblPasswordErrMsg.setText("");
+        lblPortErrMsg.setText("");
+        lblUserNameErrMsg.setText("");
+    }
+
+    private boolean validateFields() {
+        clearErrMsgs();
+        boolean res = true;
+        NConnection conn = getAllInformFromUser();
+
+        NConnection c = Config.instance().getConnectionByName(conn.getName());
+        if (c != null) {
+            lblConnectionNameErrMsg.setText("connection name already exists");
+            res = false;
+        }
+
+        if (StringUtils.isEmpty(conn.getName())) {
+            lblConnectionNameErrMsg.setText("fill connection name");
+            res = false;
+        }
+
+        if (StringUtils.isEmpty(conn.getIpAdr())) {
+            lblHostNameErrMsg.setText("fill hostname/ip adress");
+            res = false;
+        }
+
+        if (StringUtils.isEmpty(conn.getPort())) {
+            lblPortErrMsg.setText("fill port");
+            res = false;
+        }
+
+        if (StringUtils.isEmpty(conn.getUserName())) {
+            lblUserNameErrMsg.setText("fill username");
+            res = false;
+        }
+
+        if (!MainFrameUtility.checkIp(conn.getIpAdr())) {
+            lblHostNameErrMsg.setText("invalid ip address");
+            res = false;
+        }
+
+        if (!MainFrameUtility.checkPort(conn.getPort())) {
+            lblPortErrMsg.setText("invalid port number");
+            res = false;
+        }
+
+        return res;
+    }
 
     public NConnection getAllInformFromUser() {
         String name = txtConnectionName.getText();
-        String ipAdr = txtHostNameIpAdr.getText();
+        String ipAdr = txtHostNameIpAdr.getText().toLowerCase();
         String port = txtPort.getText();
         String username = txtUserName.getText();
         String password = new String(txtPassword.getPassword());
@@ -272,18 +487,22 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnOk;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblConnectionNameErrMsg;
+    private javax.swing.JLabel lblHostName;
+    private javax.swing.JLabel lblHostNameErrMsg;
+    private javax.swing.JLabel lblPasswordErrMsg;
+    private javax.swing.JLabel lblPort;
+    private javax.swing.JLabel lblPortErrMsg;
+    private javax.swing.JLabel lblUserNameErrMsg;
+    private javax.swing.JPanel panelAdvanced;
+    private javax.swing.JPanel panelGeneral;
+    private javax.swing.JPanel panelHTTP;
+    private javax.swing.JPanel panelSSH;
+    private javax.swing.JPanel panelSSL;
+    private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JTextField txtConnectionName;
     private javax.swing.JTextField txtHostNameIpAdr;
     private javax.swing.JPasswordField txtPassword;

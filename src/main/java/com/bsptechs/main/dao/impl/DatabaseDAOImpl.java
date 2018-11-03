@@ -30,11 +30,11 @@ import javax.swing.JOptionPane;
 public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInter {
 
     @Override
-    public List<String> getAllDatabases() {
-        List<String> list = new ArrayList<>();
+    public List<String> getAllDatabases(NConnection connection) {
+        List<String> databasesList = new ArrayList<>();
 
         try {
-            Connection conn = connect(Config.getCurrentConnection());
+            Connection conn = connect(connection);
             Statement stmt = conn.createStatement();
             ResultSet resultset = stmt.executeQuery("SHOW DATABASES;");
 
@@ -44,12 +44,14 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
 
             while (resultset.next()) {
                 String result = resultset.getString("Database");
-                list.add(result);
+                databasesList.add(result);
             }
+            NConnection selectedConnection = Config.getCurrentConnection();
+            selectedConnection.setDatabases(databasesList);
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            return list;
+            return databasesList;
         }
     }
 
