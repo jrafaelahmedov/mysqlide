@@ -115,9 +115,19 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public boolean dublicateTable() {
+    public boolean dublicateTable(String DBName, String tbLName) {
+        try (Connection conn = connect()) {
+            String newTbLName = tbLName.concat("_copy");
+            PreparedStatement stmt = conn.prepareStatement("CREATE TABLE " + DBName + "." + newTbLName + " LIKE " + DBName + "." + tbLName);
+            PreparedStatement stmt1 = conn.prepareStatement("INSERT " + DBName + "." + newTbLName + "SELECT * FROM " + DBName + "." + tbLName);
+            
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
 
-        return true;
     }
 
     @Override

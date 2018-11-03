@@ -140,13 +140,14 @@ public class UiPopupTable extends UiPopupAbstract {
         UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
         TableName tb = (TableName) selectedElement.getData();
         FileUtility.writeDBAndTblNameFile(tb.getDatabaseName(), tb.getTableName());
+     
+
     }
 
     private void pasteTable() {
         int selectedIndex = list.getSelectedIndex();
         UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
         TableName tb = (TableName) selectedElement.getData();
-        String options[] = new String[3];
 
         String newTblName = (String) JOptionPane.showInputDialog(null, "Enter name:", "Paste Table",
                 JOptionPane.QUESTION_MESSAGE, null, null, tb.getTableName());
@@ -155,6 +156,11 @@ public class UiPopupTable extends UiPopupAbstract {
     }
 
     private void dublicateTable() {
+        int selectedIndex = list.getSelectedIndex();
+        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
+        TableName tb = (TableName) selectedElement.getData();
+        database.dublicateTable(tb.getDatabaseName(), tb.getTableName());
+        refreshDB();
     }
 
     private void dumpSqlFile() {

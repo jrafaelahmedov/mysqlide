@@ -26,7 +26,7 @@ public interface DatabaseDAOInter {
 
     boolean truncateTable(String DBName, String tblName);
 
-    boolean dublicateTable();
+    boolean dublicateTable(String DBName, String tbLName);
 
-    boolean pasteTable(String information, String DBName, String TblName);
+    boolean pasteTable(String information, String DBName, String tbLName);
 }
