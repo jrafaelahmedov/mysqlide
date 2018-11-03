@@ -7,7 +7,7 @@ package com.bsptechs.main.popup;
 
 import com.bsptechs.main.PanelQuery;
 import com.bsptechs.main.bean.Config;
-import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.DatabaseName;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -49,7 +49,8 @@ public class UiPopupDatabase extends UiPopupAbstract {
 
     public void newQuery() throws ClassNotFoundException, SQLException {
         System.out.println("new query");
-        MainFrameUtility.addPanelToTab(Config.getMain().getTabPaneTable(), new PanelQuery(), "Query");
+        DatabaseName db = MainFrameUtility.getSelectedDatabaseFromList();
+        MainFrameUtility.addPanelToTab(Config.getMain().getTabPaneTable(), new PanelQuery(null, db), "Query");
     }
 
 }

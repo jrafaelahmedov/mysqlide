@@ -8,15 +8,14 @@ package com.bsptechs.main.util.ui;
 import com.bsptechs.main.FrameMysqlConnection;
 import com.bsptechs.main.Main;
 import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.DatabaseName;
 import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.bean.table.TableData;
 import com.bsptechs.main.bean.table.TableRow;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
-import com.bsptechs.main.dao.inter.AbstractDatabase;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
-import com.bsptechs.main.popup.UiPopupAbstract;
 import com.bsptechs.main.popup.UiPopupConnection;
 import com.bsptechs.main.popup.UiPopupDatabase;
 import com.bsptechs.main.popup.UiPopupTable;
@@ -25,12 +24,9 @@ import com.bsptechs.main.util.file.WriteToFileIO;
 import java.awt.MouseInfo;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -46,7 +42,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author sarkhanrasullu
  */
-public class MainFrameUtility extends AbstractDatabase {
+public class MainFrameUtility {
 
     public static List<String> columname = new ArrayList<>();
 
@@ -65,8 +61,7 @@ public class MainFrameUtility extends AbstractDatabase {
     public static void onMouseClick_OnTablesList(MouseEvent evt) {
         if (MainFrameUtility.isLeftDoubleClicked(evt)) {
 
-            JList listUiDatabases = Config.getMain().getListTable();
-            UiElement element = (UiElement) listUiDatabases.getSelectedValue();
+            UiElement element = getUiElementFromList(Config.getMain().getListTable());
             System.out.println("element.getData()=" + element.getData());
             if (element.getData() instanceof TableName) {
                 TableName tb = (TableName) element.getData();
@@ -74,11 +69,13 @@ public class MainFrameUtility extends AbstractDatabase {
                 return;
             }
 
-            String dbName = element.getText();
-            Config.setCurrentDatabaseName(dbName);
-            List<TableName> list = database.getAllTables(element.getText());
+            if (element.getData() instanceof DatabaseName) {
+                DatabaseName db = (DatabaseName) element.getData();
+                Config.setCurrentDatabaseName(db);
+                List<TableName> list = database.getAllTables(db);
 
-            MainFrameUtility.fillList(list, Config.getMain(), new UiPopupTable(), null, listUiDatabases);
+                MainFrameUtility.fillList(list, Config.getMain(), new UiPopupTable(), null, Config.getMain().getListTable());
+            }
         }
     }
 
@@ -108,24 +105,18 @@ public class MainFrameUtility extends AbstractDatabase {
     public static void fillConnectionsIntoJList() {
         Main m = Config.getMain();
         List<NConnection> list = Config.instance().getConnections();
+
         if (list == null) {
             return;
         }
-        UiPopupConnection popup = new UiPopupConnection();
 
-        List<String> l = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            l.add(list.get(i).getName());
-        }
-        MainFrameUtility.fillList(l, m, popup, null, m.getListConnections());
+        MainFrameUtility.fillList(list, m, new UiPopupConnection(), null, m.getListConnections());
     }
 
-    public static void fillDatabasesIntoJList() {
-        List<String> databases = database.getAllDatabases(Config.getCurrentConnection());
+    public static void fillDatabasesIntoJList(NConnection connection) {
 
-        UiPopupAbstract popup = new UiPopupDatabase();
         Main m = Config.getMain();
-        MainFrameUtility.fillList(databases, m, popup, "database", m.getListTable());
+        MainFrameUtility.fillList(connection.getDatabases(), m, new UiPopupDatabase(), "database", m.getListTable());
     }
 
     public static void fillList(List<?> textList, JFrame frame, JPopupMenu popup, Object data, JList uiList) {
@@ -145,7 +136,11 @@ public class MainFrameUtility extends AbstractDatabase {
     }
 
     public static UiElement getUiElementFromList(JList list) {
-        return (UiElement) list.getModel().getElementAt(list.getSelectedIndex());
+        int index = list.getSelectedIndex();
+        if (index > -1) {
+            return (UiElement) list.getModel().getElementAt(index);
+        }
+        return null;
     }
 
     public static void showMenuOnList(JList list, MouseEvent evt) {
@@ -212,35 +207,30 @@ public class MainFrameUtility extends AbstractDatabase {
 
     public static void onMouseClick_OnConnectionsList(MouseEvent evt) {
         if (MainFrameUtility.isLeftDoubleClicked(evt)) {
-            connect();
+            NConnection selectedConnection = getSelectedConnectionFromList();
+            Config.setConnection(selectedConnection);
+            connect(selectedConnection);
             Config.getMain().enableNewQuery();
         }
     }
 
-    public static void connect() {
-        Main m = Config.getMain();
-        int index = m.getListConnections().getSelectedIndex();
-        System.out.println("selected index=" + index);
-        NConnection selectedConnection = Config.instance().getConnections().get(index);
-        Config.setConnection(selectedConnection);
-        MainFrameUtility.fillDatabasesIntoJList();
+    public static void connect(NConnection connection) {
+//        Main m = Config.getMain();
+//        NConnection selectedConnection = getSelectedConnectionFromList();
+//        Config.setConnection(selectedConnection);
+        List<DatabaseName> databases = database.getAllDatabases(connection);
+        connection.setDatabases(databases);
+        MainFrameUtility.fillDatabasesIntoJList(connection);
 
     }
 
     public static void disconnect() {
-        try {
-            NConnection connection = getSelectedConnectionFromList();
-            if (connection.getParentConnection() != null) {
-                connection.getParentConnection().close();
-            }
-            if (Config.getCurrentConnection() == connection) {
-                Config.getMain().getListTable().setModel(new DefaultListModel());
-            }
-            connection.setParentConnection(null);
-            System.out.println(connection.getName() + " connection is closed");
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrameUtility.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        NConnection connection = getSelectedConnectionFromList();
+        connection.reset();
+
+        System.out.println(connection.getName() + " connection is closed");
+
     }
 
     public static void showMySQLConnectionAsUpdate() {
@@ -250,16 +240,42 @@ public class MainFrameUtility extends AbstractDatabase {
 
     public static NConnection getSelectedConnectionFromList() {
         Main m = Config.getMain();
-
-        int index = m.getListConnections().getSelectedIndex();
-        System.out.println("selected index=" + index);
-        NConnection selectedConnection = Config.instance().getConnections().get(index);
-        System.out.println("secilmish connection:  " + selectedConnection.getName());
+        UiElement uiElement = getUiElementFromList(m.getListConnections());
+        if (uiElement == null) {
+            return null;
+        }
+        NConnection selectedConnection = (NConnection) uiElement.getData();
         return selectedConnection;
     }
 
+    public static DatabaseName getSelectedDatabaseFromList() {
+        Main m = Config.getMain();
+        UiElement uiElement = getUiElementFromList(m.getListTable());
+        if (uiElement == null) {
+            return null;
+        }
+        Object obj = uiElement.getData();
+        if (obj instanceof DatabaseName) {
+            return (DatabaseName) obj;
+        }
+        return null;
+    }
+
+    public static TableName getSelectedTableFromList() {
+        Main m = Config.getMain();
+        UiElement uiElement = getUiElementFromList(m.getListTable());
+        if (uiElement == null) {
+            return null;
+        }
+        Object obj = uiElement.getData();
+        if (obj instanceof TableName) {
+            return (TableName) obj;
+        }
+        return null;
+    }
+
     public static int getSelectedConnectionIndexFromList() {
-        int index = Config.instance().getConnections().indexOf(getSelectedConnectionFromList());
+        int index = Config.getMain().getListConnections().getSelectedIndex();
         return index;
     }
 
@@ -284,15 +300,15 @@ public class MainFrameUtility extends AbstractDatabase {
     }
 
     public static boolean checkIp(String ip) {
-        if(StringUtils.isEmpty(ip)){
+        if (StringUtils.isEmpty(ip)) {
             return false;
         }
         boolean res = Pattern.matches("^localhost$|^127(?:\\.[0-9]+){0,2}\\.[0-9]+$|^(?:0*\\:)*?:?0*1$", ip);
         return res;
     }
-     
+
     public static boolean checkPort(String port) {
-        if(StringUtils.isEmpty(port)){
+        if (StringUtils.isEmpty(port)) {
             return true;
         }
         boolean res = Pattern.matches("(6553[0-5]|655[0-2]\\d|65[0-4]\\d{2}|6[0-4]\\d{3}|5\\d{4}|[0-9]\\d{0,3})", port);

@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.bsptechs.main;
 
 import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.DatabaseName;
+import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -665,7 +662,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1MenuDragMouseEntered
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        MainFrameUtility.fillDatabasesIntoJList();
+        NConnection cn = MainFrameUtility.getSelectedConnectionFromList();
+        MainFrameUtility.connect(cn);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void listDatabasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listDatabasesMouseClicked
@@ -810,7 +808,7 @@ public class Main extends javax.swing.JFrame {
 
     public void prepareNewQuery() {
         try {
-            panelQuery = new PanelQuery();
+            panelQuery = new PanelQuery(Config.getCurrentConnection(), Config.getCurrentDatabaseName());
             tabbedPaneCenter.setEnabled(true);
             MainFrameUtility.addPanelToTab(tabQuery, panelQuery, "Query");
         } catch (ClassNotFoundException ex) {

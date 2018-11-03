@@ -7,7 +7,10 @@ package com.bsptechs.main.bean;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,7 +24,7 @@ public class NConnection implements Serializable {
     private String userName;
     private String password;
     private transient Connection parentConnection;
-    private transient List<String> databases;
+    private transient List<DatabaseName> databases;
 
     public NConnection() {
     }
@@ -34,11 +37,11 @@ public class NConnection implements Serializable {
         this.password = password;
     }
 
-    public List<String> getDatabases() {
+    public List<DatabaseName> getDatabases() {
         return databases;
     }
 
-    public void setDatabases(List<String> databases) {
+    public void setDatabases(List<DatabaseName> databases) {
         this.databases = databases;
     }
 
@@ -88,6 +91,15 @@ public class NConnection implements Serializable {
 
     public void setParentConnection(Connection parentConnection) {
         this.parentConnection = parentConnection;
+    }
+    
+    public void reset(){
+        try {
+            this.parentConnection.close();
+            this.databases = null;
+        } catch (SQLException ex) {
+            Logger.getLogger(NConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
  
     @Override

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.bsptechs.main.bean;
 
 import com.bsptechs.main.Main;
@@ -10,19 +5,17 @@ import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
-/**
+/** 
  *
  * @author Penthos
  */
 public final class Config implements Serializable {
-
+ 
     private static final String fileName = "mySql.txt";
     private List<NConnection> connections = null;
     private static NConnection currentConnection = null;
-    private static String currentDatabaseName = null;
+    private static DatabaseName currentDatabaseName = null;
     private static Config config = null;
 
     public static void initialize() {
@@ -64,7 +57,7 @@ public final class Config implements Serializable {
     public static void setConnection(NConnection connection) {
         currentConnection = connection;
     }
-
+//
     public static NConnection getCurrentConnection() {
         return currentConnection;
     }
@@ -82,12 +75,12 @@ public final class Config implements Serializable {
         return main;
     }
 
-    public static String getCurrentDatabaseName() {
+    public static DatabaseName getCurrentDatabaseName() {
         return currentDatabaseName;
     }
 
-    public static void setCurrentDatabaseName(String currentDatabaseName) {
+    public static void setCurrentDatabaseName(DatabaseName currentDatabaseName) {
         Config.currentDatabaseName = currentDatabaseName;
-    }
+    } 
 
 }

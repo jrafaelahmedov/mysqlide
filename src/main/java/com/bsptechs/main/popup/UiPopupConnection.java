@@ -5,6 +5,7 @@
  */
 package com.bsptechs.main.popup;
 
+import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 
 /**
@@ -42,8 +43,8 @@ public class UiPopupConnection extends UiPopupAbstract {
 
     public void connect() {
         System.out.println("connection connection");
-
-        MainFrameUtility.connect();
+        NConnection cn = MainFrameUtility.getSelectedConnectionFromList();
+        MainFrameUtility.connect(cn);
         //Tebriz burani dolduracaq
     }
 

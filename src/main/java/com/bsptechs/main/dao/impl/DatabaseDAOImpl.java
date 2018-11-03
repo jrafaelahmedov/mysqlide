@@ -5,7 +5,7 @@
  */
 package com.bsptechs.main.dao.impl;
 
-import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.DatabaseName;
 import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.table.TableCell;
@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -30,8 +30,8 @@ import javax.swing.JOptionPane;
 public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInter {
 
     @Override
-    public List<String> getAllDatabases(NConnection connection) {
-        List<String> databasesList = new ArrayList<>();
+    public List<DatabaseName> getAllDatabases(NConnection connection) {
+        List<DatabaseName> databasesList = new ArrayList<>();
 
         try {
             Connection conn = connect(connection);
@@ -44,10 +44,8 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
 
             while (resultset.next()) {
                 String result = resultset.getString("Database");
-                databasesList.add(result);
+                databasesList.add(new DatabaseName(result, connection));
             }
-            NConnection selectedConnection = Config.getCurrentConnection();
-            selectedConnection.setDatabases(databasesList);
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -56,16 +54,16 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public List<TableName> getAllTables(String databaseName) {
+    public List<TableName> getAllTables(DatabaseName database) {
         List<TableName> list = new ArrayList<>();
         try {
-            Connection conn = connect(Config.getCurrentConnection());
+            Connection conn = connect(database.getConnection());
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM information_schema.tables where table_schema = ?");
-            stmt.setString(1, databaseName);
+            stmt.setString(1, database.getName());
             ResultSet resultset = stmt.executeQuery();
             while (resultset.next()) {
                 String result = resultset.getString("table_name");
-                list.add(new TableName(result, databaseName));
+                list.add(new TableName(result, database));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -76,10 +74,10 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public boolean renameTable(String DBname, String oldTblName, String newTblName) {
+    public boolean renameTable(TableName table, String newTblName) {
         try {
-            Connection conn = connect(Config.getCurrentConnection());
-            PreparedStatement stmt = conn.prepareStatement("RENAME TABLE `" + DBname + "`.`" + oldTblName + "` TO `" + DBname + "`.`" + newTblName + "`");//PrepapredStatement ile edende dirnaqlara gore ishlemirdi ona gore bele etdim
+            Connection conn = connect(table.getDatabaseName().getConnection());
+            PreparedStatement stmt = conn.prepareStatement("RENAME TABLE `" + table.getDatabaseName().getName() + "`.`" + table.getTableName() + "` TO `" + table.getDatabaseName().getName() + "`.`" + newTblName + "`");//PrepapredStatement ile edende dirnaqlara gore ishlemirdi ona gore bele etdim
             stmt.executeUpdate();
             return true;
         } catch (Exception ex) {
@@ -100,17 +98,16 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public TableData runQuery(String query) throws ClassNotFoundException, SQLException {
-        if (Config.getCurrentDatabaseName() == null || Config.getCurrentDatabaseName().isEmpty()) {
-            JOptionPane.showMessageDialog(Config.getMain(), "Choose a database");
-            return null;
-        }
-        TableData table = null;
-        Connection conn = connect(Config.getCurrentConnection());
-        Statement stmt = conn.createStatement();
-        String setDatabase = "USE " + Config.getCurrentDatabaseName() + ";";
+    public TableData runQuery(String query, DatabaseName database) throws ClassNotFoundException, SQLException {
 
-        stmt.executeQuery(setDatabase);
+        TableData table = null;
+        Connection conn = connect(database.getConnection());
+        Statement stmt = conn.createStatement();
+        if (StringUtils.isNoneEmpty(database.getName())) {
+            String setDatabase = "USE " + database.getName() + ";";
+            stmt.executeQuery(setDatabase);
+        }
+        
         ResultSet rs = stmt.executeQuery(query);
 
         List<String> columns = getColumns(rs);
@@ -131,9 +128,8 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
 
     public static void main(String[] args) throws Exception {
         NConnection conn = new NConnection("localhost", "localhost", "3306", "root", "");
-        Config.setConnection(conn);
 
-        TableData data = new DatabaseDAOImpl().runQuery("SELECT * FROM filemanagementsystem.user;");
+        TableData data = new DatabaseDAOImpl().runQuery("SELECT * FROM user;", new DatabaseName("filemanagementsystem", conn));
 
         List<TableRow> rows = data.getRows();
         for (TableRow r : rows) {

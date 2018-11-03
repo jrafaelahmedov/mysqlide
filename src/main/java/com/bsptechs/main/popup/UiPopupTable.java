@@ -63,11 +63,9 @@ public class UiPopupTable extends UiPopupAbstract {
     public void viewTable() {
         Main m = Config.getMain();
 
-        System.out.println("view table");
-
         UiElement element = (UiElement) m.getListTable().getSelectedValue();
-        System.out.println("element.getData()=" + element.getData());
-        if (element.getData() instanceof TableName) {
+         
+        if (element.getData() instanceof TableName) { 
             TableName tb = (TableName) element.getData();
             MainFrameUtility.runQuery("select * from "+tb.getTableName());
         }
@@ -75,15 +73,14 @@ public class UiPopupTable extends UiPopupAbstract {
     }
 
     public void renameTable() {
-         Main m = Config.getMain();
-        int selectedIndex = m.getListTable().getSelectedIndex();
-        UiElement selectedElement = (UiElement) m.getListTable().getModel().getElementAt(selectedIndex);
-        TableName tb = (TableName) selectedElement.getData();
+        TableName tb = MainFrameUtility.getSelectedTableFromList();
         String newTblName = (String) JOptionPane.showInputDialog(null, "Enter new name:", "Rename Table",
                 JOptionPane.QUESTION_MESSAGE, null, null, tb.getTableName());
-        database.renameTable(tb.getDatabaseName(), tb.getTableName(), newTblName);
+        database.renameTable(tb, newTblName);
 
         List<TableName> tbNames = database.getAllTables(tb.getDatabaseName());
+        
+        Main m = Config.getMain();
         MainFrameUtility.fillList(tbNames, m, new UiPopupTable(), "table", m.getListTable());
     }
 }

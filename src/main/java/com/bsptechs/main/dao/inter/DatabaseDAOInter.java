@@ -1,5 +1,6 @@
 package com.bsptechs.main.dao.inter;
 
+import com.bsptechs.main.bean.DatabaseName;
 import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.table.TableData;
@@ -12,11 +13,11 @@ import java.util.List;
  */
 public interface DatabaseDAOInter {
 
-    List<String> getAllDatabases(NConnection connection);
+    List<DatabaseName> getAllDatabases(NConnection connection);
 
-    List<TableName> getAllTables(String databaseName);
+    List<TableName> getAllTables(DatabaseName database);
 
-    boolean renameTable(String DBname, String oldTblName, String newTblName);
+    boolean renameTable(TableName table, String newTblName);
 
-    public TableData runQuery(String query) throws ClassNotFoundException, SQLException;
+    public TableData runQuery(String query, DatabaseName database) throws ClassNotFoundException, SQLException;
 }
