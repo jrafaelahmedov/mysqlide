@@ -14,6 +14,8 @@ import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -24,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
 
 /**
  *
@@ -37,43 +40,42 @@ public class PanelQuery extends javax.swing.JPanel {
 
     public PanelQuery() throws ClassNotFoundException, SQLException {
 
-        initComponents();
         List<NConnection> list = Config.instance().getConnections();
-        jComboBoxconnections.addItem("");
+        NConnection connect = MainFrameUtility.connectedConnection;
+        String connname = connect.getName();
+        String selecteddatabase = MainFrameUtility.getConnectedDatabase();
+        
+        initComponents();
+        jComboBoxconnections.addItem(connname);
         for (int i = 0; i < list.size(); i++) {
             NConnection c = list.get(i);
             jComboBoxconnections.addItem(c.getName());
         }
-        jComboBoxtables.addItem("");
+        
+        jComboBoxDatabase.addItem(selecteddatabase);
         List<String> listdatabase = database.getAllDatabases();
         for (String text : listdatabase) {
-            jComboBoxtables.addItem(text);
+            jComboBoxDatabase.addItem(text);
         }
+
         pnlTable.setVisible(false);
     }
 
-    public void refreshMyTable(List<String> f) {
-        DefaultTableModel dtm = new DefaultTableModel();
-        Vector<String> columns = new Vector<>();
-        for (int i = 0; i < MainFrameUtility.columname.size(); i++) {
-            columns.add(MainFrameUtility.columname.get(i));
-        }
-        Vector<Vector<String>> data = new Vector<>();
-        for (int i = 0; i < f.size(); i++) {
-            // FilesAndFolders ff = f.get(i);
-            Vector<String> sVector = new Vector<>();
-            //sVector.add(ff.getPath());
-            //List<User> usr = alluserforstatus(1);
-            // Integer row = cmbboxUsersList.getSelectedIndex();
-            // String username = usr.get(row).getUsername();
-            // sVector.add(username);
-            data.add(sVector);
-        }
-        dtm.setDataVector(data, columns);
-        tblQueryResult.setModel(dtm);
-
-    }
-
+//    public void refreshMyTable(List<String> f) {
+//        DefaultTableModel dtm = new DefaultTableModel();
+//        Vector<String> columns = new Vector<>();
+//        for (int i = 0; i < MainFrameUtility.columname.size(); i++) {
+//            columns.add(MainFrameUtility.columname.get(i));
+//        }
+//        Vector<Vector<String>> data = new Vector<>();
+//        for (int i = 0; i < f.size(); i++) {
+//            Vector<String> sVector = new Vector<>();
+//            data.add(sVector);
+//        }
+//        dtm.setDataVector(data, columns);
+//        tblQueryResult.setModel(dtm);
+//
+//    }
     public void btnenter(JButton btn) {
         btn.setBorder(BorderFactory.createBevelBorder(1, Color.lightGray, Color.white));
     }
@@ -98,7 +100,7 @@ public class PanelQuery extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtQuery = new javax.swing.JTextArea();
         jComboBoxconnections = new javax.swing.JComboBox<>();
-        jComboBoxtables = new javax.swing.JComboBox<>();
+        jComboBoxDatabase = new javax.swing.JComboBox<>();
         btnstop = new javax.swing.JButton();
         btnexplain = new javax.swing.JButton();
         pnlTable = new javax.swing.JPanel();
@@ -140,9 +142,9 @@ public class PanelQuery extends javax.swing.JPanel {
             }
         });
 
-        jComboBoxtables.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxDatabase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxtablesActionPerformed(evt);
+                jComboBoxDatabaseActionPerformed(evt);
             }
         });
 
@@ -216,6 +218,11 @@ public class PanelQuery extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnBeautfySQLMouseExited(evt);
+            }
+        });
+        btnBeautfySQL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBeautfySQLActionPerformed(evt);
             }
         });
 
@@ -318,7 +325,7 @@ public class PanelQuery extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jComboBoxconnections, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBoxtables, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBoxDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(btnRun, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
@@ -337,7 +344,7 @@ public class PanelQuery extends javax.swing.JPanel {
                 .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxconnections, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxtables, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRun, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnstop, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnexplain, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -370,9 +377,9 @@ public class PanelQuery extends javax.swing.JPanel {
         runQuery();
     }//GEN-LAST:event_btnRunActionPerformed
 
-    private void jComboBoxtablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxtablesActionPerformed
+    private void jComboBoxDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDatabaseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxtablesActionPerformed
+    }//GEN-LAST:event_jComboBoxDatabaseActionPerformed
 
     private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
         btnenter(btnSave);
@@ -454,6 +461,12 @@ public class PanelQuery extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jComboBoxconnectionsActionPerformed
 
+    private void btnBeautfySQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeautfySQLActionPerformed
+        String s[] = txtQuery.getText().split("\\r?\\n");
+        ArrayList<String> arrList = new ArrayList<>(Arrays.asList(s));
+        System.out.println(arrList.size());
+    }//GEN-LAST:event_btnBeautfySQLActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBeautfySQL;
@@ -465,8 +478,8 @@ public class PanelQuery extends javax.swing.JPanel {
     private javax.swing.JButton btnText;
     private javax.swing.JButton btnexplain;
     private javax.swing.JButton btnstop;
+    private javax.swing.JComboBox<String> jComboBoxDatabase;
     private javax.swing.JComboBox<String> jComboBoxconnections;
-    private javax.swing.JComboBox<String> jComboBoxtables;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
