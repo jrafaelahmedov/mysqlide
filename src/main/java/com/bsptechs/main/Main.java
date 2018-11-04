@@ -1,18 +1,21 @@
 package com.bsptechs.main;
 
+import com.bsptechs.main.bean.ui.panel.PanelQuery;
 import com.bsptechs.main.bean.Config;
-import com.bsptechs.main.bean.NConnection;
-import com.bsptechs.main.util.ui.FrameMySQLConnectionUtil;
-import com.bsptechs.main.util.ui.MainFrameUtility;
+import com.bsptechs.main.bean.ui.tree.CustomJTree;
+import com.bsptechs.main.bean.ui.uielement.UiElement;
+import com.bsptechs.main.bean.ui.uielement.data.UiElementDataConnection;
+import com.bsptechs.main.util.Util;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JTabbedPane;
-import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
 /**
  *
@@ -27,29 +30,36 @@ public class Main extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-    public void enableNewQuery() {
-        btnNewQuery.setEnabled(true);
-        menuNewQuery.setEnabled(true);
+    public void refreshNewQuery() {
+        boolean found = false;
+        List<UiElementDataConnection> l = Config.instance().getConnections();
+        for (int i = 0; i < l.size(); i++) {
+            UiElementDataConnection cn = l.get(i);
+            if (cn.getParentConnection() != null) {
+                found = true;
+                break;
+            }
+        }
+
+        btnNewQuery.setEnabled(found);
+        menuNewQuery.setEnabled(found);
     }
+
     private PanelQuery panelQuery = null;
 
     public void prepare() throws Exception {
         Config.initialize();
-//        MainFrameUtility.prepareDatabaseList();
-        refreshData();
-        MainFrameUtility.prepareList();
-    }
-
-    public void refreshData() {
-        MainFrameUtility.fillConnectionsIntoJList();
+        CustomJTree tree = getListTable();
+        List<UiElementDataConnection> connections = Config.instance().getConnections();
+        tree.fillTree(connections);
     }
 
     public JTabbedPane getTabPaneTable() {
         return tabTables;
     }
 
-    public JTree getListTable() {
-        return listDatabases;
+    public CustomJTree getListTable() {
+        return (CustomJTree) listDatabases;
     }
 
     /**
@@ -80,7 +90,7 @@ public class Main extends javax.swing.JFrame {
         splitPaneCenter = new javax.swing.JSplitPane();
         panelLeft = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        listDatabases = new javax.swing.JTree();
+        listDatabases = new com.bsptechs.main.bean.ui.tree.CustomJTree();
         tabbedPaneCenter = new javax.swing.JTabbedPane();
         tabQuery = new javax.swing.JTabbedPane();
         tabDesignTable = new javax.swing.JTabbedPane();
@@ -402,6 +412,14 @@ public class Main extends javax.swing.JFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("connections");
         listDatabases.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        listDatabases.addTreeExpansionListener(new javax.swing.event.TreeExpansionListener() {
+            public void treeExpanded(javax.swing.event.TreeExpansionEvent evt) {
+                listDatabasesTreeExpanded(evt);
+            }
+            public void treeCollapsed(javax.swing.event.TreeExpansionEvent evt) {
+                listDatabasesTreeCollapsed(evt);
+            }
+        });
         jScrollPane3.setViewportView(listDatabases);
 
         javax.swing.GroupLayout panelLeftLayout = new javax.swing.GroupLayout(panelLeft);
@@ -621,7 +639,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1MenuDragMouseEntered
 
     private void btnTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableActionPerformed
-        // TODO add your handling code here:
+        getListTable().expand(getListTable().findNode("localhost3"));
     }//GEN-LAST:event_btnTableActionPerformed
 
     private void btnTableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTableMouseEntered
@@ -633,7 +651,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTableMouseExited
 
     private void btnNewConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewConnectionActionPerformed
-        FrameMySQLConnectionUtil.showFrameForMySQLConnection(this, tabTables, listDatabases);
+        ConnectionFrame.showAsRegister();
     }//GEN-LAST:event_btnNewConnectionActionPerformed
 
     private void btnNewConnectionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewConnectionMouseEntered
@@ -741,8 +759,24 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNewQueryMouseExited
 
     private void menuNewConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNewConnectionActionPerformed
-        FrameMySQLConnectionUtil.showFrameForMySQLConnection(this, tabTables, listDatabases);
+        ConnectionFrame.showAsRegister();
     }//GEN-LAST:event_menuNewConnectionActionPerformed
+
+    private void setExpanded(javax.swing.event.TreeExpansionEvent evt, boolean b) {
+        TreePath path = evt.getPath();
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
+        if (node.getUserObject() instanceof UiElement) {
+            UiElement ui = (UiElement) node.getUserObject();
+            ui.getData().setExpanded(b);
+        }
+    }
+    private void listDatabasesTreeExpanded(javax.swing.event.TreeExpansionEvent evt) {//GEN-FIRST:event_listDatabasesTreeExpanded
+        setExpanded(evt, true);
+    }//GEN-LAST:event_listDatabasesTreeExpanded
+
+    private void listDatabasesTreeCollapsed(javax.swing.event.TreeExpansionEvent evt) {//GEN-FIRST:event_listDatabasesTreeCollapsed
+        setExpanded(evt, false);
+    }//GEN-LAST:event_listDatabasesTreeCollapsed
 
     public PanelQuery getPanelQuery() {
         return panelQuery;
@@ -752,7 +786,7 @@ public class Main extends javax.swing.JFrame {
         try {
             panelQuery = new PanelQuery(Config.getCurrentConnection(), Config.getCurrentDatabaseName());
             tabbedPaneCenter.setEnabled(true);
-            MainFrameUtility.addPanelToTab(tabQuery, panelQuery, "Query");
+            Util.addPanelToTab(tabQuery, panelQuery, "Query");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

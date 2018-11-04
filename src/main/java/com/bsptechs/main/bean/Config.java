@@ -1,41 +1,43 @@
 package com.bsptechs.main.bean;
 
+import com.bsptechs.main.bean.ui.uielement.data.UiElementDataDatabase;
+import com.bsptechs.main.bean.ui.uielement.data.UiElementDataConnection;
 import com.bsptechs.main.Main;
-import com.bsptechs.main.util.ui.MainFrameUtility;
+import com.bsptechs.main.util.FileUtility;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 
+/**
  *
  * @author Penthos
  */
 public final class Config implements Serializable {
- 
+
     private static final String fileName = "mySql.txt";
-    private List<NConnection> connections = null;
-    private static NConnection currentConnection = null;
-    private static DatabaseName currentDatabaseName = null;
+    private List<UiElementDataConnection> connections = null;
+    private static UiElementDataConnection currentConnection = null;
+    private static UiElementDataDatabase currentDatabaseName = null;
     private static Config config = null;
 
     public static void initialize() {
-        config = MainFrameUtility.readConfig();
+        config = readConfig();
     }
 
     public static Config instance() {
         return config;
     }
 
-    public List<NConnection> getConnections() {
+    public List<UiElementDataConnection> getConnections() {
         return connections;
     }
 
-    public NConnection getConnectionByName(String connectionName) {
-        if(connections==null){
+    public UiElementDataConnection getConnectionByName(String connectionName) {
+        if (connections == null) {
             return null;
         }
         for (int i = 0; i < connections.size(); i++) {
-            NConnection connection = connections.get(i);
+            UiElementDataConnection connection = connections.get(i);
             if (connection.getName().equalsIgnoreCase(connectionName)) {
                 return connection;
             }
@@ -43,22 +45,21 @@ public final class Config implements Serializable {
         return null;
     }
 
-    public void setConnections(List<NConnection> connections) {
-        this.connections = connections;
-    }
-
-    public void appendConnection(NConnection connection) {
+    public void appendConnection(UiElementDataConnection connection) {
         if (connections == null) {
             connections = new ArrayList<>();
         }
         connections.add(connection);
     }
 
-    public static void setCurrentConnection(NConnection connection) {
+    
+
+    public static void setCurrentConnection(UiElementDataConnection connection) {
         currentConnection = connection;
     }
 //
-    public static NConnection getCurrentConnection() {
+
+    public static UiElementDataConnection getCurrentConnection() {
         return currentConnection;
     }
 
@@ -75,12 +76,25 @@ public final class Config implements Serializable {
         return main;
     }
 
-    public static DatabaseName getCurrentDatabaseName() {
+    public static UiElementDataDatabase getCurrentDatabaseName() {
         return currentDatabaseName;
     }
 
-    public static void setCurrentDatabaseName(DatabaseName currentDatabaseName) {
+    public static void setCurrentDatabaseName(UiElementDataDatabase currentDatabaseName) {
         Config.currentDatabaseName = currentDatabaseName;
-    } 
+    }
+
+    public static void saveConfig() {
+        FileUtility.writeObjectToFile(Config.instance(), Config.getFileName());
+    }
+
+    public static Config readConfig() {
+        Object configObj = FileUtility.readFileDeserialize(Config.getFileName());
+        if (configObj == null) {
+            return new Config();
+        } else {
+            return (Config) configObj;
+        }
+    }
 
 }

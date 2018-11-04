@@ -1,6 +1,6 @@
 package com.bsptechs.main.dao.inter;
 
-import com.bsptechs.main.bean.NConnection;
+import com.bsptechs.main.bean.ui.uielement.data.UiElementDataConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
  */
 public abstract class AbstractDatabase {
 
-    public Connection connect(NConnection connection) throws ClassNotFoundException, SQLException {
+    public Connection connect(UiElementDataConnection connection) throws ClassNotFoundException, SQLException {
         if(connection.getParentConnection()!=null){
             System.out.println(connection.getName()+" is using its own connection which created before");
             return connection.getParentConnection();
