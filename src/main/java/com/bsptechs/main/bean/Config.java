@@ -54,7 +54,7 @@ public final class Config implements Serializable {
         connections.add(connection);
     }
 
-    public static void setConnection(NConnection connection) {
+    public static void setCurrentConnection(NConnection connection) {
         currentConnection = connection;
     }
 //

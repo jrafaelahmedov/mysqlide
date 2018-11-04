@@ -38,26 +38,28 @@ public class PanelQuery extends javax.swing.JPanel {
 
     public final void preparePanel(NConnection connection, DatabaseName database) {
         prepareConnectionCombobox(connection);
-        prepareDatabasesCombobox(database);
+        prepareDatabasesCombobox(connection, database);
         pnlTable.setVisible(false);
     }
 
     public void prepareConnectionCombobox(NConnection connection) {
-        System.out.println("prepareConnectionCombobox="+connection);
+        System.out.println("prepareConnectionCombobox=" + connection);
         cbConnections.removeAllItems();
         List<NConnection> list = Config.instance().getConnections();
         for (int i = 0; i < list.size(); i++) {
             cbConnections.addItem(list.get(i));
         }
-        System.out.println("Config.getCurrentConnection()="+connection);
+        System.out.println("Config.getCurrentConnection()=" + connection);
         cbConnections.setSelectedItem(connection);
     }
 
-    public void prepareDatabasesCombobox(DatabaseName database) {
-        System.out.println("prepareDatabasesCombobox="+database);
+    public void prepareDatabasesCombobox(NConnection connection, DatabaseName database) {
+        System.out.println("prepareDatabasesCombobox=" + database);
         cbDatabases.removeAllItems();
-        NConnection selectedConnection = (NConnection) cbConnections.getModel().getSelectedItem();
-        List<DatabaseName> databases = db.getAllDatabases(selectedConnection);
+        List<DatabaseName> databases = connection.getDatabases();
+        if (databases == null) {
+            databases = db.getAllDatabases(connection);
+        }
         for (int i = 0; i < databases.size(); i++) {
             cbDatabases.addItem(databases.get(i));
         }
@@ -86,7 +88,7 @@ public class PanelQuery extends javax.swing.JPanel {
     public void btnexit(JButton btn) {
         btn.setBorder(null);
     }
- 
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -363,9 +365,7 @@ public class PanelQuery extends javax.swing.JPanel {
     public void runQuery() {
         pnlTable.setVisible(true);
         try {
-            NConnection conn = (NConnection)cbConnections.getSelectedItem();
-            DatabaseName database = new DatabaseName((String)cbDatabases.getSelectedItem(), conn);
-            TableData data = db.runQuery(txtQuery.getText(), database);
+             TableData data = db.runQuery(txtQuery.getText(), getSelectedConnection(), getSelectedDatabase());
             DefaultTableModel model = MainFrameUtility.buildTableModel(data);
             tblQueryResult.setModel(model);
         } catch (ClassNotFoundException ex) {
@@ -375,6 +375,11 @@ public class PanelQuery extends javax.swing.JPanel {
         }
     }
 
+    public DatabaseName getSelectedDatabase() {
+       Object obj= cbDatabases.getSelectedItem();
+       
+       return (DatabaseName) obj;
+    }
     private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
         runQuery();
     }//GEN-LAST:event_btnRunActionPerformed
@@ -463,6 +468,9 @@ public class PanelQuery extends javax.swing.JPanel {
 
     }//GEN-LAST:event_cbConnectionsActionPerformed
 
+    public NConnection getSelectedConnection() {
+        return (NConnection) cbConnections.getSelectedItem();
+    }
     private void btnBeautfySQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeautfySQLActionPerformed
         String s[] = txtQuery.getText().split("\\r?\\n");
         ArrayList<String> arrList = new ArrayList<>(Arrays.asList(s));
@@ -470,7 +478,7 @@ public class PanelQuery extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBeautfySQLActionPerformed
 
     private void cbConnectionsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbConnectionsItemStateChanged
-      prepareDatabasesCombobox(null);
+        prepareDatabasesCombobox(getSelectedConnection(), null);
     }//GEN-LAST:event_cbConnectionsItemStateChanged
 
 

@@ -98,16 +98,15 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public TableData runQuery(String query, DatabaseName database) throws ClassNotFoundException, SQLException {
-
+    public TableData runQuery(String query, NConnection connection, DatabaseName database) throws ClassNotFoundException, SQLException {
         TableData table = null;
-        Connection conn = connect(database.getConnection());
+        Connection conn = connect(connection);
         Statement stmt = conn.createStatement();
-        if (StringUtils.isNoneEmpty(database.getName())) {
+        if (database != null && StringUtils.isNoneEmpty(database.getName())) {
             String setDatabase = "USE " + database.getName() + ";";
             stmt.executeQuery(setDatabase);
         }
-        
+
         ResultSet rs = stmt.executeQuery(query);
 
         List<String> columns = getColumns(rs);
@@ -129,7 +128,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     public static void main(String[] args) throws Exception {
         NConnection conn = new NConnection("localhost", "localhost", "3306", "root", "");
 
-        TableData data = new DatabaseDAOImpl().runQuery("SELECT * FROM user;", new DatabaseName("filemanagementsystem", conn));
+        TableData data = new DatabaseDAOImpl().runQuery("SELECT * FROM user;", conn, new DatabaseName("filemanagementsystem", conn));
 
         List<TableRow> rows = data.getRows();
         for (TableRow r : rows) {

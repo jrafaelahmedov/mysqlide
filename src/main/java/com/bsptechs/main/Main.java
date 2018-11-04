@@ -662,7 +662,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1MenuDragMouseEntered
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        NConnection cn = MainFrameUtility.getSelectedConnectionFromList();
+        NConnection cn = Config.getCurrentConnection();
         MainFrameUtility.connect(cn);
     }//GEN-LAST:event_btnBackActionPerformed
 

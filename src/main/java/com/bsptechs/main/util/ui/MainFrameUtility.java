@@ -208,7 +208,7 @@ public class MainFrameUtility {
     public static void onMouseClick_OnConnectionsList(MouseEvent evt) {
         if (MainFrameUtility.isLeftDoubleClicked(evt)) {
             NConnection selectedConnection = getSelectedConnectionFromList();
-            Config.setConnection(selectedConnection);
+            Config.setCurrentConnection(selectedConnection);
             connect(selectedConnection);
             Config.getMain().enableNewQuery();
         }
@@ -226,7 +226,7 @@ public class MainFrameUtility {
 
     public static void disconnect() {
 
-        NConnection connection = getSelectedConnectionFromList();
+        NConnection connection = Config.getCurrentConnection();
         connection.reset();
 
         System.out.println(connection.getName() + " connection is closed");

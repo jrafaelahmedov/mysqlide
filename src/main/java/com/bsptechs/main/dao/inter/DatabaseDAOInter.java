@@ -19,5 +19,5 @@ public interface DatabaseDAOInter {
 
     boolean renameTable(TableName table, String newTblName);
 
-    public TableData runQuery(String query, DatabaseName database) throws ClassNotFoundException, SQLException;
+    public TableData runQuery(String query, NConnection connection, DatabaseName database) throws ClassNotFoundException, SQLException;
 }

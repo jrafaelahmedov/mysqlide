@@ -49,7 +49,7 @@ public class UiPopupDatabase extends UiPopupAbstract {
 
     public void newQuery() throws ClassNotFoundException, SQLException {
         System.out.println("new query");
-        DatabaseName db = MainFrameUtility.getSelectedDatabaseFromList();
+        DatabaseName db = Config.getCurrentDatabaseName();
         MainFrameUtility.addPanelToTab(Config.getMain().getTabPaneTable(), new PanelQuery(null, db), "Query");
     }
 

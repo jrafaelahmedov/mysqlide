@@ -3,7 +3,6 @@ package com.bsptechs.main;
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.util.ui.MainFrameUtility;
-import javax.swing.JOptionPane;
 import org.apache.commons.lang3.StringUtils;
 
 /*
