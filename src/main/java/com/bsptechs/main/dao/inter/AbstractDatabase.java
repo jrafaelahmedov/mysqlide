@@ -18,6 +18,7 @@ public abstract class AbstractDatabase {
         } 
         
         Class.forName("com.mysql.jdbc.Driver");
+
         String url = "jdbc:mysql://" + connection.getIpAdr() + ":" + connection.getPort() + "/";
         String username = connection.getUserName();
         String password = connection.getPassword();

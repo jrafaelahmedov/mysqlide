@@ -6,6 +6,15 @@
 package com.bsptechs.main.popup;
 
 import com.bsptechs.main.PanelQuery;
+import com.bsptechs.main.bean.TableName;
+import com.bsptechs.main.bean.UiElement;
+import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
+import com.bsptechs.main.popup.file.FileUtility;
+import com.bsptechs.main.util.ui.MainFrameUtility;
+import static java.util.Collections.list;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.DatabaseName;
 import com.bsptechs.main.util.ui.MainFrameUtility;
@@ -18,6 +27,10 @@ import java.util.logging.Logger;
  * @author sarkhanrasullu
  */
 public class UiPopupDatabase extends UiPopupAbstract {
+
+    DatabaseDAOImpl database = new DatabaseDAOImpl();
+
+    JList list;
 
     public UiPopupDatabase() {
         addMenuItem("Database Properties", () -> {
@@ -35,6 +48,7 @@ public class UiPopupDatabase extends UiPopupAbstract {
                 Logger.getLogger(UiPopupDatabase.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+
     }
 
     public void delete() {
