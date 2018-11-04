@@ -7,7 +7,6 @@ package com.bsptechs.main.popup;
 
 import com.bsptechs.main.Main;
 import com.bsptechs.main.bean.Config;
-import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
@@ -99,17 +98,22 @@ public class UiPopupTable extends UiPopupAbstract {
 
     public void renameTable() {
         TableName tb = MainFrameUtility.getSelectedTableFromList();
-        String newTblName = (String) JOptionPane.showInputDialog(null, "Enter new name:", "Rename Table",
-                JOptionPane.QUESTION_MESSAGE, null, null, tb.getTableName());
-        database.renameTable(tb.getDatabaseName(), tb.getTableName(), newTblName);
+        String newTblName = (String) JOptionPane.showInputDialog(
+                null, 
+                "Enter new name:", 
+                "Rename Table",
+                JOptionPane.QUESTION_MESSAGE, 
+                null, 
+                null, 
+                tb.getTableName()
+        );
+        database.renameTable(tb, newTblName);
         List<TableName> tbNames = database.getAllTables(tb.getDatabaseName());
-        MainFrameUtility.fillList(tbNames, frame, new UiPopupTable(frame, list, pane), "table", list);
+        MainFrameUtility.fillList(tbNames, Config.getMain(), new UiPopupTable(), "table", Config.getMain().getListTable());
     }
 
     private void refreshDB() {
-        int selectedIndex = list.getSelectedIndex();
-        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
-        TableName tb = (TableName) selectedElement.getData();
+        TableName tb = MainFrameUtility.getSelectedTableFromList();
         List<TableName> tbNames = database.getAllTables(tb.getDatabaseName());
         
         Main m = Config.getMain();
@@ -128,7 +132,7 @@ public class UiPopupTable extends UiPopupAbstract {
 
     private void copyTable() {
         TableName tb = MainFrameUtility.getSelectedTableFromList();
-        FileUtility.writeDBAndTblNameFile(tb.getDatabaseName(), tb.getTableName());
+        FileUtility.writeDBAndTblNameFile(tb.getDatabaseName().getName(), tb.getTableName());
     }
 
     private void pasteTable() {

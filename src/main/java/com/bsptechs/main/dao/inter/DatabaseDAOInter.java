@@ -17,13 +17,13 @@ public interface DatabaseDAOInter {
 
     List<TableName> getAllTables(DatabaseName database);
 
-    boolean emptyTable(String DBName, String tblName);
+    boolean emptyTable(DatabaseName db, String tblName);
 
-    boolean truncateTable(String DBName, String tblName);
+    boolean truncateTable(DatabaseName DBName, String tblName);
 
-    boolean dublicateTable(String DBName, String tbLName);
+    boolean dublicateTable(DatabaseName DBName, String tbLName);
 
-    boolean pasteTable(String information, String DBName, String tbLName);
+    boolean pasteTable(String information, DatabaseName DBName, String tbLName);
 
     boolean renameTable(TableName table, String newTblName);
 

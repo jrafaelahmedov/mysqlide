@@ -22,11 +22,13 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         btnNewQuery.setEnabled(false);
+        menuNewQuery.setEnabled(false);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     public void enableNewQuery() {
         btnNewQuery.setEnabled(true);
+        menuNewQuery.setEnabled(true);
     }
     private PanelQuery panelQuery = null;
 
@@ -93,10 +95,8 @@ public class Main extends javax.swing.JFrame {
         tabTables = new javax.swing.JTabbedPane();
         menuBarTop = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        menuNewMySQLConnection = new javax.swing.JMenuItem();
-        jMenu9 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuNewConnection = new javax.swing.JMenuItem();
+        menuNewQuery = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -516,27 +516,21 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem1.setText("New Project");
-        jMenu1.add(jMenuItem1);
-
-        menuNewMySQLConnection.setText("New Connection");
-        menuNewMySQLConnection.addActionListener(new java.awt.event.ActionListener() {
+        menuNewConnection.setText("New Connection");
+        menuNewConnection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuNewMySQLConnectionActionPerformed(evt);
+                menuNewConnectionActionPerformed(evt);
             }
         });
-        jMenu1.add(menuNewMySQLConnection);
+        jMenu1.add(menuNewConnection);
 
-        jMenu9.setText("New");
-        jMenu1.add(jMenu9);
-
-        jMenuItem2.setText("Open Connection");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuNewQuery.setText("New Query");
+        menuNewQuery.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuNewQueryActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(menuNewQuery);
 
         jMenu10.setText("Open Recent");
         jMenu1.add(jMenu10);
@@ -633,9 +627,9 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void menuNewQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNewQueryActionPerformed
+        prepareNewQuery();
+    }//GEN-LAST:event_menuNewQueryActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
@@ -798,9 +792,9 @@ public class Main extends javax.swing.JFrame {
         btnNewQuery.setBorder(null);
     }//GEN-LAST:event_btnNewQueryMouseExited
 
-    private void menuNewMySQLConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNewMySQLConnectionActionPerformed
+    private void menuNewConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNewConnectionActionPerformed
         MainFrameUtility.showFrameForMySQLConnection(this, tabTables, listConnections, listDatabases);
-    }//GEN-LAST:event_menuNewMySQLConnectionActionPerformed
+    }//GEN-LAST:event_menuNewConnectionActionPerformed
 
     public PanelQuery getPanelQuery() {
         return panelQuery;
@@ -904,11 +898,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
-    private javax.swing.JMenu jMenu9;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -922,7 +913,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JList<String> listConnections;
     private javax.swing.JList<String> listDatabases;
     private javax.swing.JMenuBar menuBarTop;
-    private javax.swing.JMenuItem menuNewMySQLConnection;
+    private javax.swing.JMenuItem menuNewConnection;
+    private javax.swing.JMenuItem menuNewQuery;
     private javax.swing.JPanel panelCenter;
     private javax.swing.JPanel panelLeft;
     private javax.swing.JPanel panelWrapper;

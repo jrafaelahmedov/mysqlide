@@ -119,12 +119,11 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
         table = new TableData(rows, columns);
         return table;
     }
-  
-  
-    @Override
-    public boolean emptyTable(String DBName, String tblName) {
-        try (Connection conn = connect()) {
 
+    @Override
+    public boolean emptyTable(DatabaseName DBName, String tblName) {
+        try {
+            Connection conn = connect(DBName.getConnection());
             PreparedStatement stmt = conn.prepareStatement("delete  from " + DBName + "." + tblName);
 
             stmt.executeUpdate();
@@ -138,8 +137,9 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public boolean truncateTable(String DBName, String tblName) {
-        try (Connection conn = connect()) {
+    public boolean truncateTable(DatabaseName DBName, String tblName) {
+        try {
+            Connection conn = connect(DBName.getConnection());
 
             PreparedStatement stmt = conn.prepareStatement("TRUNCATE TABLE " + DBName + "." + tblName);
 
@@ -153,12 +153,13 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public boolean dublicateTable(String DBName, String tbLName) {
-        try (Connection conn = connect()) {
+    public boolean dublicateTable(DatabaseName DBName, String tbLName) {
+        try {
+            Connection conn = connect(DBName.getConnection());
             String newTbLName = tbLName.concat("_copy");
             PreparedStatement stmt = conn.prepareStatement("CREATE TABLE " + DBName + "." + newTbLName + " LIKE " + DBName + "." + tbLName);
             PreparedStatement stmt1 = conn.prepareStatement("INSERT " + DBName + "." + newTbLName + "SELECT * FROM " + DBName + "." + tbLName);
-            
+
             stmt.executeUpdate();
             return true;
         } catch (Exception ex) {
@@ -169,9 +170,10 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public boolean pasteTable(String information, String DBName, String TblName) {
+    public boolean pasteTable(String information, DatabaseName DBName, String TblName) {
 
-        try (Connection conn = connect()) {
+        try {
+            Connection conn = connect(DBName.getConnection());
             PreparedStatement stmt = conn.prepareStatement("CREATE TABLE " + DBName + "." + TblName + " LIKE " + information);
             PreparedStatement stmt1 = conn.prepareStatement("INSERT " + DBName + "." + TblName + "SELECT * FROM " + information);
             stmt.executeUpdate();
@@ -183,7 +185,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
         }
 
     }
-  
+
     public static void main(String[] args) throws Exception {
         NConnection conn = new NConnection("localhost", "localhost", "3306", "root", "");
 
@@ -201,6 +203,5 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
             System.out.println("");
         }
     }
-
 
 }
