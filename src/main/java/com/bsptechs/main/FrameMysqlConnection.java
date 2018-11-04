@@ -3,6 +3,7 @@ package com.bsptechs.main;
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.util.ui.MainFrameUtility;
+import com.bsptechs.main.util.ui.Util;
 import org.apache.commons.lang3.StringUtils;
 
 /*
@@ -423,12 +424,12 @@ public class FrameMysqlConnection extends javax.swing.JFrame {
             res = false;
         }
 
-        if (!MainFrameUtility.checkIp(conn.getIpAdr())) {
+        if (!Util.checkIp(conn.getIpAdr())) {
             lblHostNameErrMsg.setText("invalid ip address");
             res = false;
         }
 
-        if (!MainFrameUtility.checkPort(conn.getPort())) {
+        if (!Util.checkPort(conn.getPort())) {
             lblPortErrMsg.setText("invalid port number");
             res = false;
         }

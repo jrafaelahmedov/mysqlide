@@ -1,8 +1,8 @@
 package com.bsptechs.main;
 
 import com.bsptechs.main.bean.Config;
-import com.bsptechs.main.bean.DatabaseName;
 import com.bsptechs.main.bean.NConnection;
+import com.bsptechs.main.util.ui.FrameMySQLConnectionUtil;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JTabbedPane;
+import javax.swing.JTree;
 
 /**
  *
@@ -34,10 +35,9 @@ public class Main extends javax.swing.JFrame {
 
     public void prepare() throws Exception {
         Config.initialize();
-        MainFrameUtility.prepareDatabaseList();
-        MainFrameUtility.prepareConnectionsList();
+//        MainFrameUtility.prepareDatabaseList();
         refreshData();
-
+        MainFrameUtility.prepareList();
     }
 
     public void refreshData() {
@@ -48,12 +48,8 @@ public class Main extends javax.swing.JFrame {
         return tabTables;
     }
 
-    public JList getListTable() {
+    public JTree getListTable() {
         return listDatabases;
-    }
-
-    public JList getListConnections() {
-        return listConnections;
     }
 
     /**
@@ -83,11 +79,8 @@ public class Main extends javax.swing.JFrame {
         panelCenter = new javax.swing.JPanel();
         splitPaneCenter = new javax.swing.JSplitPane();
         panelLeft = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listDatabases = new javax.swing.JList<>();
-        btnBack = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        listConnections = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listDatabases = new javax.swing.JTree();
         tabbedPaneCenter = new javax.swing.JTabbedPane();
         tabQuery = new javax.swing.JTabbedPane();
         tabDesignTable = new javax.swing.JTabbedPane();
@@ -407,49 +400,21 @@ public class Main extends javax.swing.JFrame {
         panelLeft.setBackground(new java.awt.Color(255, 255, 255));
         panelLeft.setMaximumSize(new java.awt.Dimension(10000, 32767));
 
-        listDatabases.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                listDatabasesMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                listDatabasesMouseReleased(evt);
-            }
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listDatabasesMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(listDatabases);
-
-        btnBack.setText("Back");
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackActionPerformed(evt);
-            }
-        });
-
-        jScrollPane2.setViewportView(listConnections);
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("connections");
+        listDatabases.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane3.setViewportView(listDatabases);
 
         javax.swing.GroupLayout panelLeftLayout = new javax.swing.GroupLayout(panelLeft);
         panelLeft.setLayout(panelLeftLayout);
         panelLeftLayout.setHorizontalGroup(
             panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLeftLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(panelLeftLayout.createSequentialGroup()
-                .addGroup(panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelLeftLayout.setVerticalGroup(
             panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(panelLeftLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE))
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
         );
 
         splitPaneCenter.setLeftComponent(panelLeft);
@@ -655,23 +620,6 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenu1MenuDragMouseEntered
 
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        NConnection cn = Config.getCurrentConnection();
-        MainFrameUtility.connect(cn);
-    }//GEN-LAST:event_btnBackActionPerformed
-
-    private void listDatabasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listDatabasesMouseClicked
-
-    }//GEN-LAST:event_listDatabasesMouseClicked
-
-    private void listDatabasesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listDatabasesMouseReleased
-
-    }//GEN-LAST:event_listDatabasesMouseReleased
-
-    private void listDatabasesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listDatabasesMousePressed
-
-    }//GEN-LAST:event_listDatabasesMousePressed
-
     private void btnTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTableActionPerformed
@@ -685,7 +633,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTableMouseExited
 
     private void btnNewConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewConnectionActionPerformed
-        MainFrameUtility.showFrameForMySQLConnection(this, tabTables, listConnections, listDatabases);
+        FrameMySQLConnectionUtil.showFrameForMySQLConnection(this, tabTables, listDatabases);
     }//GEN-LAST:event_btnNewConnectionActionPerformed
 
     private void btnNewConnectionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewConnectionMouseEntered
@@ -793,7 +741,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNewQueryMouseExited
 
     private void menuNewConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNewConnectionActionPerformed
-        MainFrameUtility.showFrameForMySQLConnection(this, tabTables, listConnections, listDatabases);
+        FrameMySQLConnectionUtil.showFrameForMySQLConnection(this, tabTables, listDatabases);
     }//GEN-LAST:event_menuNewConnectionActionPerformed
 
     public PanelQuery getPanelQuery() {
@@ -878,7 +826,6 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAutomation;
-    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnBackup;
     private javax.swing.JButton btnEvent;
     private javax.swing.JButton btnFunctions;
@@ -907,11 +854,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JList<String> listConnections;
-    private javax.swing.JList<String> listDatabases;
+    private javax.swing.JTree listDatabases;
     private javax.swing.JMenuBar menuBarTop;
     private javax.swing.JMenuItem menuNewConnection;
     private javax.swing.JMenuItem menuNewQuery;

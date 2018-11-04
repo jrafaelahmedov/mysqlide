@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Penthos
  */
-public class NConnection implements Serializable {
+public class NConnection  extends UiElementData implements Serializable {
 
     private String name;
     private String ipAdr;

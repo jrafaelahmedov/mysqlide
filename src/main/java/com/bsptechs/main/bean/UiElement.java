@@ -13,7 +13,7 @@ import javax.swing.JPopupMenu;
  *
  * @author sarkhanrasullu
  */
-public class UiElement {
+public  class UiElement {
     private String text;
     private Object data;
     private JPopupMenu popup;

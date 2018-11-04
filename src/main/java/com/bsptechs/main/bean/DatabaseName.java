@@ -1,6 +1,6 @@
 package com.bsptechs.main.bean;
 
-public class DatabaseName {
+public class DatabaseName extends UiElementData{
 
     private String name;
     private NConnection connection;

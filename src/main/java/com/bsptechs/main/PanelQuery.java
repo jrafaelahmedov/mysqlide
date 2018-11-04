@@ -12,6 +12,7 @@ import com.bsptechs.main.bean.table.TableData;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import com.bsptechs.main.util.ui.MainFrameUtility;
+import com.bsptechs.main.util.ui.PanelQueryUtil;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -366,7 +367,7 @@ public class PanelQuery extends javax.swing.JPanel {
         pnlTable.setVisible(true);
         try {
              TableData data = db.runQuery(txtQuery.getText(), getSelectedConnection(), getSelectedDatabase());
-            DefaultTableModel model = MainFrameUtility.buildTableModel(data);
+            DefaultTableModel model = PanelQueryUtil.buildTableModel(data);
             tblQueryResult.setModel(model);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PanelQuery.class.getName()).log(Level.SEVERE, null, ex);

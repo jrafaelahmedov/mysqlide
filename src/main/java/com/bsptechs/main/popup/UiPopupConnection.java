@@ -6,6 +6,7 @@
 package com.bsptechs.main.popup;
 
 import com.bsptechs.main.bean.NConnection;
+import com.bsptechs.main.util.ui.FrameMySQLConnectionUtil;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 
 /**
@@ -38,7 +39,7 @@ public class UiPopupConnection extends UiPopupAbstract {
 
     public void properties() {
         System.out.println("properites connection");
-        MainFrameUtility.showMySQLConnectionAsUpdate();
+        FrameMySQLConnectionUtil.showMySQLConnectionAsUpdate();
     }
 
     public void connect() {

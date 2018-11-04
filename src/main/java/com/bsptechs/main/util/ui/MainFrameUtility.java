@@ -4,16 +4,13 @@
  * and open the template in the editor.
  */
 package com.bsptechs.main.util.ui;
-
-import com.bsptechs.main.FrameMysqlConnection;
+ 
 import com.bsptechs.main.Main;
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.DatabaseName;
 import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.UiElement;
-import com.bsptechs.main.bean.table.TableData;
-import com.bsptechs.main.bean.table.TableRow;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import com.bsptechs.main.popup.UiPopupConnection;
@@ -21,22 +18,20 @@ import com.bsptechs.main.popup.UiPopupDatabase;
 import com.bsptechs.main.popup.UiPopupTable;
 import com.bsptechs.main.util.file.ReadFileIO;
 import com.bsptechs.main.util.file.WriteToFileIO;
-import java.awt.MouseInfo;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
+import javax.swing.JTree;
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
-import org.apache.commons.lang3.StringUtils;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -54,18 +49,14 @@ public class MainFrameUtility {
         tab.setSelectedIndex(tab.getTabCount() - 1);
     }
 
-    public static void fillTableToRunnedQuery() {
-
-    }
-
     public static void onMouseClick_OnTablesList(MouseEvent evt) {
         if (MainFrameUtility.isLeftDoubleClicked(evt)) {
 
-            UiElement element = getUiElementFromList(Config.getMain().getListTable());
+            UiElement element = Util.getUiElementFromList(Config.getMain().getListTable());
             System.out.println("element.getData()=" + element.getData());
             if (element.getData() instanceof TableName) {
                 TableName tb = (TableName) element.getData();
-                runQuery("select * from " + tb.getTableName());
+                PanelQueryUtil.runQuery("select * from " + tb.getTableName());
                 return;
             }
 
@@ -74,20 +65,14 @@ public class MainFrameUtility {
                 Config.setCurrentDatabaseName(db);
                 List<TableName> list = database.getAllTables(db);
 
-                MainFrameUtility.fillList(list, Config.getMain(), new UiPopupTable(), null, Config.getMain().getListTable());
+                MainFrameUtility.fillTree(list, Config.getMain(), new UiPopupTable(), null, Config.getMain().getListTable());
             }
         }
     }
 
-    public static void prepareConnectionsList() {
-        MouseAdapter m = MainFrameUtility.getAdapterForConnectionList();
-        Config.getMain().getListConnections().addMouseListener(m);
-    }
-
-    public static void prepareDatabaseList() {
-        MouseAdapter ma = MainFrameUtility.getAdapterForDatabaseList();
-        Main m = Config.getMain();
-        JList listTable = m.getListTable();
+    public static void prepareList() {
+        MouseAdapter ma = MainFrameUtility.getAdapterForList();
+        JTree listTable = Config.getMain().getListTable();
         listTable.addMouseListener(ma);
     }
 
@@ -98,10 +83,6 @@ public class MainFrameUtility {
 //        frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
     }
 
-    public static void showFrameForMySQLConnection(JFrame frame, JTabbedPane tab, JList listConnections, JList listDatabases) {
-        new FrameMysqlConnection().setVisible(true);
-    }
-
     public static void fillConnectionsIntoJList() {
         Main m = Config.getMain();
         List<NConnection> list = Config.instance().getConnections();
@@ -110,13 +91,13 @@ public class MainFrameUtility {
             return;
         }
 
-        MainFrameUtility.fillList(list, m, new UiPopupConnection(), null, m.getListConnections());
+        MainFrameUtility.fillTree(list, m, new UiPopupConnection(), null, m.getListTable());
     }
 
     public static void fillDatabasesIntoJList(NConnection connection) {
 
         Main m = Config.getMain();
-        MainFrameUtility.fillList(connection.getDatabases(), m, new UiPopupDatabase(), "database", m.getListTable());
+        MainFrameUtility.fillTree(connection.getDatabases(), m, new UiPopupDatabase(), "database", m.getListTable());
     }
 
     public static void fillList(List<?> textList, JFrame frame, JPopupMenu popup, Object data, JList uiList) {
@@ -135,47 +116,54 @@ public class MainFrameUtility {
         uiList.setModel(dm);
     }
 
-    public static UiElement getUiElementFromList(JList list) {
-        int index = list.getSelectedIndex();
-        if (index > -1) {
-            return (UiElement) list.getModel().getElementAt(index);
+    public static void fillConnections(List<NConnection> list, JFrame frame, JPopupMenu popup, Object data, JTree tree) {
+        if (list == null) {
+            return;
         }
-        return null;
-    }
+        DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
 
-    public static void showMenuOnList(JList list, MouseEvent evt) {
-        if (list.getSelectedIndex() > -1 && SwingUtilities.isRightMouseButton(evt)) {
-            UiElement element = (UiElement) list.getModel().getElementAt(list.getSelectedIndex());
-            int mouseX = (int) MouseInfo.getPointerInfo().getLocation().getX();
-            int mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY();
-            element.getPopup().show(element.getFrame(), mouseX, mouseY - 5);
+        DefaultMutableTreeNode dm = new DefaultMutableTreeNode();
+        for (NConnection t : list) {
+            UiElement uiElement = new UiElement(t.toString());
+            uiElement.setFrame(frame);
+            uiElement.setPopup(popup);
+            uiElement.setData(t);
+
+            model.insertNodeInto(new DefaultMutableTreeNode(uiElement), root, root.getChildCount());
         }
+
     }
 
-    public static MouseAdapter getAdapterForConnectionList() {
-        Main main = Config.getMain();
+    public static void fillTree(List<?> textList, JFrame frame, JPopupMenu popup, Object data, JTree tree) {
+        if (textList == null) {
+            return;
+        }
 
-        MouseAdapter m = new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                MainFrameUtility.showMenuOnList(main.getListConnections(), evt);
-            }
+        for (Object t : textList) {
+            UiElement uiElement = new UiElement(t.toString());
+            uiElement.setFrame(frame);
+            uiElement.setPopup(popup);
+            uiElement.setData(t);
 
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                System.out.println("I am connection name");
-                MainFrameUtility.onMouseClick_OnConnectionsList(evt);
+            DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+            DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+            if (Util.getSelectedNode(tree) != null) {
+                root = Util.getSelectedNode(tree);
             }
-        };
-        return m;
+            model.insertNodeInto(new DefaultMutableTreeNode(uiElement), root, root.getChildCount());
+        }
+
     }
 
-    public static MouseAdapter getAdapterForDatabaseList() {
+    
+   
+    public static MouseAdapter getAdapterForList() {
         MouseAdapter m = new java.awt.event.MouseAdapter() {
             @Override
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 System.out.println("I am released on database list");
-                MainFrameUtility.showMenuOnList(Config.getMain().getListTable(), evt);
+                Util.showMenuOnList(Config.getMain().getListTable(), evt);
             }
 
             @Override
@@ -190,6 +178,10 @@ public class MainFrameUtility {
 
     public static boolean isLeftDoubleClicked(MouseEvent evt) {
         return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
+    }
+    
+    public static boolean isRightClicked(MouseEvent evt) {
+        return SwingUtilities.isRightMouseButton(evt);
     }
 
     public static void saveConfig() {
@@ -215,9 +207,6 @@ public class MainFrameUtility {
     }
 
     public static void connect(NConnection connection) {
-//        Main m = Config.getMain();
-//        NConnection selectedConnection = getSelectedConnectionFromList();
-//        Config.setConnection(selectedConnection);
         List<DatabaseName> databases = database.getAllDatabases(connection);
         connection.setDatabases(databases);
         MainFrameUtility.fillDatabasesIntoJList(connection);
@@ -225,22 +214,14 @@ public class MainFrameUtility {
     }
 
     public static void disconnect() {
-
         NConnection connection = Config.getCurrentConnection();
         connection.reset();
-
         System.out.println(connection.getName() + " connection is closed");
-
-    }
-
-    public static void showMySQLConnectionAsUpdate() {
-        FrameMysqlConnection f = new FrameMysqlConnection();
-        f.showAsUpdate();
     }
 
     public static NConnection getSelectedConnectionFromList() {
         Main m = Config.getMain();
-        UiElement uiElement = getUiElementFromList(m.getListConnections());
+        UiElement uiElement = Util.getUiElementFromList(m.getListTable());
         if (uiElement == null) {
             return null;
         }
@@ -250,7 +231,7 @@ public class MainFrameUtility {
 
     public static DatabaseName getSelectedDatabaseFromList() {
         Main m = Config.getMain();
-        UiElement uiElement = getUiElementFromList(m.getListTable());
+        UiElement uiElement = Util.getUiElementFromList(m.getListTable());
         if (uiElement == null) {
             return null;
         }
@@ -263,7 +244,7 @@ public class MainFrameUtility {
 
     public static TableName getSelectedTableFromList() {
         Main m = Config.getMain();
-        UiElement uiElement = getUiElementFromList(m.getListTable());
+        UiElement uiElement = Util.getUiElementFromList(m.getListTable());
         if (uiElement == null) {
             return null;
         }
@@ -275,43 +256,12 @@ public class MainFrameUtility {
     }
 
     public static int getSelectedConnectionIndexFromList() {
-        int index = Config.getMain().getListConnections().getSelectedIndex();
-        return index;
+//        int index = Config.getMain().getListTable().getSelectedIndex();
+//        return index;
+        return -1;
     }
 
-    public static DefaultTableModel buildTableModel(TableData tableData) {
-        Vector<String> columnNames = new Vector<String>(tableData.getColumns());
 
-        Vector<Vector<Object>> rowsVector = new Vector<Vector<Object>>();
-        List<TableRow> rows = tableData.getRows();
-        for (TableRow row : rows) {
-            Vector<Object> vector = new Vector<Object>(row.getCells());
-            rowsVector.add(vector);
-        }
 
-        DefaultTableModel dtm = new DefaultTableModel(rowsVector, columnNames);
-        return dtm;
-    }
-
-    public static void runQuery(String txt) {
-        Config.getMain().prepareNewQuery();
-        Config.getMain().getPanelQuery().setQuery(txt);
-        Config.getMain().getPanelQuery().runQuery();
-    }
-
-    public static boolean checkIp(String ip) {
-        if (StringUtils.isEmpty(ip)) {
-            return false;
-        }
-        boolean res = Pattern.matches("^localhost$|^127(?:\\.[0-9]+){0,2}\\.[0-9]+$|^(?:0*\\:)*?:?0*1$", ip);
-        return res;
-    }
-
-    public static boolean checkPort(String port) {
-        if (StringUtils.isEmpty(port)) {
-            return true;
-        }
-        boolean res = Pattern.matches("(6553[0-5]|655[0-2]\\d|65[0-4]\\d{2}|6[0-4]\\d{3}|5\\d{4}|[0-9]\\d{0,3})", port);
-        return res;
-    }
+   
 }

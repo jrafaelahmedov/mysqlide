@@ -13,6 +13,7 @@ import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import com.bsptechs.main.popup.file.FileUtility;
 import com.bsptechs.main.util.ui.MainFrameUtility;
+import com.bsptechs.main.util.ui.PanelQueryUtil;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -88,11 +89,11 @@ public class UiPopupTable extends UiPopupAbstract {
     public void viewTable() {
         Main m = Config.getMain();
 
-        UiElement element = (UiElement) m.getListTable().getSelectedValue();
+        UiElement element = (UiElement) m.getListTable().getSelectionPath().getLastPathComponent();
          
         if (element.getData() instanceof TableName) { 
             TableName tb = (TableName) element.getData();
-            MainFrameUtility.runQuery("select * from "+tb.getTableName());
+            PanelQueryUtil.runQuery("select * from "+tb.getTableName());
         }
     }
 
@@ -109,7 +110,7 @@ public class UiPopupTable extends UiPopupAbstract {
         );
         database.renameTable(tb, newTblName);
         List<TableName> tbNames = database.getAllTables(tb.getDatabaseName());
-        MainFrameUtility.fillList(tbNames, Config.getMain(), new UiPopupTable(), "table", Config.getMain().getListTable());
+        MainFrameUtility.fillTree(tbNames, Config.getMain(), new UiPopupTable(), "table", Config.getMain().getListTable());
     }
 
     private void refreshDB() {
@@ -117,7 +118,7 @@ public class UiPopupTable extends UiPopupAbstract {
         List<TableName> tbNames = database.getAllTables(tb.getDatabaseName());
         
         Main m = Config.getMain();
-        MainFrameUtility.fillList(tbNames, m, new UiPopupTable(), "table", m.getListTable());
+        MainFrameUtility.fillTree(tbNames, m, new UiPopupTable(), "table", m.getListTable());
     }
 
     private void emptyTable() {

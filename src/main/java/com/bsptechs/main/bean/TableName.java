@@ -9,7 +9,8 @@ package com.bsptechs.main.bean;
  *
  * @author Goshgar
  */
-public class TableName {
+public class TableName extends UiElementData {
+
     private String tableName;
     private DatabaseName databaseName;
 
@@ -33,10 +34,10 @@ public class TableName {
     public void setDatabaseName(DatabaseName databaseName) {
         this.databaseName = databaseName;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return this.tableName;
     }
-    
+
 }
