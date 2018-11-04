@@ -1,20 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.bsptechs.main.dao.impl;
 
+import com.bsptechs.main.bean.DatabaseName;
+import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.bean.TableName;
+import com.bsptechs.main.bean.table.TableCell;
+import com.bsptechs.main.bean.table.TableData;
+import com.bsptechs.main.bean.table.TableRow;
 import com.bsptechs.main.dao.inter.AbstractDatabase;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -23,10 +25,11 @@ import java.util.List;
 public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInter {
 
     @Override
-    public List<String> getAllDatabases() {
-        List<String> list = new ArrayList<>();
+    public List<DatabaseName> getAllDatabases(NConnection connection) {
+        List<DatabaseName> databasesList = new ArrayList<>();
 
-        try (Connection conn = connect()) {
+        try {
+            Connection conn = connect(connection);
             Statement stmt = conn.createStatement();
             ResultSet resultset = stmt.executeQuery("SHOW DATABASES;");
 
@@ -36,25 +39,26 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
 
             while (resultset.next()) {
                 String result = resultset.getString("Database");
-                list.add(result);
+                databasesList.add(new DatabaseName(result, connection));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            return list;
+            return databasesList;
         }
     }
 
     @Override
-    public List<TableName> getAllTables(String databaseName) {
+    public List<TableName> getAllTables(DatabaseName database) {
         List<TableName> list = new ArrayList<>();
-        try (Connection conn = connect();) {
+        try {
+            Connection conn = connect(database.getConnection());
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM information_schema.tables where table_schema = ?");
-            stmt.setString(1, databaseName);
+            stmt.setString(1, database.getName());
             ResultSet resultset = stmt.executeQuery();
             while (resultset.next()) {
                 String result = resultset.getString("table_name");
-                list.add(new TableName(result, databaseName));
+                list.add(new TableName(result, database));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -65,17 +69,11 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public List<String> getAllConnection() {
-        List<String> list = Arrays.asList("localhost", "rafael mysql");
-        return list;
-    }
-
-    @Override
-    public boolean renameTable(String DBname, String oldTblName, String newTblName) {
-        try (Connection conn = connect()) {
-            PreparedStatement stmt = conn.prepareStatement("RENAME TABLE `" + DBname + "`.`" + oldTblName + "` TO `" + DBname + "`.`" + newTblName + "`");
+    public boolean renameTable(TableName table, String newTblName) {
+        try {
+            Connection conn = connect(table.getDatabaseName().getConnection());
+            PreparedStatement stmt = conn.prepareStatement("RENAME TABLE `" + table.getDatabaseName().getName() + "`.`" + table.getTableName() + "` TO `" + table.getDatabaseName().getName() + "`.`" + newTblName + "`");//PrepapredStatement ile edende dirnaqlara gore ishlemirdi ona gore bele etdim
             stmt.executeUpdate();
-
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -83,6 +81,46 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
         }
     }
 
+    public static List<String> getColumns(ResultSet rs) throws SQLException {
+        ResultSetMetaData metdata = rs.getMetaData();
+        int cnt = metdata.getColumnCount();
+        List<String> columns = new ArrayList<>();
+        for (int i = 0; i < cnt; i++) {
+            String columnName = metdata.getColumnName(i + 1);
+            columns.add(columnName);
+        }
+        return columns;
+    }
+
+    @Override
+    public TableData runQuery(String query, NConnection connection, DatabaseName database) throws ClassNotFoundException, SQLException {
+        TableData table = null;
+        Connection conn = connect(connection);
+        Statement stmt = conn.createStatement();
+        if (database != null && StringUtils.isNoneEmpty(database.getName())) {
+            String setDatabase = "USE " + database.getName() + ";";
+            stmt.executeQuery(setDatabase);
+        }
+
+        ResultSet rs = stmt.executeQuery(query);
+
+        List<String> columns = getColumns(rs);
+        List<TableRow> rows = new ArrayList<>();
+        while (rs.next()) {
+            List<TableCell> rowCells = new ArrayList<>();
+
+            for (String column : columns) {
+                Object o = rs.getObject(column);
+                rowCells.add(new TableCell(column, o));
+            }
+
+            rows.add(new TableRow(rowCells));
+        }
+        table = new TableData(rows, columns);
+        return table;
+    }
+  
+  
     @Override
     public boolean emptyTable(String DBName, String tblName) {
         try (Connection conn = connect()) {
@@ -145,5 +183,24 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
         }
 
     }
+  
+    public static void main(String[] args) throws Exception {
+        NConnection conn = new NConnection("localhost", "localhost", "3306", "root", "");
+
+        TableData data = new DatabaseDAOImpl().runQuery("SELECT * FROM user;", conn, new DatabaseName("filemanagementsystem", conn));
+
+        List<TableRow> rows = data.getRows();
+        for (TableRow r : rows) {
+            System.out.println(r);
+            System.out.println("-------------------");
+            List<TableCell> cells = r.getCells();
+
+            for (TableCell c : cells) {
+                System.out.println(c);
+            }
+            System.out.println("");
+        }
+    }
+
 
 }

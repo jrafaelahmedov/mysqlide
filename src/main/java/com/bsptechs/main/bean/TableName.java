@@ -11,9 +11,9 @@ package com.bsptechs.main.bean;
  */
 public class TableName {
     private String tableName;
-    private String databaseName;
+    private DatabaseName databaseName;
 
-    public TableName(String tableName, String databaseName) {
+    public TableName(String tableName, DatabaseName databaseName) {
         this.tableName = tableName;
         this.databaseName = databaseName;
     }
@@ -26,11 +26,11 @@ public class TableName {
         this.tableName = tableName;
     }
 
-    public String getDatabaseName() {
+    public DatabaseName getDatabaseName() {
         return databaseName;
     }
 
-    public void setDatabaseName(String databaseName) {
+    public void setDatabaseName(DatabaseName databaseName) {
         this.databaseName = databaseName;
     }
     

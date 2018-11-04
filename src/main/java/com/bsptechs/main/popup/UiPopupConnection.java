@@ -5,6 +5,9 @@
  */
 package com.bsptechs.main.popup;
 
+import com.bsptechs.main.bean.NConnection;
+import com.bsptechs.main.util.ui.MainFrameUtility;
+
 /**
  *
  * @author sarkhanrasullu
@@ -18,15 +21,37 @@ public class UiPopupConnection extends UiPopupAbstract {
         addMenuItem("Connection Properties", () -> {
             properties();
         });
+
+        addMenuItem("Connect", () -> {
+            connect();
+        });
+
+        addMenuItem("Disconnect", () -> {
+            disconnect();
+        });
     }
 
     public void delete() {
-        System.out.println("delete database");
+        System.out.println("delete connection");
         //Tebriz burani dolduracaq
     }
 
     public void properties() {
-        System.out.println("properites database");
+        System.out.println("properites connection");
+        MainFrameUtility.showMySQLConnectionAsUpdate();
+    }
+
+    public void connect() {
+        System.out.println("connection connection");
+        NConnection cn = MainFrameUtility.getSelectedConnectionFromList();
+        MainFrameUtility.connect(cn);
+        //Tebriz burani dolduracaq
+    }
+
+    public void disconnect() {
+        System.out.println("disconnection connection");
+
+        MainFrameUtility.disconnect();
         //Tebriz burani dolduracaq
     }
 

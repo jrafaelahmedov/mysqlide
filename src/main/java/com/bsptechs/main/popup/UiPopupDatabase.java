@@ -15,6 +15,12 @@ import static java.util.Collections.list;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.DatabaseName;
+import com.bsptechs.main.util.ui.MainFrameUtility;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,11 +29,10 @@ import javax.swing.JTabbedPane;
 public class UiPopupDatabase extends UiPopupAbstract {
 
     DatabaseDAOImpl database = new DatabaseDAOImpl();
-    JTabbedPane pane;
+
     JList list;
 
-    public UiPopupDatabase(JTabbedPane pane) {
-        this.pane = pane;
+    public UiPopupDatabase() {
         addMenuItem("Database Properties", () -> {
             properties();
         });
@@ -35,7 +40,13 @@ public class UiPopupDatabase extends UiPopupAbstract {
             delete();
         });
         addMenuItem("New Query", () -> {
-            newQuery();
+            try {
+                newQuery();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UiPopupDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(UiPopupDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
     }
@@ -50,9 +61,10 @@ public class UiPopupDatabase extends UiPopupAbstract {
         //Tebriz burani dolduracaq
     }
 
-    public void newQuery() {
+    public void newQuery() throws ClassNotFoundException, SQLException {
         System.out.println("new query");
-        MainFrameUtility.addPanelToTab(pane, new PanelQuery(), "Query");
+        DatabaseName db = Config.getCurrentDatabaseName();
+        MainFrameUtility.addPanelToTab(Config.getMain().getTabPaneTable(), new PanelQuery(null, db), "Query");
     }
 
 }

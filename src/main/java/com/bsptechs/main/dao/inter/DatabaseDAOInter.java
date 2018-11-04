@@ -1,11 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.bsptechs.main.dao.inter;
 
+import com.bsptechs.main.bean.DatabaseName;
+import com.bsptechs.main.bean.NConnection;
 import com.bsptechs.main.bean.TableName;
+import com.bsptechs.main.bean.table.TableData;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -14,13 +13,9 @@ import java.util.List;
  */
 public interface DatabaseDAOInter {
 
-    List<String> getAllDatabases();
+    List<DatabaseName> getAllDatabases(NConnection connection);
 
-    List<TableName> getAllTables(String databaseName);
-
-    List<String> getAllConnection();
-
-    boolean renameTable(String DBname, String oldTblName, String newTblName);
+    List<TableName> getAllTables(DatabaseName database);
 
     boolean emptyTable(String DBName, String tblName);
 
@@ -29,4 +24,9 @@ public interface DatabaseDAOInter {
     boolean dublicateTable(String DBName, String tbLName);
 
     boolean pasteTable(String information, String DBName, String tbLName);
+
+    boolean renameTable(TableName table, String newTblName);
+
+    public TableData runQuery(String query, NConnection connection, DatabaseName database) throws ClassNotFoundException, SQLException;
+
 }

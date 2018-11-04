@@ -5,6 +5,9 @@
  */
 package com.bsptechs.main.popup;
 
+import com.bsptechs.main.Main;
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.TableName;
 import com.bsptechs.main.bean.UiElement;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
@@ -12,10 +15,7 @@ import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import com.bsptechs.main.popup.file.FileUtility;
 import com.bsptechs.main.util.ui.MainFrameUtility;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JTabbedPane;
 
 /**
  *
@@ -25,14 +25,8 @@ public class UiPopupTable extends UiPopupAbstract {
 
     private static DatabaseDAOInter database = new DatabaseDAOImpl();
 
-    private JList list;
-    private JTabbedPane pane;
-    private JFrame frame;
+    public UiPopupTable() {
 
-    public UiPopupTable(JFrame frame, JList list, JTabbedPane pane) {
-        this.pane = pane;
-        this.list = list;
-        this.frame = frame;
         addMenuItem("Delete Table", () -> {
             delete();
         });
@@ -93,19 +87,18 @@ public class UiPopupTable extends UiPopupAbstract {
     }
 
     public void viewTable() {
-        System.out.println("view table");
-        UiElement element = (UiElement) list.getSelectedValue();
-        System.out.println("element.getData()=" + element.getData());
-        if ("table".equals(element.getData())) {
-            MainFrameUtility.viewTable(pane, element.getText());
+        Main m = Config.getMain();
+
+        UiElement element = (UiElement) m.getListTable().getSelectedValue();
+         
+        if (element.getData() instanceof TableName) { 
+            TableName tb = (TableName) element.getData();
+            MainFrameUtility.runQuery("select * from "+tb.getTableName());
         }
-        //Tebriz burani dolduracaq
     }
 
     public void renameTable() {
-        int selectedIndex = list.getSelectedIndex();
-        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
-        TableName tb = (TableName) selectedElement.getData();
+        TableName tb = MainFrameUtility.getSelectedTableFromList();
         String newTblName = (String) JOptionPane.showInputDialog(null, "Enter new name:", "Rename Table",
                 JOptionPane.QUESTION_MESSAGE, null, null, tb.getTableName());
         database.renameTable(tb.getDatabaseName(), tb.getTableName(), newTblName);
@@ -118,36 +111,28 @@ public class UiPopupTable extends UiPopupAbstract {
         UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
         TableName tb = (TableName) selectedElement.getData();
         List<TableName> tbNames = database.getAllTables(tb.getDatabaseName());
-        MainFrameUtility.fillList(tbNames, frame, new UiPopupTable(frame, list, pane), "table", list);
+        
+        Main m = Config.getMain();
+        MainFrameUtility.fillList(tbNames, m, new UiPopupTable(), "table", m.getListTable());
     }
 
     private void emptyTable() {
-        int selectedIndex = list.getSelectedIndex();
-        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
-        TableName tb = (TableName) selectedElement.getData();
+        TableName tb = MainFrameUtility.getSelectedTableFromList();
         database.emptyTable(tb.getDatabaseName(), tb.getTableName());
     }
 
     private void truncateTeable() {
-        int selectedIndex = list.getSelectedIndex();
-        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
-        TableName tb = (TableName) selectedElement.getData();
+        TableName tb = MainFrameUtility.getSelectedTableFromList();
         database.truncateTable(tb.getDatabaseName(), tb.getTableName());
     }
 
     private void copyTable() {
-        int selectedIndex = list.getSelectedIndex();
-        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
-        TableName tb = (TableName) selectedElement.getData();
+        TableName tb = MainFrameUtility.getSelectedTableFromList();
         FileUtility.writeDBAndTblNameFile(tb.getDatabaseName(), tb.getTableName());
-     
-
     }
 
     private void pasteTable() {
-        int selectedIndex = list.getSelectedIndex();
-        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
-        TableName tb = (TableName) selectedElement.getData();
+        TableName tb = MainFrameUtility.getSelectedTableFromList();
 
         String newTblName = (String) JOptionPane.showInputDialog(null, "Enter name:", "Paste Table",
                 JOptionPane.QUESTION_MESSAGE, null, null, tb.getTableName());
@@ -156,9 +141,7 @@ public class UiPopupTable extends UiPopupAbstract {
     }
 
     private void dublicateTable() {
-        int selectedIndex = list.getSelectedIndex();
-        UiElement selectedElement = (UiElement) list.getModel().getElementAt(selectedIndex);
-        TableName tb = (TableName) selectedElement.getData();
+        TableName tb = MainFrameUtility.getSelectedTableFromList();
         database.dublicateTable(tb.getDatabaseName(), tb.getTableName());
         refreshDB();
     }
