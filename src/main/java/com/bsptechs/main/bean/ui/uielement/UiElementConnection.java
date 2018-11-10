@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.bsptechs.main.bean.ui.uielement.data;
+package com.bsptechs.main.bean.ui.uielement;
 
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.ui.popup.UiPopupConnection;
-import com.bsptechs.main.bean.ui.tree.CustomJTree;
 import com.bsptechs.main.bean.ui.uielement.UiElement;
 import java.io.Serializable;
 import java.sql.Connection;
@@ -17,11 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPopupMenu;
 
-/**
- *
- * @author Penthos
- */
-public class UiElementDataConnection extends UiElementData implements Serializable {
+public class UiElementConnection extends UiElement implements Serializable {
 
     private String name;
     private String ipAdr;
@@ -29,12 +19,12 @@ public class UiElementDataConnection extends UiElementData implements Serializab
     private String userName;
     private String password;
     private transient Connection parentConnection;
-    private transient List<UiElementDataDatabase> databases;
+    private transient List<UiElementDatabase> databases;
 
-    public UiElementDataConnection() {
+    public UiElementConnection() {
     }
 
-    public UiElementDataConnection(String name, String ipAdr, String port, String userName, String password) {
+    public UiElementConnection(String name, String ipAdr, String port, String userName, String password) {
         this.name = name;
         this.ipAdr = ipAdr;
         this.port = port;
@@ -42,11 +32,11 @@ public class UiElementDataConnection extends UiElementData implements Serializab
         this.password = password;
     }
 
-    public List<UiElementDataDatabase> getDatabases() {
+    public List<UiElementDatabase> getDatabases() {
         return databases;
     }
 
-    public void setDatabases(List<UiElementDataDatabase> databases) {
+    public void setDatabases(List<UiElementDatabase> databases) {
         this.databases = databases;
     }
 
@@ -100,13 +90,14 @@ public class UiElementDataConnection extends UiElementData implements Serializab
 
     public void reset() {
         try {
-            this.parentConnection.close();
-            this.parentConnection = null;
+            if (parentConnection != null && !parentConnection.isClosed()) {
+                this.parentConnection.close();
+                this.parentConnection = null;
+            }
             this.databases = null;
             Config.getMain().refreshNewQuery();
-            Config.getMain().getListTable().refresh();
         } catch (SQLException ex) {
-            Logger.getLogger(UiElementDataConnection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UiElementConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -114,9 +105,10 @@ public class UiElementDataConnection extends UiElementData implements Serializab
         if (databases == null) {
             databases = database.getAllDatabases(this);
             Config.setCurrentConnection(this);
-            Config.getMain().getListTable().fillTree(databases, Config.getMain().getListTable().getSelectedNode());
+            addChildren(databases);
             Config.getMain().refreshNewQuery();
-            setExpanded(true);
+            nodeStructureChanged();
+            expand();
         }
     }
 
@@ -135,7 +127,7 @@ public class UiElementDataConnection extends UiElementData implements Serializab
     }
 
     @Override
-    public List<UiElementDataDatabase> getSubList() {
+    public List<UiElementDatabase> getSubList() {
         return getDatabases();
     }
 
@@ -148,5 +140,4 @@ public class UiElementDataConnection extends UiElementData implements Serializab
     public String toString() {
         return name;
     }
-
 }

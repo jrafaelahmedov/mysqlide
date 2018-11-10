@@ -1,8 +1,8 @@
 package com.bsptechs.main.dao.inter;
 
-import com.bsptechs.main.bean.ui.uielement.data.UiElementDataDatabase;
-import com.bsptechs.main.bean.ui.uielement.data.UiElementDataConnection;
-import com.bsptechs.main.bean.ui.uielement.data.UiElementDataTable;
+import com.bsptechs.main.bean.ui.uielement.UiElementDatabase;
+import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
+import com.bsptechs.main.bean.ui.uielement.UiElementTable;
 import com.bsptechs.main.bean.ui.table.TableData;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,20 +13,20 @@ import java.util.List;
  */
 public interface DatabaseDAOInter {
 
-    List<UiElementDataDatabase> getAllDatabases(UiElementDataConnection connection);
+    List<UiElementDatabase> getAllDatabases(UiElementConnection connection);
 
-    List<UiElementDataTable> getAllTables(UiElementDataDatabase database);
+    List<UiElementTable> getAllTables(UiElementDatabase database);
 
-    boolean emptyTable(UiElementDataDatabase db, String tblName);
+    boolean emptyTable(UiElementDatabase db, String tblName);
 
-    boolean truncateTable(UiElementDataDatabase DBName, String tblName);
+    boolean truncateTable(UiElementDatabase DBName, String tblName);
 
-    boolean dublicateTable(UiElementDataDatabase DBName, String tbLName);
+    boolean dublicateTable(UiElementDatabase DBName, String tbLName);
 
-    boolean pasteTable(String information, UiElementDataDatabase DBName, String tbLName);
+    boolean pasteTable(String information, UiElementDatabase DBName, String tbLName);
 
-    boolean renameTable(UiElementDataTable table, String newTblName);
+    boolean renameTable(UiElementTable table, String newTblName);
 
-    public TableData runQuery(String query, UiElementDataConnection connection, UiElementDataDatabase database) throws ClassNotFoundException, SQLException;
+    public TableData runQuery(String query, UiElementConnection connection, UiElementDatabase database) throws ClassNotFoundException, SQLException;
 
 }

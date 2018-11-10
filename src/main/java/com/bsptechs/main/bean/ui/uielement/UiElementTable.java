@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bsptechs.main.bean.ui.uielement.data;
+package com.bsptechs.main.bean.ui.uielement;
 
 import com.bsptechs.main.bean.ui.panel.PanelQuery;
 import com.bsptechs.main.bean.ui.popup.UiPopupTable;
+import com.bsptechs.main.bean.ui.uielement.UiElement;
 import java.util.List;
 import javax.swing.JPopupMenu;
 
@@ -14,15 +15,14 @@ import javax.swing.JPopupMenu;
  *
  * @author Goshgar
  */
-public class UiElementDataTable extends UiElementData {
+public class UiElementTable extends UiElement {
 
     private String tableName;
-    private UiElementDataDatabase databaseName;
+    private UiElementDatabase databaseName;
 
-    public UiElementDataTable(String tableName, UiElementDataDatabase databaseName) {
+    public UiElementTable(String tableName, UiElementDatabase databaseName) {
         this.tableName = tableName;
         this.databaseName = databaseName;
-        setExpanded(true);
     }
 
     public String getTableName() {
@@ -33,11 +33,11 @@ public class UiElementDataTable extends UiElementData {
         this.tableName = tableName;
     }
 
-    public UiElementDataDatabase getDatabaseName() {
+    public UiElementDatabase getDatabaseName() {
         return databaseName;
     }
 
-    public void setDatabaseName(UiElementDataDatabase databaseName) {
+    public void setDatabaseName(UiElementDatabase databaseName) {
         this.databaseName = databaseName;
     }
 
@@ -57,7 +57,7 @@ public class UiElementDataTable extends UiElementData {
     }
 
     @Override
-    public List<? extends UiElementData> getSubList() {
+    public List<? extends UiElement> getSubList() {
         return null;
     }
 
@@ -68,7 +68,6 @@ public class UiElementDataTable extends UiElementData {
 
     @Override
     public String toString() {
-        return this.tableName;
+        return tableName;
     }
-
 }

@@ -8,7 +8,7 @@ package com.bsptechs.main.bean.ui.popup;
 import com.bsptechs.main.Main;
 import com.bsptechs.main.bean.ui.panel.PanelQuery;
 import com.bsptechs.main.bean.Config;
-import com.bsptechs.main.bean.ui.uielement.data.UiElementDataTable;
+import com.bsptechs.main.bean.ui.uielement.UiElementTable;
 import com.bsptechs.main.bean.ui.uielement.UiElement;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
@@ -89,18 +89,18 @@ public class UiPopupTable extends UiPopupAbstract {
 
         UiElement element = (UiElement) m.getListTable().getSelectionPath().getLastPathComponent();
 
-        if (element.getData() instanceof UiElementDataTable) {
-            UiElementDataTable tb = (UiElementDataTable) element.getData();
+        if (element instanceof UiElementTable) {
+            UiElementTable tb = (UiElementTable) element;
             PanelQuery.runQuery("select * from " + tb.getTableName());
         }
     }
 
-    public UiElementDataTable getSelectedTable() {
-        return (UiElementDataTable) getSelectedElement().getData();
+    public UiElementTable getSelectedTable() {
+        return (UiElementTable) getSelectedElement();
     }
 
     public void renameTable() {
-        UiElementDataTable tb = getSelectedTable();
+        UiElementTable tb = getSelectedTable();
         String newTblName = (String) JOptionPane.showInputDialog(
                 null,
                 "Enter new name:",
@@ -111,34 +111,35 @@ public class UiPopupTable extends UiPopupAbstract {
                 tb.getTableName()
         );
         database.renameTable(tb, newTblName);
+       tb.nodeChanged();
     }
 
     private void refreshDB() {
-        UiElementDataTable tb = getSelectedTable();
-        List<UiElementDataTable> tbNames = database.getAllTables(tb.getDatabaseName());
+        UiElementTable tb = getSelectedTable();
+        List<UiElementTable> tbNames = database.getAllTables(tb.getDatabaseName());
 
         Main m = Config.getMain();
     }
 
     private void emptyTable() {
-        UiElementDataTable tb = getSelectedTable();
+        UiElementTable tb = getSelectedTable();
         database.emptyTable(tb.getDatabaseName(), tb.getTableName());
     }
 
     private void truncateTeable() {
-        UiElementDataTable tb = getSelectedTable();
+        UiElementTable tb = getSelectedTable();
         database.truncateTable(tb.getDatabaseName(), tb.getTableName());
     }
 
-    private UiElementDataTable selectedElementForCopy;
+    private UiElementTable selectedElementForCopy;
 
     private void copyTable() {
-        UiElementDataTable tb = getSelectedTable();
+        UiElementTable tb = getSelectedTable();
         this.selectedElementForCopy = tb;
     }
 
     private void pasteTable() {
-        UiElementDataTable tb = getSelectedTable();
+        UiElementTable tb = getSelectedTable();
 
         String newTblName = (String) JOptionPane.showInputDialog(
                 null,
@@ -159,7 +160,7 @@ public class UiPopupTable extends UiPopupAbstract {
     }
 
     private void dublicateTable() {
-        UiElementDataTable tb = getSelectedTable();
+        UiElementTable tb = getSelectedTable();
         database.dublicateTable(tb.getDatabaseName(), tb.getTableName());
         refreshDB();
     }

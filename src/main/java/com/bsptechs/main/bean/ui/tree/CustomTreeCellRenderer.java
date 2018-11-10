@@ -6,12 +6,10 @@
 package com.bsptechs.main.bean.ui.tree;
 
 import com.bsptechs.main.bean.ui.uielement.UiElement;
-import com.bsptechs.main.bean.ui.uielement.data.UiElementData;
 import com.bsptechs.main.util.ImageUtil;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
 
 /**
@@ -29,12 +27,10 @@ public class CustomTreeCellRenderer implements TreeCellRenderer {
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
             boolean leaf, int row, boolean hasFocus) {
-        Object obj = (Object) ((DefaultMutableTreeNode) value).getUserObject();
-        if(obj instanceof UiElement){
-            UiElement el = (UiElement) obj;
-            UiElementData elData = el.getData();
-            label.setIcon(ImageUtil.getIcon(elData.getIcon()));
-            label.setText(elData.toString());
+        if(value instanceof UiElement){
+            UiElement el = (UiElement) value;
+            label.setIcon(ImageUtil.getIcon(el.getIcon()));
+            label.setText(el.toString());
         }else {
             label.setIcon(ImageUtil.getIcon("/icons/connection.png"));
             label.setText("" + value);

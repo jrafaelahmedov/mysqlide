@@ -6,7 +6,8 @@
 package com.bsptechs.main.bean.ui.popup;
 
 import com.bsptechs.main.ConnectionFrame;
-import com.bsptechs.main.bean.ui.uielement.data.UiElementDataConnection;
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
 
 /**
  *
@@ -35,13 +36,18 @@ public class UiPopupConnection extends UiPopupAbstract {
         });
     }
     
-    public UiElementDataConnection getSelectedConnection(){
-        return (UiElementDataConnection) getSelectedElement().getData();
+    public UiElementConnection getSelectedConnection(){
+        return (UiElementConnection) getSelectedElement();
     }
 
     public void delete() {
         System.out.println("delete connection");
-        //Tebriz burani dolduracaq
+        UiElementConnection c = getSelectedConnection();
+        Config.instance().getConnections().remove(c);
+        Config.saveConfig();
+        c.reset();
+        Config.getMain().getListTable().removeUiElement(c);
+        
     }
 
     public void properties() {
@@ -56,8 +62,9 @@ public class UiPopupConnection extends UiPopupAbstract {
 
     public void disconnect() {
         System.out.println("disconnection connection");
-        UiElementDataConnection cn = getSelectedConnection();
+        UiElementConnection cn = getSelectedConnection();
         cn.reset();
+        cn.removeAllChildren();
     }
 
 }

@@ -1,67 +1,59 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.bsptechs.main.bean.ui.uielement;
 
-import com.bsptechs.main.bean.ui.uielement.data.UiElementData;
-import javax.swing.JFrame;
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
+import com.bsptechs.main.dao.inter.DatabaseDAOInter;
+import java.util.List;
+import javax.swing.JPopupMenu;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
-/**
- *
- * @author sarkhanrasullu
- */
-public  class UiElement {
-    private String text;
-    private UiElementData data;
-    private JFrame frame;
-    
-    public UiElement(UiElementData data){
-        this.data = data;
-    }
-    
+public abstract class UiElement extends DefaultMutableTreeNode {
+
+    public static DatabaseDAOInter database = new DatabaseDAOImpl();
 
     public UiElement() {
     }
 
-    public UiElement(String text) {
-        this.text = text;
+    public abstract void onClick();
+
+    public abstract void onDoubleClick();
+
+    public abstract JPopupMenu getPopup();
+
+    public abstract List<? extends UiElement> getSubList();
+
+    public abstract String getIcon();
+
+    public void addChildren(List<? extends UiElement> listData) {
+        if (listData == null) {
+            return;
+        }
+
+        for (UiElement t : listData) {
+            add(t);
+        }
+        
+        nodeStructureChanged();
+
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public UiElementData getData() {
-        return data;
-    }
-
-    public void setData(UiElementData data) {
-        this.data = data;
-    }
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    public void setFrame(JFrame frame) {
-        this.frame = frame;
-    }
-
-    
-    
- 
     @Override
-    public String toString() {
-        return text;
+    public void removeAllChildren() {
+        super.removeAllChildren();
+        nodeStructureChanged();
+    }
+
+    public void nodeChanged() {
+        Config.getMain().getListTable().getTreeModel().nodeChanged(this);
+    }
+
+    public void nodeStructureChanged() {
+        Config.getMain().getListTable().getTreeModel().nodeStructureChanged(this);
     }
     
     
-    
-    
+    public void expand(){
+       Config.getMain().getListTable().expandPath(new TreePath(this.getPath()));
+    }
 }

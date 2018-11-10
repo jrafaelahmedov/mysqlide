@@ -1,7 +1,8 @@
 package com.bsptechs.main;
 
 import com.bsptechs.main.bean.Config;
-import com.bsptechs.main.bean.ui.uielement.data.UiElementDataConnection;
+import com.bsptechs.main.bean.ui.tree.CustomJTree;
+import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
 import com.bsptechs.main.util.Util;
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,7 +27,7 @@ public class ConnectionFrame extends javax.swing.JFrame {
     }
 
     private boolean updateMode = false;
-    private UiElementDataConnection connection = new UiElementDataConnection();
+    private UiElementConnection connection = new UiElementConnection();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -334,30 +335,30 @@ public class ConnectionFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
-        UiElementDataConnection newConnection = getAllInformFromUser();
+        UiElementConnection filledConnection = getAllInformFromUser();
         if (!validateFields()) {
             return;
         }
         if (updateMode) {
-             updateConnection(connection, newConnection);
+            updateConnection(filledConnection);
+            connection.nodeChanged();
         } else {
-            Config.instance().appendConnection(newConnection);
+            Config.instance().appendConnection(filledConnection);
+            CustomJTree tree = Config.getMain().getListTable();
+            tree.addUiElement(filledConnection);
         }
         Config.saveConfig();
-        Config.getMain().getListTable().refresh();
         this.dispose();
     }//GEN-LAST:event_btnOkActionPerformed
 
-    public void updateConnection(UiElementDataConnection oldConnection, UiElementDataConnection newConnection) {
-        oldConnection.setName(newConnection.getName());
-        oldConnection.setIpAdr(newConnection.getIpAdr());
-        oldConnection.setPort(newConnection.getPort());
-        oldConnection.setUserName(newConnection.getUserName());
-        oldConnection.setPassword(newConnection.getPassword());
-        int index = Config.instance().getConnections().indexOf(oldConnection);
-        Config.instance().getConnections().set(index, newConnection);
+    public void updateConnection(UiElementConnection newConnection) {
+        connection.setName(newConnection.getName());
+        connection.setIpAdr(newConnection.getIpAdr());
+        connection.setPort(newConnection.getPort());
+        connection.setUserName(newConnection.getUserName());
+        connection.setPassword(newConnection.getPassword());
     }
-    
+
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
@@ -393,10 +394,10 @@ public class ConnectionFrame extends javax.swing.JFrame {
     private boolean validateFields() {
         clearErrMsgs();
         boolean res = true;
-        UiElementDataConnection conn = getAllInformFromUser();
+        UiElementConnection conn = getAllInformFromUser();
 
-        UiElementDataConnection c = Config.instance().getConnectionByName(conn.getName());
-        if (!updateMode && c != null) {
+        UiElementConnection c = Config.instance().getConnectionByName(conn.getName());
+        if (c!=null && c != connection) {
             lblConnectionNameErrMsg.setText("connection name already exists");
             res = false;
         }
@@ -434,14 +435,14 @@ public class ConnectionFrame extends javax.swing.JFrame {
         return res;
     }
 
-    public UiElementDataConnection getAllInformFromUser() {
+    public UiElementConnection getAllInformFromUser() {
         String name = txtConnectionName.getText();
         String ipAdr = txtHostNameIpAdr.getText().toLowerCase();
         String port = txtPort.getText();
         String username = txtUserName.getText();
         String password = new String(txtPassword.getPassword());
 
-        UiElementDataConnection connection = new UiElementDataConnection(name, ipAdr, port, username, password);
+        UiElementConnection connection = new UiElementConnection(name, ipAdr, port, username, password);
         return connection;
     }
 
@@ -450,7 +451,7 @@ public class ConnectionFrame extends javax.swing.JFrame {
         f.setVisible(true);
     }
 
-    private void prepareUpdate(UiElementDataConnection c) {
+    private void prepareUpdate(UiElementConnection c) {
         connection = c;
         updateMode = true;
         txtConnectionName.setText(c.getName());
@@ -461,11 +462,11 @@ public class ConnectionFrame extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
-    public static void showAsUpdate(UiElementDataConnection c) {
+    public static void showAsUpdate(UiElementConnection c) {
         ConnectionFrame m = new ConnectionFrame();
         m.prepareUpdate(c);
     }
- 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnOk;

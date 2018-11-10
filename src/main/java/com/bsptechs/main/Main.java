@@ -4,7 +4,7 @@ import com.bsptechs.main.bean.ui.panel.PanelQuery;
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.ui.tree.CustomJTree;
 import com.bsptechs.main.bean.ui.uielement.UiElement;
-import com.bsptechs.main.bean.ui.uielement.data.UiElementDataConnection;
+import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
 import com.bsptechs.main.util.Util;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -17,10 +17,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
-/**
- *
- * @author RafaelAhmedov
- */
 public class Main extends javax.swing.JFrame {
 
     public Main() {
@@ -32,9 +28,9 @@ public class Main extends javax.swing.JFrame {
 
     public void refreshNewQuery() {
         boolean found = false;
-        List<UiElementDataConnection> l = Config.instance().getConnections();
+        List<UiElementConnection> l = Config.instance().getConnections();
         for (int i = 0; i < l.size(); i++) {
-            UiElementDataConnection cn = l.get(i);
+            UiElementConnection cn = l.get(i);
             if (cn.getParentConnection() != null) {
                 found = true;
                 break;
@@ -50,7 +46,8 @@ public class Main extends javax.swing.JFrame {
     public void prepare() throws Exception {
         Config.initialize();
         CustomJTree tree = getListTable();
-        List<UiElementDataConnection> connections = Config.instance().getConnections();
+        tree.setRoot(tree.getSelectedRoot());
+        List<UiElementConnection> connections = Config.instance().getConnections();
         tree.fillTree(connections);
     }
 
@@ -639,7 +636,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1MenuDragMouseEntered
 
     private void btnTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableActionPerformed
-        getListTable().expand(getListTable().findNode("localhost3"));
+
     }//GEN-LAST:event_btnTableActionPerformed
 
     private void btnTableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTableMouseEntered
@@ -762,20 +759,10 @@ public class Main extends javax.swing.JFrame {
         ConnectionFrame.showAsRegister();
     }//GEN-LAST:event_menuNewConnectionActionPerformed
 
-    private void setExpanded(javax.swing.event.TreeExpansionEvent evt, boolean b) {
-        TreePath path = evt.getPath();
-        DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
-        if (node.getUserObject() instanceof UiElement) {
-            UiElement ui = (UiElement) node.getUserObject();
-            ui.getData().setExpanded(b);
-        }
-    }
     private void listDatabasesTreeExpanded(javax.swing.event.TreeExpansionEvent evt) {//GEN-FIRST:event_listDatabasesTreeExpanded
-        setExpanded(evt, true);
     }//GEN-LAST:event_listDatabasesTreeExpanded
 
     private void listDatabasesTreeCollapsed(javax.swing.event.TreeExpansionEvent evt) {//GEN-FIRST:event_listDatabasesTreeCollapsed
-        setExpanded(evt, false);
     }//GEN-LAST:event_listDatabasesTreeCollapsed
 
     public PanelQuery getPanelQuery() {

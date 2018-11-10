@@ -1,20 +1,21 @@
-package com.bsptechs.main.bean.ui.uielement.data;
+package com.bsptechs.main.bean.ui.uielement;
 
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.ui.popup.UiPopupDatabase;
+import com.bsptechs.main.bean.ui.uielement.UiElement;
 import java.util.List;
 import javax.swing.JPopupMenu;
 
-public class UiElementDataDatabase extends UiElementData {
+public class UiElementDatabase extends UiElement {
 
     private String name;
-    private UiElementDataConnection connection;
-    private List<UiElementDataTable> tables;
+    private UiElementConnection connection;
+    private List<UiElementTable> tables;
 
-    public UiElementDataDatabase() {
+    public UiElementDatabase() {
     }
 
-    public UiElementDataDatabase(String name, UiElementDataConnection connection) {
+    public UiElementDatabase(String name, UiElementConnection connection) {
         this.name = name;
         this.connection = connection;
     }
@@ -27,19 +28,19 @@ public class UiElementDataDatabase extends UiElementData {
         this.name = name;
     }
 
-    public UiElementDataConnection getConnection() {
+    public UiElementConnection getConnection() {
         return connection;
     }
 
-    public void setConnection(UiElementDataConnection connection) {
+    public void setConnection(UiElementConnection connection) {
         this.connection = connection;
     }
 
-    public List<UiElementDataTable> getTables() {
+    public List<UiElementTable> getTables() {
         return tables;
     }
 
-    public void setTables(List<UiElementDataTable> tables) {
+    public void setTables(List<UiElementTable> tables) {
         this.tables = tables;
     }
 
@@ -53,8 +54,8 @@ public class UiElementDataDatabase extends UiElementData {
         Config.setCurrentDatabaseName(this);
         if (tables == null) {
             tables = database.getAllTables(this);
-            Config.getMain().getListTable().fillTree(tables, Config.getMain().getListTable().getSelectedNode());
-            setExpanded(true);
+            addChildren(tables);
+            expand();
         }
     }
 
@@ -64,7 +65,7 @@ public class UiElementDataDatabase extends UiElementData {
     }
 
     @Override
-    public List<UiElementDataTable> getSubList() {
+    public List<UiElementTable> getSubList() {
         return getTables();
     }
 
@@ -72,9 +73,9 @@ public class UiElementDataDatabase extends UiElementData {
     public String getIcon() {
         return "/icons/database.png";
     }
-
-    @Override
-    public String toString() {
+    
+     @Override
+    public String toString(){
         return name;
     }
 

@@ -1,8 +1,8 @@
 package com.bsptechs.main.dao.impl;
 
-import com.bsptechs.main.bean.ui.uielement.data.UiElementDataDatabase;
-import com.bsptechs.main.bean.ui.uielement.data.UiElementDataConnection;
-import com.bsptechs.main.bean.ui.uielement.data.UiElementDataTable;
+import com.bsptechs.main.bean.ui.uielement.UiElementDatabase;
+import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
+import com.bsptechs.main.bean.ui.uielement.UiElementTable;
 import com.bsptechs.main.bean.ui.table.TableCell;
 import com.bsptechs.main.bean.ui.table.TableData;
 import com.bsptechs.main.bean.ui.table.TableRow;
@@ -25,8 +25,8 @@ import org.apache.commons.lang3.StringUtils;
 public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInter {
 
     @Override
-    public List<UiElementDataDatabase> getAllDatabases(UiElementDataConnection connection) {
-        List<UiElementDataDatabase> databasesList = new ArrayList<>();
+    public List<UiElementDatabase> getAllDatabases(UiElementConnection connection) {
+        List<UiElementDatabase> databasesList = new ArrayList<>();
 
         try {
             Connection conn = connect(connection);
@@ -39,7 +39,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
 
             while (resultset.next()) {
                 String result = resultset.getString("Database");
-                databasesList.add(new UiElementDataDatabase(result, connection));
+                databasesList.add(new UiElementDatabase(result, connection));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -49,8 +49,8 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public List<UiElementDataTable> getAllTables(UiElementDataDatabase database) {
-        List<UiElementDataTable> list = new ArrayList<>();
+    public List<UiElementTable> getAllTables(UiElementDatabase database) {
+        List<UiElementTable> list = new ArrayList<>();
         try {
             Connection conn = connect(database.getConnection());
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM information_schema.tables where table_schema = ?");
@@ -58,7 +58,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
             ResultSet resultset = stmt.executeQuery();
             while (resultset.next()) {
                 String result = resultset.getString("table_name");
-                list.add(new UiElementDataTable(result, database));
+                list.add(new UiElementTable(result, database));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -69,11 +69,15 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public boolean renameTable(UiElementDataTable table, String newTblName) {
+    public boolean renameTable(UiElementTable table, String newTblName) {
         try {
             Connection conn = connect(table.getDatabaseName().getConnection());
-            PreparedStatement stmt = conn.prepareStatement("RENAME TABLE `" + table.getDatabaseName().getName() + "`.`" + table.getTableName() + "` TO `" + table.getDatabaseName().getName() + "`.`" + newTblName + "`");//PrepapredStatement ile edende dirnaqlara gore ishlemirdi ona gore bele etdim
+            PreparedStatement stmt = conn.prepareStatement(
+                    "RENAME "
+                    + " TABLE `" + table.getDatabaseName().getName() + "`.`" + table.getTableName() + "` "
+                    + " TO `" + table.getDatabaseName().getName() + "`.`" + newTblName + "`");
             stmt.executeUpdate();
+            table.setTableName(newTblName);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -93,7 +97,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public TableData runQuery(String query, UiElementDataConnection connection, UiElementDataDatabase database) throws ClassNotFoundException, SQLException {
+    public TableData runQuery(String query, UiElementConnection connection, UiElementDatabase database) throws ClassNotFoundException, SQLException {
         TableData table = null;
         Connection conn = connect(connection);
         Statement stmt = conn.createStatement();
@@ -121,7 +125,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public boolean emptyTable(UiElementDataDatabase DBName, String tblName) {
+    public boolean emptyTable(UiElementDatabase DBName, String tblName) {
         try {
             Connection conn = connect(DBName.getConnection());
             PreparedStatement stmt = conn.prepareStatement("delete  from " + DBName + "." + tblName);
@@ -137,7 +141,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public boolean truncateTable(UiElementDataDatabase DBName, String tblName) {
+    public boolean truncateTable(UiElementDatabase DBName, String tblName) {
         try {
             Connection conn = connect(DBName.getConnection());
 
@@ -153,7 +157,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public boolean dublicateTable(UiElementDataDatabase DBName, String tbLName) {
+    public boolean dublicateTable(UiElementDatabase DBName, String tbLName) {
         try {
             Connection conn = connect(DBName.getConnection());
             String newTbLName = tbLName.concat("_copy");
@@ -170,7 +174,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public boolean pasteTable(String information, UiElementDataDatabase DBName, String TblName) {
+    public boolean pasteTable(String information, UiElementDatabase DBName, String TblName) {
 
         try {
             Connection conn = connect(DBName.getConnection());
@@ -187,9 +191,9 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     public static void main(String[] args) throws Exception {
-        UiElementDataConnection conn = new UiElementDataConnection("localhost", "localhost", "3306", "root", "");
+        UiElementConnection conn = new UiElementConnection("localhost", "localhost", "3306", "root", "");
 
-        TableData data = new DatabaseDAOImpl().runQuery("SELECT * FROM user;", conn, new UiElementDataDatabase("filemanagementsystem", conn));
+        TableData data = new DatabaseDAOImpl().runQuery("SELECT * FROM user;", conn, new UiElementDatabase("filemanagementsystem", conn));
 
         List<TableRow> rows = data.getRows();
         for (TableRow r : rows) {
