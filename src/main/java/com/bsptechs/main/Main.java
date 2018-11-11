@@ -1,9 +1,9 @@
 package com.bsptechs.main;
 
+import com.bsptechs.main.bean.ui.frame.ConnectionFrame;
 import com.bsptechs.main.bean.ui.panel.PanelQuery;
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.ui.tree.CustomJTree;
-import com.bsptechs.main.bean.ui.uielement.UiElement;
 import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
 import com.bsptechs.main.util.Util;
 import java.awt.Color;
@@ -14,8 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreePath;
+import com.bsptechs.main.bean.ui.frame.DataTransferFrame;
 
 public class Main extends javax.swing.JFrame {
 
@@ -111,6 +110,7 @@ public class Main extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
+        menuDataTransfer = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
 
@@ -313,11 +313,11 @@ public class Main extends javax.swing.JFrame {
         btnTable.setPreferredSize(new java.awt.Dimension(80, 61));
         btnTable.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnTableMouseEntered(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnTableMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnTableMouseEntered(evt);
             }
         });
         btnTable.addActionListener(new java.awt.event.ActionListener() {
@@ -583,6 +583,15 @@ public class Main extends javax.swing.JFrame {
         menuBarTop.add(jMenu4);
 
         jMenu5.setText("Tools");
+
+        menuDataTransfer.setText("Data Transfer");
+        menuDataTransfer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDataTransferActionPerformed(evt);
+            }
+        });
+        jMenu5.add(menuDataTransfer);
+
         menuBarTop.add(jMenu5);
 
         jMenu6.setText("Window");
@@ -765,6 +774,14 @@ public class Main extends javax.swing.JFrame {
     private void listDatabasesTreeCollapsed(javax.swing.event.TreeExpansionEvent evt) {//GEN-FIRST:event_listDatabasesTreeCollapsed
     }//GEN-LAST:event_listDatabasesTreeCollapsed
 
+    private void menuDataTransferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDataTransferActionPerformed
+        try {
+            DataTransferFrame.showDataTransfer();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_menuDataTransferActionPerformed
+
     public PanelQuery getPanelQuery() {
         return panelQuery;
     }
@@ -879,6 +896,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTree listDatabases;
     private javax.swing.JMenuBar menuBarTop;
+    private javax.swing.JMenuItem menuDataTransfer;
     private javax.swing.JMenuItem menuNewConnection;
     private javax.swing.JMenuItem menuNewQuery;
     private javax.swing.JPanel panelCenter;

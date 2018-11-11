@@ -5,7 +5,7 @@
  */
 package com.bsptechs.main.bean.ui.popup;
 
-import com.bsptechs.main.ConnectionFrame;
+import com.bsptechs.main.bean.ui.frame.ConnectionFrame;
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
 

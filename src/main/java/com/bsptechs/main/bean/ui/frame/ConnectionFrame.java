@@ -1,4 +1,4 @@
-package com.bsptechs.main;
+package com.bsptechs.main.bean.ui.frame;
 
 import com.bsptechs.main.bean.Config;
 import com.bsptechs.main.bean.ui.tree.CustomJTree;

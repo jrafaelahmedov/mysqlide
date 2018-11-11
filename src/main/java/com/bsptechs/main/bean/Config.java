@@ -3,12 +3,11 @@ package com.bsptechs.main.bean;
 import com.bsptechs.main.bean.ui.uielement.UiElementDatabase;
 import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
 import com.bsptechs.main.Main;
+import com.bsptechs.main.bean.ui.panel.PanelDataTransferGeneral;
 import com.bsptechs.main.util.FileUtility;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -22,6 +21,7 @@ public final class Config implements Serializable {
     private static UiElementDatabase currentDatabaseName = null;
     private static Config config = null;
     private static volatile Main main;
+    private static volatile PanelDataTransferGeneral paneldatatransfer;
 
     public static void initialize() {
         config = readConfig();
@@ -54,8 +54,6 @@ public final class Config implements Serializable {
         }
         connections.add(connection);
     }
-
-    
 
     public static void setCurrentConnection(UiElementConnection connection) {
         currentConnection = connection;
@@ -97,6 +95,14 @@ public final class Config implements Serializable {
         } else {
             return (Config) configObj;
         }
+    }
+
+    public static void setPanelDataTransfer(PanelDataTransferGeneral frame) {
+        paneldatatransfer = frame;
+    }
+
+    public static PanelDataTransferGeneral getPanelDataTransfer() {
+        return paneldatatransfer;
     }
 
 }
