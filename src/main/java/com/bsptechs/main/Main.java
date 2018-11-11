@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import com.bsptechs.main.bean.ui.frame.DataTransferFrame;
+import com.bsptechs.main.util.ImageUtil;
 
 public class Main extends javax.swing.JFrame {
 
@@ -23,6 +24,11 @@ public class Main extends javax.swing.JFrame {
         btnNewQuery.setEnabled(false);
         menuNewQuery.setEnabled(false);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setIcons();
+    }
+    
+    public void setIcons(){
+        btnNewConnection.setIcon(ImageUtil.getIcon("connection.png"));//diqqet yetir burada sadece iconun adini verirem haaa 
     }
 
     public void refreshNewQuery() {

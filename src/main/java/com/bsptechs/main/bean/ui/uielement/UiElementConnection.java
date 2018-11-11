@@ -133,7 +133,7 @@ public class UiElementConnection extends UiElement implements Serializable {
 
     @Override
     public String getIcon() {
-        return "/icons/connection.png";
+        return "connection.png";
     }
 
     @Override

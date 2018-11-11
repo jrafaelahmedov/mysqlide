@@ -71,7 +71,7 @@ public class UiElementDatabase extends UiElement {
 
     @Override
     public String getIcon() {
-        return "/icons/database.png";
+        return "database.png";
     }
     
      @Override

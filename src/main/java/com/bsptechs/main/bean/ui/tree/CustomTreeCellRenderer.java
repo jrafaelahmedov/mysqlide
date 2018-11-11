@@ -32,7 +32,7 @@ public class CustomTreeCellRenderer implements TreeCellRenderer {
             label.setIcon(ImageUtil.getIcon(el.getIcon()));
             label.setText(el.toString());
         }else {
-            label.setIcon(ImageUtil.getIcon("/icons/connection.png"));
+            label.setIcon(ImageUtil.getIcon("connection.png"));
             label.setText("" + value);
         }
 

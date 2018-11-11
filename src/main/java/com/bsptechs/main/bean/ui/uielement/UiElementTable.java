@@ -63,7 +63,7 @@ public class UiElementTable extends UiElement {
 
     @Override
     public String getIcon() {
-        return "/icons/table.png";
+        return "table.png";
     }
 
     @Override
