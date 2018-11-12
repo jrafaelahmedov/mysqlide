@@ -12,6 +12,7 @@ import com.bsptechs.main.bean.ui.table.TableData;
 import com.bsptechs.main.bean.ui.table.TableRow;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
+import com.bsptechs.main.util.ImageUtil;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,8 +36,21 @@ public class PanelQuery extends javax.swing.JPanel {
     public PanelQuery(UiElementConnection connection, UiElementDatabase database) throws ClassNotFoundException, SQLException {
         initComponents();
         preparePanel(connection, database);
+        setIcon();
     }
 
+    public void setIcon(){
+    btnSave.setIcon(ImageUtil.getIconforQueryPanel("querypanel/save.png"));
+    btnQueryBuilder.setIcon(ImageUtil.getIconforQueryPanel("querypanel/querybuilder.png"));
+    btnBeautfySQL.setIcon(ImageUtil.getIconforQueryPanel("querypanel/beauty.png"));
+    btnCodeSnipped.setIcon(ImageUtil.getIconforQueryPanel("querypanel/snippet.png"));
+    btnText.setIcon(ImageUtil.getIconforQueryPanel("querypanel/text-document.png"));
+    btnExportResult.setIcon(ImageUtil.getIconforQueryPanel("querypanel/export-file.png"));
+    btnRun.setIcon(ImageUtil.getIconforQueryPanel("querypanel/play-arrow.png"));
+    btnstop.setIcon(ImageUtil.getIconforQueryPanel("querypanel/stop.png"));
+    btnexplain.setIcon(ImageUtil.getIconforQueryPanel("querypanel/explain-.png"));
+    }
+    
     public final void preparePanel(UiElementConnection connection, UiElementDatabase database) {
         prepareConnectionCombobox(connection);
         prepareDatabasesCombobox(connection, database);

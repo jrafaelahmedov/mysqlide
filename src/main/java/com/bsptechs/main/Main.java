@@ -18,7 +18,7 @@ import com.bsptechs.main.bean.ui.frame.DataTransferFrame;
 import com.bsptechs.main.util.ImageUtil;
 
 public class Main extends javax.swing.JFrame {
-
+ 
     public Main() {
         initComponents();
         btnNewQuery.setEnabled(false);
@@ -28,7 +28,19 @@ public class Main extends javax.swing.JFrame {
     }
     
     public void setIcons(){
-        btnNewConnection.setIcon(ImageUtil.getIcon("connection.png"));//diqqet yetir burada sadece iconun adini verirem haaa 
+        btnNewConnection.setIcon(ImageUtil.getIcon("mainframe/connection.png"));
+        btnNewQuery.setIcon(ImageUtil.getIcon("mainframe/newquery.png"));
+        btnTable.setIcon(ImageUtil.getIcon("mainframe/table.png"));
+        btnView.setIcon(ImageUtil.getIcon("mainframe/view.png"));
+        btnFunctions.setIcon(ImageUtil.getIcon("mainframe/function.png"));
+        btnEvent.setIcon(ImageUtil.getIcon("mainframe/event.png"));
+        btnUsers.setIcon(ImageUtil.getIcon("mainframe/user.png"));
+        btnQuery.setIcon(ImageUtil.getIcon("mainframe/query.png"));
+        btnReport.setIcon(ImageUtil.getIcon("mainframe/report.png"));
+        btnBackup.setIcon(ImageUtil.getIcon("mainframe/backup.png"));
+        btnAutomation.setIcon(ImageUtil.getIcon("mainframe/automation.png"));
+        btnModel.setIcon(ImageUtil.getIcon("mainframe/model.png"));
+    
     }
 
     public void refreshNewQuery() {
@@ -298,11 +310,11 @@ public class Main extends javax.swing.JFrame {
         btnNewConnection.setPreferredSize(new java.awt.Dimension(80, 61));
         btnNewConnection.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnNewConnection.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnNewConnectionMouseExited(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnNewConnectionMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnNewConnectionMouseExited(evt);
             }
         });
         btnNewConnection.addActionListener(new java.awt.event.ActionListener() {
@@ -416,11 +428,11 @@ public class Main extends javax.swing.JFrame {
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("connections");
         listDatabases.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         listDatabases.addTreeExpansionListener(new javax.swing.event.TreeExpansionListener() {
-            public void treeExpanded(javax.swing.event.TreeExpansionEvent evt) {
-                listDatabasesTreeExpanded(evt);
-            }
             public void treeCollapsed(javax.swing.event.TreeExpansionEvent evt) {
                 listDatabasesTreeCollapsed(evt);
+            }
+            public void treeExpanded(javax.swing.event.TreeExpansionEvent evt) {
+                listDatabasesTreeExpanded(evt);
             }
         });
         jScrollPane3.setViewportView(listDatabases);
@@ -491,12 +503,12 @@ public class Main extends javax.swing.JFrame {
 
         jMenu1.setText("File");
         jMenu1.addMenuDragMouseListener(new javax.swing.event.MenuDragMouseListener() {
+            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
+            }
             public void menuDragMouseEntered(javax.swing.event.MenuDragMouseEvent evt) {
                 jMenu1MenuDragMouseEntered(evt);
             }
             public void menuDragMouseExited(javax.swing.event.MenuDragMouseEvent evt) {
-            }
-            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
             }
             public void menuDragMouseReleased(javax.swing.event.MenuDragMouseEvent evt) {
             }
