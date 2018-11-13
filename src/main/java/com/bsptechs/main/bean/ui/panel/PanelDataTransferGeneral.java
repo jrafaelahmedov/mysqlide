@@ -11,6 +11,8 @@ import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
 import com.bsptechs.main.bean.ui.uielement.UiElementDatabase;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,74 +28,76 @@ public class PanelDataTransferGeneral extends javax.swing.JPanel {
      * Creates new form PaneDataTransver
      */
     public PanelDataTransferGeneral() {
-        initComponents();
+	initComponents();
 
-        pnlInformationSourceSide.setVisible(false);
-        pnlInformationTargetSide.setVisible(false);
+	pnlInformationSourceSide.setVisible(false);
+	pnlInformationTargetSide.setVisible(false);
 
-        UiElementDatabase db = null;
-        UiElementConnection cn = Config.getCurrentConnection();
-        if (cn == null
-                && Config.instance() != null
-                && Config.instance().getConnections() != null
-                && Config.instance().getConnections().size() > 0) {
-            cn = Config.instance().getConnections().get(0);
-        }
+	UiElementDatabase db = null;
+	UiElementConnection cn = Config.getCurrentConnection();
+	if (cn == null
+		&& Config.instance() != null
+		&& Config.instance().getConnections() != null
+		&& Config.instance().getConnections().size() > 0) {
+	    cn = Config.instance().getConnections().get(0);
+	}
 
-        db = Config.getCurrentDatabaseName();
-        preparePanel(cn, db);
+	db = Config.getCurrentDatabaseName();
+	preparePanel(cn, db);
     }
 
 //   public void refreshData() {
 //        MainFrameUtility.fillConnectionsIntoJList();
 //    }
     public final void preparePanel(UiElementConnection connection, UiElementDatabase database) {
-        prepareConnectionCombobox(connection);
-        prepareDatabasesCombobox(connection, database);
+	prepareConnectionCombobox(connection);
+	prepareDatabasesCombobox(connection, database);
     }
+
+    
 
     public void prepareConnectionCombobox(UiElementConnection connection) {
 
-        System.out.println("prepareConnectionCombobox=" + connection);
-        comboboxConnectionSource.removeAllItems();
-        List<UiElementConnection> list = Config.instance().getConnections();
-        if (list == null) {
-            return;
-        }
-        
-        for (int i = 0; i < list.size(); i++) {
-            comboboxConnectionSource.addItem(list.get(i));
-        }
-        System.out.println("Config.getCurrentConnection()=" + connection);
-        if (connection != null) {
-            comboboxConnectionSource.setSelectedItem(connection);
-        }
+	System.out.println("prepareConnectionCombobox=" + connection);
+	comboboxConnectionSource.removeAllItems();
+	List<UiElementConnection> list = Config.instance().getConnections();
+	if (list == null) {
+	    return;
+	}
+
+	for (int i = 0; i < list.size(); i++) {
+	    comboboxConnectionSource.addItem(list.get(i));
+	}
+	System.out.println("Config.getCurrentConnection()=" + connection);
+	if (connection != null) {
+	    comboboxConnectionSource.setSelectedItem(connection);
+	}
     }
 
     public void prepareDatabasesCombobox(UiElementConnection connection, UiElementDatabase database) {
-        if(connection == null){
-            return;
-        }
-        System.out.println("prepareDatabasesCombobox=" + database);
-        comboboxDatabaseSource.removeAllItems();
-        List<UiElementDatabase> databases = connection.getDatabases();
-        if (databases == null) {
-            databases = db.getAllDatabases(connection);
-        }
-        for (int i = 0; i < databases.size(); i++) {
-            comboboxDatabaseSource.addItem(databases.get(i));
-        }
-        comboboxDatabaseSource.setSelectedItem(database);
+	if (connection == null) {
+	    return;
+	}
+	System.out.println("prepareDatabasesCombobox=" + database);
+	comboboxDatabaseSource.removeAllItems();
+	List<UiElementDatabase> databases = connection.getDatabases();
+	if (databases == null) {
+	    databases = db.getAllDatabases(connection);
+	}
+	for (int i = 0; i < databases.size(); i++) {
+	    comboboxDatabaseSource.addItem(databases.get(i));
+	}
+	comboboxDatabaseSource.setSelectedItem(database);
     }
 
     public UiElementDatabase getSelectedDatabase() {
-        Object obj = comboboxDatabaseSource.getSelectedItem();
+	Object obj = comboboxDatabaseSource.getSelectedItem();
 
-        return (UiElementDatabase) obj;
+	return (UiElementDatabase) obj;
     }
 
     public UiElementConnection getSelectedConnection() {
-        return (UiElementConnection) comboboxConnectionSource.getSelectedItem();
+	return (UiElementConnection) comboboxConnectionSource.getSelectedItem();
     }
 
     /**
@@ -603,23 +607,23 @@ public class PanelDataTransferGeneral extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBoxSaveProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSaveProfileActionPerformed
-        // TODO add your handling code here:
+	// TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxSaveProfileActionPerformed
 
     private void btnLoadProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadProfileActionPerformed
-        // TODO add your handling code here:
+	// TODO add your handling code here:
     }//GEN-LAST:event_btnLoadProfileActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        // TODO add your handling code here:
+	// TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void comboboxConnectionSourceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboboxConnectionSourceItemStateChanged
-        prepareDatabasesCombobox(getSelectedConnection(), null);
+	prepareDatabasesCombobox(getSelectedConnection(), null);
     }//GEN-LAST:event_comboboxConnectionSourceItemStateChanged
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
-        // TODO add your handling code here:
+	// TODO add your handling code here:
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
 

@@ -13,9 +13,15 @@ import javax.swing.ImageIcon;
  * @author sarkhanrasullu
  */
 public class ImageUtil {
-    public static ImageIcon getIcon(String iconName){//get Icon methodunu men duzeltmishem bu ozu /icons elave edir
-        ImageIcon imageIcon = new ImageIcon(ImageUtil.class.getResource("/icons/"+iconName));//bax burada
-        Image temp = imageIcon.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
+    public static ImageIcon getIcon(String iconName){
+        ImageIcon imageIcon = new ImageIcon(ImageUtil.class.getResource("/icons/"+iconName));
+        Image temp = imageIcon.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT);
+        return new ImageIcon(temp);
+    }
+    
+     public static ImageIcon getIconforQueryPanel(String iconName){
+        ImageIcon imageIcon = new ImageIcon(ImageUtil.class.getResource("/icons/"+iconName));
+        Image temp = imageIcon.getImage().getScaledInstance(18, 18, Image.SCALE_DEFAULT);
         return new ImageIcon(temp);
     }
 }
