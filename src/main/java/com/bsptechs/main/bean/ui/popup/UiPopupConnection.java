@@ -7,6 +7,7 @@ package com.bsptechs.main.bean.ui.popup;
 
 import com.bsptechs.main.bean.ui.frame.ConnectionFrame;
 import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.ui.frame.CreatDB;
 import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
 
 /**
@@ -34,6 +35,11 @@ public class UiPopupConnection extends UiPopupAbstract {
         addMenuItem("Disconnect", () -> {
             disconnect();
         });
+        
+        addMenuItem("Create Database", () -> {
+            createDb();
+        });
+        
     }
     
     public UiElementConnection getSelectedConnection(){
@@ -67,4 +73,10 @@ public class UiPopupConnection extends UiPopupAbstract {
         cn.removeAllChildren();
     }
 
+    
+    public void createDb() {
+        System.out.println("create database");
+        CreatDB create = new CreatDB();
+        create.setVisible(true);
+    }
 }
