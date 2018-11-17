@@ -21,10 +21,12 @@ public class Main extends javax.swing.JFrame {
  
     public Main() {
         initComponents();
+        System.out.println("Salam");
         btnNewQuery.setEnabled(false);
         menuNewQuery.setEnabled(false);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setIcons();
+        System.out.println("SalamSalam test222");
     }
     
     public void setIcons(){
