@@ -25,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author Penthos
  */
+
 public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInter {
 
     @SneakyThrows
@@ -43,7 +44,7 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
         while (resultset.next()) {
             String result = resultset.getString("Database");
             databasesList.add(new UiElementDatabase(result, connection));
-        }
+        } 
         return databasesList;
     }
 
