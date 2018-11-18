@@ -5,6 +5,8 @@
  */
 package com.bsptechs.main.bean.ui.tree;
 
+import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.ui.panel.PanelUiElementInformation;
 import com.bsptechs.main.bean.ui.uielement.UiElement;
 import com.bsptechs.main.util.MouseUtil;
 import java.awt.event.MouseAdapter;
@@ -33,14 +35,20 @@ public class CustomJTree extends AbstractJTree {
 
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if (MouseUtil.isLeftDoubleClicked(evt)) {
-                    DefaultMutableTreeNode selectedUiElement = getSelectedNode();
-                    if (selectedUiElement == null || !(selectedUiElement instanceof UiElement)) {
-                        return;
-                    }
-                    UiElement element = (UiElement) selectedUiElement;
+                DefaultMutableTreeNode selectedUiElement = getSelectedNode();
+                if (selectedUiElement == null || !(selectedUiElement instanceof UiElement)) {
+                    return;
+                }
+                UiElement element = (UiElement) selectedUiElement;
 
+                if (MouseUtil.isLeftDoubleClicked(evt)) {
                     element.onDoubleClick();
+                }
+
+                if (MouseUtil.isLeftClicked(evt)) {
+                    System.out.println("left clicked");
+                    PanelUiElementInformation pnlInfor = Config.getMain().getInformationPanel();
+                    pnlInfor.preparePanel(element);
                 }
             }
         };

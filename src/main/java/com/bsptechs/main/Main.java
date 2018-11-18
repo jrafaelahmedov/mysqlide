@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import com.bsptechs.main.bean.ui.frame.DataTransferFrame;
+import com.bsptechs.main.bean.ui.panel.PanelUiElementInformation;
 import com.bsptechs.main.util.ImageUtil;
 
 public class Main extends javax.swing.JFrame {
@@ -29,7 +30,6 @@ public class Main extends javax.swing.JFrame {
         menuNewQuery.setEnabled(false);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setIcons();
-        setlablesforInformationPanel(conn);
     }
 
 //    public String getSelectedConnectionName() {
@@ -39,38 +39,12 @@ public class Main extends javax.swing.JFrame {
 //            System.out.println(e.nextElement());
 //        }
 //    }
-    public void setlablesforInformationPanel(UiElementConnection element) {
-        UiElementConnection conn = element;
-        if (conn != null) {
-            String name = conn.getName();
-            String port = conn.getPort();
-            String ipAdress = conn.getIpAdr();
-            String userName = conn.getUserName();
-
-            lblconnecteddatabase.setText(name);
-            lblisconnectornoconnect.setText("Connected");
-            //            lblHost.setText(host);
-            lblPort.setText(port);
-            lblUserName1.setText(userName);
-        } else {
-            lblisconnectornoconnect.setText("Not Connection");
-        }
-//        if (Config.readConfig().getConnections() == null) {
-//        } else {
-//            lblconnecteddatabase.setText(Config.readConfig().getConnections().get(0).toString());
-//
-//        }
-//
-//        if (Config.getCurrentConnection() == null) {
-//            lblisconnectornoconnect.setText("Not Connection");
-//        }
-//        List<UiElementConnection> l = Config.readConfig().getConnections();
-//        UiElementConnection cn = l.get(0);
-//        lblHost.setText(cn.getName());
-//        lblPort.setText(cn.getPort());
-//        lblUserName.setText(cn.getUserName());
-
+    
+    public PanelUiElementInformation getInformationPanel(){
+        return (PanelUiElementInformation)pnlUiElementInformation;
     }
+    
+   
 
     public void setIcons() {
         btnNewConnection.setIcon(ImageUtil.getIcon("mainframe/connection.png"));
@@ -85,8 +59,6 @@ public class Main extends javax.swing.JFrame {
         btnBackup.setIcon(ImageUtil.getIcon("mainframe/backup.png"));
         btnAutomation.setIcon(ImageUtil.getIcon("mainframe/automation.png"));
         btnModel.setIcon(ImageUtil.getIcon("mainframe/model.png"));
-        iconinfo.setIcon(ImageUtil.getIconforQueryPanel("/info.png"));
-        iconforconnecteddatabase.setIcon(ImageUtil.getIconforMysql("/mysql.png"));
     }
 
     public void refreshNewQuery() {
@@ -156,28 +128,7 @@ public class Main extends javax.swing.JFrame {
         tabDesignTable = new javax.swing.JTabbedPane();
         tabNewTable = new javax.swing.JTabbedPane();
         tabTables = new javax.swing.JTabbedPane();
-        pnlInformation = new javax.swing.JPanel();
-        iconinfo = new javax.swing.JLabel();
-        iconforconnecteddatabase = new javax.swing.JLabel();
-        lblconnecteddatabase = new javax.swing.JLabel();
-        lblisconnectornoconnect = new javax.swing.JLabel();
-        lbl = new javax.swing.JLabel();
-        lblServerVersion = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        lblSessions = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        lblHost = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        lblPort = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        lblUserName = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        lblSettingLocation = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        lblEncoding = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        lblSSHHost = new javax.swing.JLabel();
-        lblUserName1 = new javax.swing.JLabel();
+        pnlUiElementInformation = new com.bsptechs.main.bean.ui.panel.PanelUiElementInformation();
         menuBarTop = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuNewConnection = new javax.swing.JMenuItem();
@@ -496,11 +447,11 @@ public class Main extends javax.swing.JFrame {
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("connections");
         listDatabases.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         listDatabases.addTreeExpansionListener(new javax.swing.event.TreeExpansionListener() {
-            public void treeCollapsed(javax.swing.event.TreeExpansionEvent evt) {
-                listDatabasesTreeCollapsed(evt);
-            }
             public void treeExpanded(javax.swing.event.TreeExpansionEvent evt) {
                 listDatabasesTreeExpanded(evt);
+            }
+            public void treeCollapsed(javax.swing.event.TreeExpansionEvent evt) {
+                listDatabasesTreeCollapsed(evt);
             }
         });
         jScrollPane3.setViewportView(listDatabases);
@@ -515,7 +466,7 @@ public class Main extends javax.swing.JFrame {
         );
         panelLeftLayout.setVerticalGroup(
             panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
         );
 
         splitPaneCenter.setLeftComponent(panelLeft);
@@ -538,152 +489,6 @@ public class Main extends javax.swing.JFrame {
         splitPaneCenter.setRightComponent(tabbedPaneCenter);
         tabbedPaneCenter.getAccessibleContext().setAccessibleName("tabbedPaneCenter");
 
-        pnlInformation.setBackground(new java.awt.Color(255, 255, 255));
-        pnlInformation.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        iconforconnecteddatabase.setBackground(new java.awt.Color(0, 0, 0));
-
-        lblconnecteddatabase.setText("            ");
-
-        lblisconnectornoconnect.setText("                       ");
-
-        lbl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lbl.setText("Server Version:");
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Sessions:");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Host:");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Port:");
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("User Name:");
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setText("Settings Location:");
-
-        lblSettingLocation.setText("   ");
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel7.setText("Encoding:");
-
-        lblEncoding.setText("                                  ");
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel8.setText("SSH Host:");
-
-        lblSSHHost.setText("                                ");
-
-        lblUserName1.setText("   ");
-
-        javax.swing.GroupLayout pnlInformationLayout = new javax.swing.GroupLayout(pnlInformation);
-        pnlInformation.setLayout(pnlInformationLayout);
-        pnlInformationLayout.setHorizontalGroup(
-            pnlInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlInformationLayout.createSequentialGroup()
-                .addGroup(pnlInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlInformationLayout.createSequentialGroup()
-                        .addGroup(pnlInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlInformationLayout.createSequentialGroup()
-                                .addGap(94, 94, 94)
-                                .addComponent(iconinfo))
-                            .addGroup(pnlInformationLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblEncoding))
-                            .addGroup(pnlInformationLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel8))
-                            .addGroup(pnlInformationLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblSSHHost))
-                            .addGroup(pnlInformationLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel7))
-                            .addGroup(pnlInformationLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(iconforconnecteddatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(28, 28, 28)
-                        .addGroup(pnlInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblisconnectornoconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblconnecteddatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlInformationLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pnlInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlInformationLayout.createSequentialGroup()
-                                .addComponent(lblUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(lblSettingLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lbl)
-                            .addComponent(lblServerVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(lblSessions, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(lblHost, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(lblPort, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(lblUserName1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(24, 27, Short.MAX_VALUE))
-        );
-        pnlInformationLayout.setVerticalGroup(
-            pnlInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlInformationLayout.createSequentialGroup()
-                .addComponent(iconinfo)
-                .addGroup(pnlInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlInformationLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(lblconnecteddatabase)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblisconnectornoconnect)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformationLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                        .addComponent(iconforconnecteddatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addGroup(pnlInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlInformationLayout.createSequentialGroup()
-                        .addComponent(lbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblServerVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblSessions, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblHost, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPort, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblUserName1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblEncoding)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblSSHHost)
-                        .addGap(75, 75, 75))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformationLayout.createSequentialGroup()
-                        .addGap(434, 434, 434)
-                        .addComponent(lblSettingLocation)
-                        .addContainerGap())))
-        );
-
         javax.swing.GroupLayout panelCenterLayout = new javax.swing.GroupLayout(panelCenter);
         panelCenter.setLayout(panelCenterLayout);
         panelCenterLayout.setHorizontalGroup(
@@ -691,8 +496,9 @@ public class Main extends javax.swing.JFrame {
             .addGroup(panelCenterLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(splitPaneCenter, javax.swing.GroupLayout.PREFERRED_SIZE, 1002, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnlInformation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlUiElementInformation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelCenterLayout.setVerticalGroup(
             panelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -700,18 +506,17 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCenterLayout.createSequentialGroup()
-                        .addComponent(splitPaneCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(panelCenterLayout.createSequentialGroup()
-                        .addComponent(pnlInformation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(51, 51, 51))))
+                        .addComponent(pnlUiElementInformation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(splitPaneCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panelWrapperLayout = new javax.swing.GroupLayout(panelWrapper);
         panelWrapper.setLayout(panelWrapperLayout);
         panelWrapperLayout.setHorizontalGroup(
             panelWrapperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMainTop, javax.swing.GroupLayout.DEFAULT_SIZE, 1274, Short.MAX_VALUE)
+            .addComponent(pnlMainTop, javax.swing.GroupLayout.DEFAULT_SIZE, 1347, Short.MAX_VALUE)
             .addComponent(panelCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelWrapperLayout.setVerticalGroup(
@@ -724,12 +529,12 @@ public class Main extends javax.swing.JFrame {
 
         jMenu1.setText("File");
         jMenu1.addMenuDragMouseListener(new javax.swing.event.MenuDragMouseListener() {
-            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
-            }
             public void menuDragMouseEntered(javax.swing.event.MenuDragMouseEvent evt) {
                 jMenu1MenuDragMouseEntered(evt);
             }
             public void menuDragMouseExited(javax.swing.event.MenuDragMouseEvent evt) {
+            }
+            public void menuDragMouseDragged(javax.swing.event.MenuDragMouseEvent evt) {
             }
             public void menuDragMouseReleased(javax.swing.event.MenuDragMouseEvent evt) {
             }
@@ -1114,15 +919,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnTable;
     private javax.swing.JButton btnUsers;
     private javax.swing.JButton btnView;
-    private javax.swing.JLabel iconforconnecteddatabase;
-    private javax.swing.JLabel iconinfo;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
@@ -1142,18 +938,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lbl;
-    private javax.swing.JLabel lblEncoding;
-    private javax.swing.JLabel lblHost;
-    private javax.swing.JLabel lblPort;
-    private javax.swing.JLabel lblSSHHost;
-    private javax.swing.JLabel lblServerVersion;
-    private javax.swing.JLabel lblSessions;
-    private javax.swing.JLabel lblSettingLocation;
-    private javax.swing.JLabel lblUserName;
-    private javax.swing.JLabel lblUserName1;
-    private javax.swing.JLabel lblconnecteddatabase;
-    private javax.swing.JLabel lblisconnectornoconnect;
     private javax.swing.JTree listDatabases;
     private javax.swing.JMenuBar menuBarTop;
     private javax.swing.JMenuItem menuDataTransfer;
@@ -1162,8 +946,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel panelCenter;
     private javax.swing.JPanel panelLeft;
     private javax.swing.JPanel panelWrapper;
-    private javax.swing.JPanel pnlInformation;
     private javax.swing.JPanel pnlMainTop;
+    private com.bsptechs.main.bean.ui.panel.PanelUiElementInformation pnlUiElementInformation;
     private javax.swing.JSplitPane splitPaneCenter;
     private javax.swing.JTabbedPane tabDesignTable;
     private javax.swing.JTabbedPane tabNewTable;
