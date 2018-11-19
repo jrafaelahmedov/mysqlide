@@ -25,27 +25,17 @@ public abstract class AbstractJTree extends JTree {
         this.addMouseListener(getAdapter());
         this.setCellRenderer(new CustomTreeCellRenderer());
         root = getSelectedRoot();
-        System.out.println("root="+root);
-    }
-
-    public DefaultMutableTreeNode getSelectedNode() {
-        TreePath selectionPath = this.getSelectionPath();
-        if (selectionPath != null) {
-            DefaultMutableTreeNode obj = (DefaultMutableTreeNode) selectionPath.getLastPathComponent();
-            return obj;
-        }
-        return null;
+        System.out.println("root=" + root);
     }
 
     public DefaultMutableTreeNode getRoot() {
         return root;
     }
-    
-    public void setRoot(DefaultMutableTreeNode root){
+
+    public void setRoot(DefaultMutableTreeNode root) {
         this.root = root;
     }
 
-    
     public DefaultMutableTreeNode getSelectedRoot() {
         DefaultTreeModel model = (DefaultTreeModel) this.getModel();
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
@@ -65,6 +55,22 @@ public abstract class AbstractJTree extends JTree {
 //        }
 //        return null;
 //    }
+    public DefaultMutableTreeNode getSelectedNode() {
+        TreePath selectionPath = this.getSelectionPath();
+        if (selectionPath != null) {
+            DefaultMutableTreeNode obj = (DefaultMutableTreeNode) selectionPath.getLastPathComponent();
+            return obj;
+        }
+        return null;
+    }
+
+    protected <T> T getSelectedUiElementGeneric(Class<T> clazz) {
+        DefaultMutableTreeNode obj = getSelectedNode();
+        if (obj != null && clazz.isInstance(obj)) {
+            return (T) obj;
+        }
+        return null;
+    }
 
     public UiElement getSelectedUiElement() {
         DefaultMutableTreeNode obj = getSelectedNode();
@@ -74,22 +80,19 @@ public abstract class AbstractJTree extends JTree {
         return null;
     }
 
-
     public DefaultMutableTreeNode addUiElement(UiElement element) {
         DefaultMutableTreeNode root = getRoot();
         return addUiElement(element, root);
     }
-    
-    public void removeUiElement(UiElement element){
-       getTreeModel().removeNodeFromParent(element);
+
+    public void removeUiElement(UiElement element) {
+        getTreeModel().removeNodeFromParent(element);
     }
 
-       public DefaultTreeModel getTreeModel(){
+    public DefaultTreeModel getTreeModel() {
         return (DefaultTreeModel) this.getModel();
     }
-    
-   
-    
+
     public DefaultMutableTreeNode addUiElement(UiElement element, DefaultMutableTreeNode root) {
         DefaultTreeModel model = (DefaultTreeModel) this.getModel();
         model.insertNodeInto(element, root, root.getChildCount());
@@ -102,7 +105,6 @@ public abstract class AbstractJTree extends JTree {
 //        model.insertNodeInto(element, root, root.getChildCount());
 //        return element;
 //    }
-
     public void fillTree(List<? extends UiElement> listData, DefaultMutableTreeNode root) {
         if (listData == null) {
             return;
@@ -120,6 +122,6 @@ public abstract class AbstractJTree extends JTree {
     public void fillTree(List<? extends UiElement> listData) {
         fillTree(listData, getRoot());
     }
- 
+
     protected abstract MouseAdapter getAdapter();
 }

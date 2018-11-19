@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+import lombok.SneakyThrows;
 
 /**
  *
@@ -39,36 +40,45 @@ public class PanelQuery extends javax.swing.JPanel {
         setIcon();
     }
 
-    public void setIcon(){
-    btnSave.setIcon(ImageUtil.getIconforQueryPanel("querypanel/save.png"));
-    btnQueryBuilder.setIcon(ImageUtil.getIconforQueryPanel("querypanel/querybuilder.png"));
-    btnBeautfySQL.setIcon(ImageUtil.getIconforQueryPanel("querypanel/beauty.png"));
-    btnCodeSnipped.setIcon(ImageUtil.getIconforQueryPanel("querypanel/snippet.png"));
-    btnText.setIcon(ImageUtil.getIconforQueryPanel("querypanel/text-document.png"));
-    btnExportResult.setIcon(ImageUtil.getIconforQueryPanel("querypanel/export-file.png"));
-    btnRun.setIcon(ImageUtil.getIconforQueryPanel("querypanel/play-arrow.png"));
-    btnstop.setIcon(ImageUtil.getIconforQueryPanel("querypanel/stop.png"));
-    btnexplain.setIcon(ImageUtil.getIconforQueryPanel("querypanel/explain-.png"));
+    public void setIcon() {
+        btnSave.setIcon(ImageUtil.getIconforQueryPanel("querypanel/save.png"));
+        btnQueryBuilder.setIcon(ImageUtil.getIconforQueryPanel("querypanel/querybuilder.png"));
+        btnBeautfySQL.setIcon(ImageUtil.getIconforQueryPanel("querypanel/beauty.png"));
+        btnCodeSnipped.setIcon(ImageUtil.getIconforQueryPanel("querypanel/snippet.png"));
+        btnText.setIcon(ImageUtil.getIconforQueryPanel("querypanel/text-document.png"));
+        btnExportResult.setIcon(ImageUtil.getIconforQueryPanel("querypanel/export-file.png"));
+        btnRun.setIcon(ImageUtil.getIconforQueryPanel("querypanel/play-arrow.png"));
+        btnstop.setIcon(ImageUtil.getIconforQueryPanel("querypanel/stop.png"));
+        btnexplain.setIcon(ImageUtil.getIconforQueryPanel("querypanel/explain-.png"));
     }
-    
+
     public final void preparePanel(UiElementConnection connection, UiElementDatabase database) {
+//        pnlResult.setVisible(false);
         prepareConnectionCombobox(connection);
         prepareDatabasesCombobox(connection, database);
-        pnlTable.setVisible(false);
     }
 
     public void prepareConnectionCombobox(UiElementConnection connection) {
-        System.out.println("prepareConnectionCombobox=" + connection);
         cbConnections.removeAllItems();
         List<UiElementConnection> list = Config.instance().getConnections();
+        if (list.size() == 0) {
+            return;
+        }
+
         for (int i = 0; i < list.size(); i++) {
             cbConnections.addItem(list.get(i));
         }
-        System.out.println("Config.getCurrentConnection()=" + connection);
+
+        if (connection == null) {
+            connection = list.get(0);
+        }
         cbConnections.setSelectedItem(connection);
     }
 
     public void prepareDatabasesCombobox(UiElementConnection connection, UiElementDatabase database) {
+        if (connection == null) {
+            return;
+        }
         System.out.println("prepareDatabasesCombobox=" + database);
         cbDatabases.removeAllItems();
         List<UiElementDatabase> databases = connection.getDatabases();
@@ -93,58 +103,42 @@ public class PanelQuery extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlTable = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tblQueryResult = new javax.swing.JTable();
+        splitPane = new javax.swing.JSplitPane();
+        pnlQuery = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtQuery = new javax.swing.JTextArea();
         pnlButtons = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
         btnSave = new javax.swing.JButton();
         btnQueryBuilder = new javax.swing.JButton();
         btnBeautfySQL = new javax.swing.JButton();
         btnCodeSnipped = new javax.swing.JButton();
         btnText = new javax.swing.JButton();
         btnExportResult = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        pnlControllBtns = new javax.swing.JPanel();
         cbConnections = new javax.swing.JComboBox<>();
         cbDatabases = new javax.swing.JComboBox<>();
         btnRun = new javax.swing.JButton();
         btnstop = new javax.swing.JButton();
         btnexplain = new javax.swing.JButton();
+        pnlResult = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblQueryResult = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        btnAdd = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
-        tblQueryResult.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane4.setViewportView(tblQueryResult);
+        splitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        pnlQuery.setMinimumSize(new java.awt.Dimension(300, 300));
+        pnlQuery.setPreferredSize(new java.awt.Dimension(300, 300));
+        pnlQuery.setSize(new java.awt.Dimension(300, 300));
 
         txtQuery.setColumns(20);
         txtQuery.setRows(5);
+        txtQuery.setMinimumSize(new java.awt.Dimension(0, 160));
+        txtQuery.setPreferredSize(new java.awt.Dimension(240, 200));
         jScrollPane1.setViewportView(txtQuery);
-
-        javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
-        pnlTable.setLayout(pnlTableLayout);
-        pnlTableLayout.setHorizontalGroup(
-            pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1078, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jScrollPane1)
-        );
-        pnlTableLayout.setVerticalGroup(
-            pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTableLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
 
         btnSave.setText("Save");
         btnSave.setBorder(null);
@@ -231,11 +225,11 @@ public class PanelQuery extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlButtonsLayout = new javax.swing.GroupLayout(pnlButtons);
+        pnlButtons.setLayout(pnlButtonsLayout);
+        pnlButtonsLayout.setHorizontalGroup(
+            pnlButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlButtonsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
@@ -248,13 +242,13 @@ public class PanelQuery extends javax.swing.JPanel {
                 .addComponent(btnText, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(btnExportResult, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(9, 9, 9))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        pnlButtonsLayout.setVerticalGroup(
+            pnlButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlButtonsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnQueryBuilder, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBeautfySQL, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCodeSnipped, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -262,21 +256,6 @@ public class PanelQuery extends javax.swing.JPanel {
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExportResult, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-        );
-
-        javax.swing.GroupLayout pnlButtonsLayout = new javax.swing.GroupLayout(pnlButtons);
-        pnlButtons.setLayout(pnlButtonsLayout);
-        pnlButtonsLayout.setHorizontalGroup(
-            pnlButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlButtonsLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlButtonsLayout.setVerticalGroup(
-            pnlButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlButtonsLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         cbConnections.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -339,12 +318,12 @@ public class PanelQuery extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+        javax.swing.GroupLayout pnlControllBtnsLayout = new javax.swing.GroupLayout(pnlControllBtns);
+        pnlControllBtns.setLayout(pnlControllBtnsLayout);
+        pnlControllBtnsLayout.setHorizontalGroup(
+            pnlControllBtnsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlControllBtnsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cbConnections, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(cbDatabases, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -356,11 +335,11 @@ public class PanelQuery extends javax.swing.JPanel {
                 .addComponent(btnexplain, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pnlControllBtnsLayout.setVerticalGroup(
+            pnlControllBtnsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlControllBtnsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlControllBtnsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbConnections, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbDatabases, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRun, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -369,31 +348,97 @@ public class PanelQuery extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        javax.swing.GroupLayout pnlQueryLayout = new javax.swing.GroupLayout(pnlQuery);
+        pnlQuery.setLayout(pnlQueryLayout);
+        pnlQueryLayout.setHorizontalGroup(
+            pnlQueryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlQueryLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(pnlQueryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlControllBtns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1)
+        );
+        pnlQueryLayout.setVerticalGroup(
+            pnlQueryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlQueryLayout.createSequentialGroup()
+                .addComponent(pnlButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(pnlControllBtns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE))
+        );
+
+        splitPane.setLeftComponent(pnlQuery);
+
+        tblQueryResult.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(tblQueryResult);
+
+        btnAdd.setText("Add");
+
+        btnUpdate.setText("Update");
+
+        btnDelete.setText("Delete");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btnAdd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnUpdate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDelete)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDelete)))
+        );
+
+        javax.swing.GroupLayout pnlResultLayout = new javax.swing.GroupLayout(pnlResult);
+        pnlResult.setLayout(pnlResultLayout);
+        pnlResultLayout.setHorizontalGroup(
+            pnlResultLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1372, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        pnlResultLayout.setVerticalGroup(
+            pnlResultLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlResultLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
+        );
+
+        splitPane.setRightComponent(pnlResult);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(473, 473, 473))))
+            .addComponent(splitPane, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(splitPane, javax.swing.GroupLayout.PREFERRED_SIZE, 896, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -401,17 +446,12 @@ public class PanelQuery extends javax.swing.JPanel {
         txtQuery.setText(txt);
     }
 
+    @SneakyThrows
     public void runQuery() {
-        pnlTable.setVisible(true);
-        try {
-            TableData data = db.runQuery(txtQuery.getText(), getSelectedConnection(), getSelectedDatabase());
-            DefaultTableModel model = PanelQuery.buildTableModel(data);
-            tblQueryResult.setModel(model);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PanelQuery.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(PanelQuery.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        TableData data = db.runQuery(txtQuery.getText(), getSelectedConnection(), getSelectedDatabase());
+        DefaultTableModel model = PanelQuery.buildTableModel(data);
+        tblQueryResult.setModel(model);
+//        pnlResult.setVisible(true);
     }
 
     public UiElementDatabase getSelectedDatabase() {
@@ -517,7 +557,9 @@ public class PanelQuery extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBeautfySQLActionPerformed
 
     private void cbConnectionsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbConnectionsItemStateChanged
-        prepareDatabasesCombobox(getSelectedConnection(), null);
+        UiElementConnection conn = getSelectedConnection();
+        System.out.println("selected connnection=" + conn);
+        prepareDatabasesCombobox(conn, null);
     }//GEN-LAST:event_cbConnectionsItemStateChanged
 
     public static void runQuery(String txt) {
@@ -541,23 +583,28 @@ public class PanelQuery extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBeautfySQL;
     private javax.swing.JButton btnCodeSnipped;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExportResult;
     private javax.swing.JButton btnQueryBuilder;
     private javax.swing.JButton btnRun;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnText;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnexplain;
     private javax.swing.JButton btnstop;
     private javax.swing.JComboBox<UiElementConnection> cbConnections;
     private javax.swing.JComboBox<UiElementDatabase> cbDatabases;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel pnlButtons;
-    private javax.swing.JPanel pnlTable;
+    private javax.swing.JPanel pnlControllBtns;
+    private javax.swing.JPanel pnlQuery;
+    private javax.swing.JPanel pnlResult;
+    private javax.swing.JSplitPane splitPane;
     private javax.swing.JTable tblQueryResult;
     private javax.swing.JTextArea txtQuery;
     // End of variables declaration//GEN-END:variables

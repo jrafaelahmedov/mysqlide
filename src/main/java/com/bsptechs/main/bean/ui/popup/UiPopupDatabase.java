@@ -9,6 +9,9 @@ import com.bsptechs.main.bean.ui.panel.PanelQuery;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import javax.swing.JList;
 import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.ui.tree.CustomJTree;
+import com.bsptechs.main.bean.ui.uielement.UiElement;
+import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
 import com.bsptechs.main.bean.ui.uielement.UiElementDatabase;
 import com.bsptechs.main.util.Util;
 import java.sql.SQLException;
@@ -56,8 +59,10 @@ public class UiPopupDatabase extends UiPopupAbstract {
 
     public void newQuery() throws ClassNotFoundException, SQLException {
         System.out.println("new query");
-        UiElementDatabase db = Config.getCurrentDatabaseName();
-        Util.addPanelToTab(Config.getMain().getTabPaneTable(), new PanelQuery(null, db), "Query");
+        CustomJTree tree = Config.getMain().getListTable();
+        UiElementConnection cnn = tree.getSelectedConnection();
+        UiElementDatabase db = tree.getSelectedDatabase();
+        Config.getMain().prepareNewQuery(cnn, db);
     }
 
 }

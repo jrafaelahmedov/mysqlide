@@ -56,4 +56,5 @@ public abstract class UiElement extends DefaultMutableTreeNode {
     public void expand(){
        Config.getMain().getListTable().expandPath(new TreePath(this.getPath()));
     }
+    
 }

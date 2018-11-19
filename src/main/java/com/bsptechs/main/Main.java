@@ -16,13 +16,14 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import com.bsptechs.main.bean.ui.frame.DataTransferFrame;
 import com.bsptechs.main.bean.ui.panel.PanelUiElementInformation;
+import com.bsptechs.main.bean.ui.uielement.UiElementDatabase;
+import com.bsptechs.main.bean.ui.uielement.UiElementTable;
 import com.bsptechs.main.util.ImageUtil;
+import lombok.SneakyThrows;
 
 public class Main extends javax.swing.JFrame {
 
     UiElementConnection conn = null;
-
-   
 
     public Main() {
         initComponents();
@@ -39,12 +40,9 @@ public class Main extends javax.swing.JFrame {
 //            System.out.println(e.nextElement());
 //        }
 //    }
-    
-    public PanelUiElementInformation getInformationPanel(){
-        return (PanelUiElementInformation)pnlUiElementInformation;
+    public PanelUiElementInformation getInformationPanel() {
+        return (PanelUiElementInformation) pnlUiElementInformation;
     }
-    
-   
 
     public void setIcons() {
         btnNewConnection.setIcon(ImageUtil.getIcon("mainframe/connection.png"));
@@ -466,7 +464,7 @@ public class Main extends javax.swing.JFrame {
         );
         panelLeftLayout.setVerticalGroup(
             panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
         );
 
         splitPaneCenter.setLeftComponent(panelLeft);
@@ -494,29 +492,25 @@ public class Main extends javax.swing.JFrame {
         panelCenterLayout.setHorizontalGroup(
             panelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCenterLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(splitPaneCenter, javax.swing.GroupLayout.PREFERRED_SIZE, 1002, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(splitPaneCenter, javax.swing.GroupLayout.PREFERRED_SIZE, 1209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlUiElementInformation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlUiElementInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelCenterLayout.setVerticalGroup(
             panelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCenterLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelCenterLayout.createSequentialGroup()
-                        .addComponent(pnlUiElementInformation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(splitPaneCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(pnlUiElementInformation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(splitPaneCenter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panelWrapperLayout = new javax.swing.GroupLayout(panelWrapper);
         panelWrapper.setLayout(panelWrapperLayout);
         panelWrapperLayout.setHorizontalGroup(
             panelWrapperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMainTop, javax.swing.GroupLayout.DEFAULT_SIZE, 1347, Short.MAX_VALUE)
+            .addComponent(pnlMainTop, javax.swing.GroupLayout.DEFAULT_SIZE, 1431, Short.MAX_VALUE)
             .addComponent(panelCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelWrapperLayout.setVerticalGroup(
@@ -831,15 +825,19 @@ public class Main extends javax.swing.JFrame {
     }
 
     public void prepareNewQuery() {
-        try {
-            panelQuery = new PanelQuery(Config.getCurrentConnection(), Config.getCurrentDatabaseName());
-            tabbedPaneCenter.setEnabled(true);
-            Util.addPanelToTab(tabQuery, panelQuery, "Query");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        UiElementTable table = getListTable().getSelectedTable();
+
+        UiElementConnection conn = table != null ? table.getDatabaseName().getConnection() : Config.getCurrentConnection();
+        UiElementDatabase db = table != null ? table.getDatabaseName() : Config.getCurrentDatabaseName();
+
+        prepareNewQuery(conn, db);
+    }
+
+    @SneakyThrows
+    public void prepareNewQuery(UiElementConnection conn, UiElementDatabase db) {
+        panelQuery = new PanelQuery(conn, db);
+        tabbedPaneCenter.setEnabled(true);
+        Util.addPanelToTab(tabQuery, panelQuery, "Query");
     }
 
     private void btnNewQueryActionPerformed(java.awt.event.ActionEvent evt) {
