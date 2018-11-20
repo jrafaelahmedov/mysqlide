@@ -26,7 +26,7 @@ public interface DatabaseDAOInter {
     boolean dublicateTable(UiElementDatabase DBName, String tbLName);
 
     boolean pasteTable(String information, UiElementDatabase DBName, String tbLName);
-
+  
     boolean renameTable(UiElementTable table, String newTblName);
 
     public TableData runQuery(String query, UiElementConnection connection, UiElementDatabase database) throws ClassNotFoundException, SQLException;
