@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
@@ -125,14 +123,16 @@ public class PanelQuery extends javax.swing.JPanel {
         tblQueryResult = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
+        btnSaveChangesForTable = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
+        btnStop = new javax.swing.JButton();
 
         splitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         pnlQuery.setMinimumSize(new java.awt.Dimension(300, 300));
         pnlQuery.setPreferredSize(new java.awt.Dimension(300, 300));
-        pnlQuery.setSize(new java.awt.Dimension(300, 300));
 
         txtQuery.setColumns(20);
         txtQuery.setRows(5);
@@ -374,22 +374,25 @@ public class PanelQuery extends javax.swing.JPanel {
 
         tblQueryResult.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane4.setViewportView(tblQueryResult);
 
         btnAdd.setText("Add");
 
-        btnUpdate.setText("Update");
+        btnSaveChangesForTable.setText("Save");
 
         btnDelete.setText("Delete");
+
+        btnCancel.setText("Cancel");
+
+        btnRefresh.setText("Refresh");
+
+        btnStop.setText("Stop");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -398,9 +401,15 @@ public class PanelQuery extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(btnAdd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnUpdate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDelete)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSaveChangesForTable)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRefresh)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnStop)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -409,8 +418,11 @@ public class PanelQuery extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnDelete)))
+                    .addComponent(btnSaveChangesForTable)
+                    .addComponent(btnDelete)
+                    .addComponent(btnCancel)
+                    .addComponent(btnRefresh)
+                    .addComponent(btnStop)))
         );
 
         javax.swing.GroupLayout pnlResultLayout = new javax.swing.GroupLayout(pnlResult);
@@ -585,14 +597,17 @@ public class PanelQuery extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBeautfySQL;
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnCodeSnipped;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExportResult;
     private javax.swing.JButton btnQueryBuilder;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnRun;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSaveChangesForTable;
+    private javax.swing.JButton btnStop;
     private javax.swing.JButton btnText;
-    private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnexplain;
     private javax.swing.JButton btnstop;
     private javax.swing.JComboBox<UiElementConnection> cbConnections;
