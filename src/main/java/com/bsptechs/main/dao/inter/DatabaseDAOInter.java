@@ -6,6 +6,7 @@ import com.bsptechs.main.bean.ui.uielement.UiElementDatabase;
 import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
 import com.bsptechs.main.bean.ui.uielement.UiElementTable;
 import com.bsptechs.main.bean.ui.table.TableData;
+import com.bsptechs.main.bean.ui.table.TableRow;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,16 +27,19 @@ public interface DatabaseDAOInter {
     boolean dublicateTable(UiElementDatabase DBName, String tbLName);
 
     boolean pasteTable(String information, UiElementDatabase DBName, String tbLName);
-  
+
     boolean renameTable(UiElementTable table, String newTblName);
 
-    public TableData runQuery(String query, UiElementConnection connection, UiElementDatabase database) throws ClassNotFoundException, SQLException;
+    public TableData runQuery(String query, UiElementConnection connection, UiElementDatabase database) throws Exception;
 
     public boolean createDb(UiElementConnection ui, String name, String charset, String collate);
 
     public List<Charset> getAllCharsets(UiElementConnection connection);
 
     public List<Collation> getAllCollations(UiElementConnection connection, Charset charset);
-    
-    
+
+    public boolean deleteRow(UiElementConnection connection, TableRow row);
+
+    public boolean deleteRows(UiElementConnection connection, List<TableRow> rows);
+
 }

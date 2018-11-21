@@ -18,10 +18,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 
-/**
+/** 
  *
  * @author Penthos
  */
@@ -88,8 +89,9 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
     }
 
     @Override
-    public TableData runQuery(String query, UiElementConnection connection, UiElementDatabase database) throws ClassNotFoundException, SQLException {
+    public TableData runQuery(String query, UiElementConnection connection, UiElementDatabase database) throws Exception {
         Connection conn = connect(connection);
+ 
         Statement stmt = conn.createStatement();
         if (database != null && StringUtils.isNoneEmpty(database.getName())) {
             String setDatabase = "USE " + database.getName() + ";";
@@ -97,20 +99,26 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
         }
 
         ResultSet rs = stmt.executeQuery(query);
-
         List<String> columns = getColumns(rs);
         List<TableRow> rows = new ArrayList<>();
-        while (rs.next()) {
-            List<TableCell> rowCells = new ArrayList<>();
+        String databaseName = getDatabaseName(rs, 1);
 
-            for (String column : columns) {
+        String tableName = getTableName(rs, 1);
+        while (rs.next()) {
+            TableRow row = new TableRow(databaseName, tableName);
+
+            for (int i = 0; i < columns.size(); i++) {
+                String column = columns.get(i);
                 Object o = rs.getObject(column);
-                rowCells.add(new TableCell(column, o));
+                String tableNameCell = getTableName(rs, i + 1);
+                String databaseNameCell = getDatabaseName(rs, i + 1);
+                System.out.println("databasenamecell=" + databaseNameCell);
+                row.add(new TableCell(column, o, databaseNameCell, tableNameCell, isPrimaryKey()));
             }
 
-            rows.add(new TableRow(rowCells));
+            rows.add(row);
         }
-        TableData table = new TableData(rows, columns);
+        TableData table = new TableData(rows, columns, databaseName, tableName);
         return table;
     }
 
@@ -244,5 +252,69 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
 
         charset.setCollations(collations);
         return collations;
+    }
+    
+    
+    
+    @SneakyThrows
+    @Override 
+    public boolean deleteRows(UiElementConnection connection, List<TableRow> rows) {
+        for (TableRow row : rows) {
+            deleteRow(connection, row);
+        }
+        return true;
+    }
+
+    @SneakyThrows
+    @Override
+    public boolean deleteRow(UiElementConnection connection, TableRow row) {
+        List<TableCell> primaryCells = row.getAllPrimaryCell();
+
+        if (primaryCells == null || primaryCells.isEmpty()) {
+            deleteRowByRow(connection, row);
+        } else {
+            TableCell pk = primaryCells.get(0);
+            return deleteRowByCell(connection, pk);
+        }
+
+        return true;
+    }
+
+    @SneakyThrows
+    public boolean deleteRowByRow(UiElementConnection connection, TableRow row) {
+        Connection conn = connect(connection);
+
+        Vector<TableCell> cells = row;
+        String query = "delete "
+                + " from " + row.getDatabaseName() + "." + row.getTableName() + " where ";
+
+        for (int i = 0; i < cells.size(); i++) {
+            TableCell cell = cells.get(i);
+            query += cell.getColumnName() + "=?";
+        }
+        System.out.println("query deleteRowByRow=" + query);
+        PreparedStatement stmt = conn.prepareStatement(query);
+
+        for (int i = 0; i < cells.size(); i++) {
+            TableCell cell = cells.get(i);
+            stmt.setObject(i + 1, cell.getColumnValue());
+        }
+
+        stmt.executeUpdate();
+        return true;
+    }
+
+    @SneakyThrows
+    private boolean deleteRowByCell(UiElementConnection connection, TableCell cell) {
+        Connection conn = connect(connection);
+        String query = "delete "
+                + " from " + cell.getDatabaseName() + "." + cell.getTable()
+                + " where " + cell.getColumnName() + "=?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        System.out.println("query deleteRowByCell=" + query);
+        stmt.setObject(1, cell.getColumnValue());
+        stmt.executeUpdate();
+
+        return true;
     }
 }

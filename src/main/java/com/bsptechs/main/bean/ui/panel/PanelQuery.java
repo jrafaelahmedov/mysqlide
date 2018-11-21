@@ -6,10 +6,10 @@
 package com.bsptechs.main.bean.ui.panel;
 
 import com.bsptechs.main.bean.Config;
+import com.bsptechs.main.bean.ui.table.CustomTable;
 import com.bsptechs.main.bean.ui.uielement.UiElementDatabase;
 import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
 import com.bsptechs.main.bean.ui.table.TableData;
-import com.bsptechs.main.bean.ui.table.TableRow;
 import com.bsptechs.main.dao.impl.DatabaseDAOImpl;
 import com.bsptechs.main.dao.inter.DatabaseDAOInter;
 import com.bsptechs.main.util.ImageUtil;
@@ -18,10 +18,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.table.DefaultTableModel;
 import lombok.SneakyThrows;
 
 /**
@@ -120,7 +118,7 @@ public class PanelQuery extends javax.swing.JPanel {
         btnexplain = new javax.swing.JButton();
         pnlResult = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tblQueryResult = new javax.swing.JTable();
+        tblQueryResult = new CustomTable();
         jPanel1 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnSaveChangesForTable = new javax.swing.JButton();
@@ -387,6 +385,11 @@ public class PanelQuery extends javax.swing.JPanel {
         btnSaveChangesForTable.setText("Save");
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnCancel.setText("Cancel");
 
@@ -458,12 +461,15 @@ public class PanelQuery extends javax.swing.JPanel {
         txtQuery.setText(txt);
     }
 
+    private CustomTable getTable() {
+        return (CustomTable) tblQueryResult;
+    }
+
     @SneakyThrows
     public void runQuery() {
+        CustomTable tbl = getTable();
         TableData data = db.runQuery(txtQuery.getText(), getSelectedConnection(), getSelectedDatabase());
-        DefaultTableModel model = PanelQuery.buildTableModel(data);
-        tblQueryResult.setModel(model);
-//        pnlResult.setVisible(true);
+        tbl.setData(data);
     }
 
     public UiElementDatabase getSelectedDatabase() {
@@ -574,25 +580,19 @@ public class PanelQuery extends javax.swing.JPanel {
         prepareDatabasesCombobox(conn, null);
     }//GEN-LAST:event_cbConnectionsItemStateChanged
 
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        CustomTable tbl = getTable();
+        db.deleteRow(getSelectedConnection(), tbl.getSelectedTableRow());
+        runQuery();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
     public static void runQuery(String txt) {
         Config.getMain().prepareNewQuery();
         Config.getMain().getPanelQuery().setQuery(txt);
         Config.getMain().getPanelQuery().runQuery();
     }
-
-    public static DefaultTableModel buildTableModel(TableData tableData) {
-        Vector<String> columnNames = new Vector<String>(tableData.getColumns());
-
-        Vector<Vector<Object>> rowsVector = new Vector<Vector<Object>>();
-        List<TableRow> rows = tableData.getRows();
-        for (TableRow row : rows) {
-            Vector<Object> vector = new Vector<Object>(row.getCells());
-            rowsVector.add(vector);
-        }
-
-        DefaultTableModel dtm = new DefaultTableModel(rowsVector, columnNames);
-        return dtm;
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;

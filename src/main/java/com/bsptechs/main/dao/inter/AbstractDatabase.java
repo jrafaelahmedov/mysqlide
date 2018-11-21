@@ -3,6 +3,8 @@ package com.bsptechs.main.dao.inter;
 import com.bsptechs.main.bean.ui.uielement.UiElementConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 /**
@@ -26,6 +28,22 @@ public abstract class AbstractDatabase {
         connection.setParentConnection(c);
         
         return c;
+    }
+    
+     public boolean isPrimaryKey() {
+        return true;
+    }
+
+    public String getTableName(ResultSet rs, int columnIndex) throws Exception{
+        ResultSetMetaData metadata = rs.getMetaData();
+        String name = metadata.getTableName(columnIndex);
+        return name;
+    }
+    
+    public String getDatabaseName(ResultSet rs, int columnIndex) throws Exception{
+        ResultSetMetaData metadata = rs.getMetaData();
+        String name = metadata.getCatalogName(columnIndex);
+        return name;
     }
 
 }
