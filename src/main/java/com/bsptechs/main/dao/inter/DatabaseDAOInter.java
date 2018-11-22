@@ -27,6 +27,8 @@ public interface DatabaseDAOInter {
     boolean dublicateTable(UiElementDatabase DBName, String tbLName);
 
     boolean pasteTable(String information, UiElementDatabase DBName, String tbLName);
+    
+    boolean createTable(String[] information, UiElementDatabase DBName, String tbLName);
 
     boolean renameTable(UiElementTable table, String newTblName);
 

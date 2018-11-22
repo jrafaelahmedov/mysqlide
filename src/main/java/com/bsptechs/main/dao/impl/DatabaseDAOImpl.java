@@ -76,6 +76,16 @@ public class DatabaseDAOImpl extends AbstractDatabase implements DatabaseDAOInte
         return true;
     }
 
+    
+    @SneakyThrows
+    @Override
+    public boolean createTable(String[] information, UiElementDatabase DBName, String TblName) {
+        Connection conn = connect(DBName.getConnection());
+        PreparedStatement stmt = conn.prepareStatement("CREATE TABLE " + DBName + "." + TblName + (information.toString()));
+        stmt.executeUpdate();
+        return true;
+    }
+    
     @SneakyThrows
     public static List<String> getColumns(ResultSet rs) throws SQLException {
         ResultSetMetaData metdata = rs.getMetaData();
